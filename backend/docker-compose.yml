@@ -1,0 +1,14 @@
+version: '3.8'
+
+services: 
+  api:
+    build:
+      context: ./shepherd
+      dockerfile: Dockerfile
+    networks:
+      - backend
+    ports:
+      - 8080:8080
+
+networks:
+  backend:
