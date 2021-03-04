@@ -8,27 +8,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
+    - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        build-root-directory: backend/shepherd/
+        java-version: 15
     - name: Test with Gradle
-      run: |
-        cd backend/shepherd/
-        chmod +x gradlew
-        ./gradlew test --stacktrace
+      uses: eskatos/gradle-command-action@v1
+      with:
+        arguments: test --fail-fast --stacktrace
 
   build:
     runs-on: ubuntu-latest
     needs: test
     steps:
     - uses: actions/checkout@v2
-    - name: Set up JDK 1.8
+    - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 1.8
+        build-root-directory: backend/shepherd/
+        java-version: 15
     - name: Build with Gradle
-      run: |
-        cd backend/shepherd/
-        chmod +x gradlew
-        ./gradlew build
+      uses: eskatos/gradle-command-action@v1
+      with:
+        arguments: build
