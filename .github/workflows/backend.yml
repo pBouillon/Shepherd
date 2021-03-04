@@ -13,10 +13,10 @@ jobs:
       with:
         java-version: 15
     - name: Test with Gradle
-      uses: eskatos/gradle-command-action@v1
-      with:
-        arguments: test --fail-fast --stacktrace
-        build-root-directory: backend/shepherd/
+      run: |
+        cd backend/shepherd/
+        chmod +x gradlew
+        ./gradlew test --stacktrace
 
   build:
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
       with:
         java-version: 15
     - name: Build with Gradle
-      uses: eskatos/gradle-command-action@v1
-      with:
-        arguments: build
-        build-root-directory: backend/shepherd/
+      run: |
+        cd backend/shepherd/
+        chmod +x gradlew
+        ./gradlew build
