@@ -1,4 +1,4 @@
-package com.fis.shepherd;
+package com.fisæ.shepherd;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
