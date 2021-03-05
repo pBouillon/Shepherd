@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+
+  spa:
+    build:
+      context: ./shepherd
+      dockerfile: Dockerfile.prod
+    ports:
+    - 3000:80
