@@ -24,7 +24,7 @@ public class Media {
      *
      * For more details related to the way its stored, see: https://stackoverflow.com/a/62307301/6152689
      */
-    private Instant creationDate;
+    private Instant creationDate = Instant.now();
 
     /**
      * Id of the media

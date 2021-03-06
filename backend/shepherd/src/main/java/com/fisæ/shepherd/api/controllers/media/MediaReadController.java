@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.api.controllers.media;
 
-import com.fisæ.shepherd.api.contracts.Media;
+import com.fisæ.shepherd.api.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.MediaQueryService;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import io.swagger.annotations.Api;
@@ -55,7 +55,7 @@ public class MediaReadController extends MediaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
             })
-    public ResponseEntity<List<Media>> get(GetMediasQuery query) {
+    public ResponseEntity<List<MediaDto>> get(GetMediasQuery query) {
         return ResponseEntity.ok()
                 .body(new ArrayList<>());
     }

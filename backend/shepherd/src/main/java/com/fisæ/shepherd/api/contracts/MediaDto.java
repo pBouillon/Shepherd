@@ -8,7 +8,7 @@ import java.time.Instant;
  * Media DTO, served by the API
  */
 @Data
-public class Media {
+public class MediaDto {
 
     /**
      * Creation date of the media, represented in UTC

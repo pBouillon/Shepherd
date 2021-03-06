@@ -1,9 +1,12 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
-import com.fisæ.shepherd.api.contracts.Media;
+import com.fisæ.shepherd.api.contracts.MediaDto;
+import com.fisæ.shepherd.domain.entities.Media;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -17,6 +20,15 @@ public interface MediaMapper {
      *
      * @return The associated DTO
      */
-    Media toDto(com.fisæ.shepherd.domain.entities.Media media);
+    MediaDto toDto(Media media);
+
+    /**
+     * Convert a collection of media entities to the associated list of DTO
+     *
+     * @param medias Entities to convert
+     *
+     * @return The associated DTOs
+     */
+    List<MediaDto> toDtos(List<Media> medias);
 
 }

@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.application.media;
 
-import com.fisæ.shepherd.api.contracts.Media;
+import com.fisæ.shepherd.api.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class MediaService implements MediaQueryService {
      * {@inheritDoc}
      */
     @Override
-    public List<Media> getMedias(GetMediasQuery query) {
+    public List<MediaDto> getMedias(GetMediasQuery query) {
         // TODO: implementation, logging and mapping
         return null;
     }

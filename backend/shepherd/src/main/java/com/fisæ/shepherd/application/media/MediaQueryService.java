@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.application.media;
 
-import com.fisæ.shepherd.api.contracts.Media;
+import com.fisæ.shepherd.api.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 
 import java.util.List;
@@ -19,6 +19,6 @@ public interface MediaQueryService {
      *
      * @return A list of all the medias, filtered by the payload
      */
-    List<Media> getMedias(GetMediasQuery query);
+    List<MediaDto> getMedias(GetMediasQuery query);
 
 }
