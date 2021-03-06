@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.controllers;
+package com.fisæ.shepherd.api.controllers.media;
 
 import com.fisæ.shepherd.api.contracts.Media;
 import io.swagger.annotations.Api;
@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * API controller used for the media resource
+ * API controller used for the read-only operations on the media resource
  */
 @RestController
 @RequestMapping(
         path = "/api/medias",
         produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = "Media")
-public class MediaController {
+@Api(tags = MediaController.CONTROLLER_TAG)
+public class MediaReadController extends MediaController {
 
     /**
      * Endpoint for: GET /medias
