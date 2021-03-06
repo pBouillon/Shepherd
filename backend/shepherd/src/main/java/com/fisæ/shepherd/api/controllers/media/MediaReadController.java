@@ -1,6 +1,7 @@
 package com.fisæ.shepherd.api.controllers.media;
 
 import com.fisæ.shepherd.api.contracts.Media;
+import com.fisæ.shepherd.application.media.query.GetAllMediaQuery;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -28,6 +29,8 @@ public class MediaReadController extends MediaController {
      *
      * Retrieve all medias
      *
+     * @param query CQRS query containing any details that might be needed to filter the media
+     *
      * @return A JSON payload containing all the medias
      */
     @GetMapping
@@ -35,7 +38,7 @@ public class MediaReadController extends MediaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
             })
-    public ResponseEntity<List<Media>> get() {
+    public ResponseEntity<List<Media>> get(GetAllMediaQuery query) {
         return ResponseEntity.ok()
                 .body(new ArrayList<>());
     }
