@@ -28,6 +28,10 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// Logs
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
 	// MapStruct
 	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
