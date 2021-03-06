@@ -9,6 +9,10 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 
 configurations {
+
+	// Resolve SLF4J error: "Class path contains multiple SLF4J bindings"
+	all*.exclude module : 'spring-boot-starter-logging'
+
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
