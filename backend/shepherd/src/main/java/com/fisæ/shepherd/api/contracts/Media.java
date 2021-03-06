@@ -11,7 +11,7 @@ import java.time.Instant;
 public class Media {
 
     /**
-     * Creation date of the media, represented as UTC
+     * Creation date of the media, represented in UTC
      */
     private Instant creationDate;
 
