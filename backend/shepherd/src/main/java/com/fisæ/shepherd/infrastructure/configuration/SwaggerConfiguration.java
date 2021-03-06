@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.configuration;
+package com.fisæ.shepherd.infrastructure.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
