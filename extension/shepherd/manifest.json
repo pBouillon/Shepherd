@@ -1,0 +1,7 @@
+{
+    "name": "Shepherd extension",
+    "version": "0.1",
+    "description": "Official Chrome extension for the Shepherd application",
+    "permissions": ["declarativeContent", "storage"],
+    "manifest_version": 2
+}
