@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.controllers;
+package com.fisæ.shepherd.api.controller;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

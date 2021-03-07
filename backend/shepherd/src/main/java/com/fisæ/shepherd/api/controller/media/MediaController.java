@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.controllers.media;
+package com.fisæ.shepherd.api.controller.media;
 
 /**
  * Base class used for the read- and write-only controllers

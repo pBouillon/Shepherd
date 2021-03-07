@@ -1,7 +1,7 @@
-package com.fisæ.shepherd.api.controllers.media;
+package com.fisæ.shepherd.api.controller.media;
 
-import com.fisæ.shepherd.api.controllers.ControllerTests;
-import com.fisæ.shepherd.api.controllers.RestPageImpl;
+import com.fisæ.shepherd.api.controller.ControllerTests;
+import com.fisæ.shepherd.api.controller.RestPageImpl;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import org.junit.jupiter.api.Test;

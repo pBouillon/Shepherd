@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.controllers.media;
+package com.fisæ.shepherd.api.controller.media;
 
 import com.fisæ.shepherd.application.media.MediaQueryService;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;

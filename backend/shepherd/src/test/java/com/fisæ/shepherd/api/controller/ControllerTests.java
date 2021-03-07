@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.controllers;
+package com.fisæ.shepherd.api.controller;
 
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
