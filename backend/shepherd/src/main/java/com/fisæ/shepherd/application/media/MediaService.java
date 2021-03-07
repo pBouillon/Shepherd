@@ -2,7 +2,7 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
-import com.fisæ.shepherd.domain.entities.Media;
+import com.fisæ.shepherd.domain.entity.Media;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
 import lombok.extern.log4j.Log4j2;

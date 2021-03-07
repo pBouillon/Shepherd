@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.application.media.query;
 
-import com.fisæ.shepherd.domain.entities.Media;
+import com.fisæ.shepherd.domain.entity.Media;
 import lombok.Data;
 
 /**

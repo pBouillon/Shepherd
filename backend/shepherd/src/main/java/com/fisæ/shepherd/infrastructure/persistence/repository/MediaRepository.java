@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.infrastructure.persistence.repository;
 
-import com.fisæ.shepherd.domain.entities.Media;
+import com.fisæ.shepherd.domain.entity.Media;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
-import com.fisæ.shepherd.domain.entities.Media;
+import com.fisæ.shepherd.domain.entity.Media;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit test suite for the {@link MediaMapper}
  */
-public class MediaMapperTest {
+public class MediaMapperTests {
 
     /**
      * Instance of the mapper to be tested, cleaned-up before each test
@@ -39,9 +39,8 @@ public class MediaMapperTest {
         List<Media> medias = new ArrayList<>();
 
         for (int i = 0; i < 5; ++i) {
-            Media media = new Media();
+            Media media = new Media(String.valueOf(i));
             media.setId((long) i);
-            media.setName(String.valueOf(i));
 
             medias.add(media);
         }
@@ -51,9 +50,8 @@ public class MediaMapperTest {
 
     @Test
     public void givenAMedia_WhenMappingIt_ThenThePropertiesShouldRemainTheSame() {
-        Media media = new Media();
+        Media media = new Media("A trustworthy source");
         media.setId(1L);
-        media.setName("A trustworthy source");
 
         MediaDto dto = mapper.toDto(media);
 

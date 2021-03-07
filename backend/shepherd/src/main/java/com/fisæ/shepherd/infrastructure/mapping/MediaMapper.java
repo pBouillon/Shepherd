@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
-import com.fisæ.shepherd.domain.entities.Media;
+import com.fisæ.shepherd.domain.entity.Media;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;

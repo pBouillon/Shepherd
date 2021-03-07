@@ -1,7 +1,8 @@
-package com.fisæ.shepherd.domain.entities;
+package com.fisæ.shepherd.domain.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,18 +25,27 @@ public class Media {
      *
      * For more details related to the way its stored, see: https://stackoverflow.com/a/62307301/6152689
      */
-    private Instant creationDate = Instant.now();
+    @NonNull private Instant creationDate = Instant.now();
 
     /**
      * Id of the media
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NonNull private Long id = 0L;
 
     /**
      * Media brand name
      */
-    private String name;
+    @NonNull private String name = "";
+
+    /**
+     * Create a new media
+     *
+     * @param name Media brand name such as "CNN", "Fox News", etc.
+     */
+    public Media(@NonNull String name) {
+        this.name = name;
+    }
 
 }
