@@ -41,7 +41,7 @@ public class MediaReadControllerTests extends ControllerTests {
         ResponseEntity<RestPageImpl<MediaDto>> mediasResponse = restTemplate.exchange(
                 getPaginatedMediasUri, HttpMethod.GET, null, new ParameterizedTypeReference<>() { });
 
-        assertEquals(mediasResponse.getStatusCode(), HttpStatus.OK);
+        assertEquals(HttpStatus.OK, mediasResponse.getStatusCode());
     }
 
 }
