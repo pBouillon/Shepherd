@@ -14,11 +14,11 @@ public class GetMediasQuery {
      *
      * The first page is at index 0
      */
-    public int pageId = 0;
+    private int pageId = 0;
 
     /**
      * Number of the items displayed per pages
      */
-    public int itemsPerPages = 10;
+    private int itemsPerPages = 10;
 
 }

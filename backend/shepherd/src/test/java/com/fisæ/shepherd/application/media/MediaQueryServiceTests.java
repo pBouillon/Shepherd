@@ -89,12 +89,12 @@ public class MediaQueryServiceTests {
                 .thenAnswer(invocation -> getPageFromList(medias, invocation.getArgument(0)));
 
         GetMediasQuery query = new GetMediasQuery();
-        query.pageId = 0;
-        query.itemsPerPages = 1;
+        query.setPageId(0);
+        query.setItemsPerPages(1);
 
         Page<MediaDto> paginatedMedias = service.getMedias(Optional.of(query));
 
-        assertEquals(query.itemsPerPages, paginatedMedias.getSize());
+        assertEquals(query.getItemsPerPages(), paginatedMedias.getSize());
         assertEquals(medias.size(), paginatedMedias.getTotalElements());
 
         @SuppressWarnings("OptionalGetWithoutIsPresent")

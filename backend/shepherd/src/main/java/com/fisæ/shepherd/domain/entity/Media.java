@@ -21,6 +21,16 @@ import java.time.Instant;
 public class Media {
 
     /**
+     * Maximum length of the media name
+     */
+    public static final int NAME_MAX_LENGTH = 32;
+
+    /**
+     * Minimum length of the media name
+     */
+    public static final int NAME_MIN_LENGTH = 3;
+
+    /**
      * Creation date of the media, represented in UTC
      *
      * For more details related to the way its stored, see: https://stackoverflow.com/a/62307301/6152689

@@ -50,7 +50,7 @@ public class MediaService implements MediaCommandService, MediaQueryService {
     public Page<MediaDto> getMedias(Optional<GetMediasQuery> query) {
         GetMediasQuery digestedQuery = query.orElse(new GetMediasQuery());
 
-        int pageId = digestedQuery.pageId;
+        int pageId = digestedQuery.getPageId();
         int itemsPerPage = digestedQuery.getItemsPerPages();
 
         PageRequest request = PageRequest.of(pageId, itemsPerPage);
