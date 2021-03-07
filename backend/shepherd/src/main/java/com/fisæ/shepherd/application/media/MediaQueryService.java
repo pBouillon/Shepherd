@@ -4,6 +4,8 @@ import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import org.springframework.data.domain.Page;
 
+import java.util.Optional;
+
 /**
  * Define a service able to handle the read-only operations (queries) performed on medias
  *
@@ -18,6 +20,6 @@ public interface MediaQueryService {
      *
      * @return A list of all the medias, filtered by the payload
      */
-    Page<MediaDto> getMedias(GetMediasQuery query);
+    Page<MediaDto> getMedias(Optional<GetMediasQuery> query);
 
 }

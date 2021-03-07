@@ -30,6 +30,7 @@ public class MediaMapperTests {
         mapper = Mappers.getMapper(MediaMapper.class);
     }
 
+
     /**
      * Utility method to generate a collection of medias
      *
@@ -77,5 +78,4 @@ public class MediaMapperTests {
                     () -> assertEquals(media.getCreationDate(), dto.getCreationDate()));
         }
     }
-
 }

@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * API controller used for the read-only operations on the media resource
@@ -53,7 +53,8 @@ public class MediaReadController extends MediaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
             })
-    public ResponseEntity<Page<MediaDto>> get(GetMediasQuery query) {
+    public ResponseEntity<Page<MediaDto>> get(
+            @ModelAttribute @RequestParam(required = false) Optional<GetMediasQuery> query) {
         return ResponseEntity.ok()
                 .body(mediaService.getMedias(query));
     }

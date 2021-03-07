@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -48,6 +49,7 @@ public class MediaQueryServiceTests {
         service = new MediaService(mapper, repository);
     }
 
+
     /**
      * Create a page of the provided list according to the provided page request
      *
@@ -72,7 +74,7 @@ public class MediaQueryServiceTests {
 
         GetMediasQuery query = new GetMediasQuery();
 
-        Page<MediaDto> paginatedMedias = service.getMedias(query);
+        Page<MediaDto> paginatedMedias = service.getMedias(Optional.of(query));
 
         assertTrue(paginatedMedias.isEmpty());
     }
@@ -90,7 +92,7 @@ public class MediaQueryServiceTests {
         query.pageId = 0;
         query.itemsPerPages = 1;
 
-        Page<MediaDto> paginatedMedias = service.getMedias(query);
+        Page<MediaDto> paginatedMedias = service.getMedias(Optional.of(query));
 
         assertEquals(query.itemsPerPages, paginatedMedias.getSize());
         assertEquals(medias.size(), paginatedMedias.getTotalElements());

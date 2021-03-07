@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * Define a service able to handle the operations performed on medias
  */
@@ -42,11 +44,17 @@ public class MediaService implements MediaQueryService {
 
     /**
      * {@inheritDoc}
+     * @param query
      */
     @Override
-    public Page<MediaDto> getMedias(GetMediasQuery query) {
-        PageRequest request = PageRequest.of(query.getPageId(), query.getItemsPerPages());
-        log.info("{} medias on page {} requested", query.getItemsPerPages(), query.getPageId());
+    public Page<MediaDto> getMedias(Optional<GetMediasQuery> query) {
+        GetMediasQuery digestedQuery = query.orElse(new GetMediasQuery());
+
+        int pageId = digestedQuery.pageId;
+        int itemsPerPage = digestedQuery.getItemsPerPages();
+
+        PageRequest request = PageRequest.of(pageId, itemsPerPage);
+        log.info("{} medias on page {} requested", pageId, itemsPerPage);
 
         Page<Media> medias = repository.findAll(request);
         log.info("{} medias on {} pages retrieved", medias.getTotalElements(), medias.getTotalPages());
