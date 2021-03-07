@@ -23,7 +23,7 @@ public class SwaggerConfiguration {
     /**
      * Package in which the controllers are defined
      */
-    private final static String controllersPackage = "com.fisæ.shepherd.api.controllers";
+    private final static String controllersPackage = "com.fisæ.shepherd.api.controller";
 
     /**
      * Expose controllers and endpoints to be displayed by Swagger
