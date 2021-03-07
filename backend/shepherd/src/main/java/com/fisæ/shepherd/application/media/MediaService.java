@@ -1,16 +1,15 @@
 package com.fisæ.shepherd.application.media;
 
-import com.fisæ.shepherd.api.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.domain.entities.Media;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Define a service able to handle the operations performed on medias
@@ -45,12 +44,14 @@ public class MediaService implements MediaQueryService {
      * {@inheritDoc}
      */
     @Override
-    public List<MediaDto> getMedias(GetMediasQuery query) {
-        List<Media> medias = repository.findAll();
+    public Page<MediaDto> getMedias(GetMediasQuery query) {
+        PageRequest request = PageRequest.of(query.getPageId(), query.getItemsPerPages());
+        log.info("{} medias on page {} requested", query.getItemsPerPages(), query.getPageId());
 
-        log.info("Retrieved {} medias", medias.size());
+        Page<Media> medias = repository.findAll(request);
+        log.info("{} medias on {} pages retrieved", medias.getTotalElements(), medias.getTotalPages());
 
-        return mapper.toDtos(medias);
+        return medias.map(mapper::toDto);
     }
 
 }

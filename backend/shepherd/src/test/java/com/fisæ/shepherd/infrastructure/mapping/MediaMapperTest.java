@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
-import com.fisæ.shepherd.api.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entities.Media;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

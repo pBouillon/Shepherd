@@ -1,12 +1,13 @@
 package com.fisæ.shepherd.api.controllers.media;
 
-import com.fisæ.shepherd.api.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.MediaQueryService;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,9 +56,9 @@ public class MediaReadController extends MediaController {
             responses = {
                     @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
             })
-    public ResponseEntity<List<MediaDto>> get(GetMediasQuery query) {
+    public ResponseEntity<Page<MediaDto>> get(GetMediasQuery query) {
         return ResponseEntity.ok()
-                .body(new ArrayList<>());
+                .body(mediaService.getMedias(query));
     }
 
 }

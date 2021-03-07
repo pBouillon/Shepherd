@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.api.contracts;
+package com.fisæ.shepherd.application.media.contracts;
 
 import lombok.Data;
 
