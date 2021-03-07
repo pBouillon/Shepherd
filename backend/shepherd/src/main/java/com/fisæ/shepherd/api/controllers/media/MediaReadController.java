@@ -57,6 +57,7 @@ public class MediaReadController extends MediaController {
             @ModelAttribute @RequestParam(required = false) Optional<GetMediasQuery> query) {
         return ResponseEntity.ok()
                 .body(mediaService.getMedias(query));
+
     }
 
 }

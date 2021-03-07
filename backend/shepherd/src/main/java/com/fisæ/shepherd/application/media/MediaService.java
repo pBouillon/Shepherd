@@ -18,7 +18,7 @@ import java.util.Optional;
  */
 @Log4j2
 @Service
-public class MediaService implements MediaQueryService {
+public class MediaService implements MediaCommandService, MediaQueryService {
 
     /**
      * Mapper to convert Media entities to their DTO
