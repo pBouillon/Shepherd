@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.api.controllers.media;
 
-import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.MediaQueryService;
+import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,9 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * API controller used for the read-only operations on the media resource
@@ -49,7 +46,7 @@ public class MediaReadController extends MediaController {
      *
      * @param query CQRS query containing any details that might be needed to filter the media
      *
-     * @return A JSON payload containing the medias
+     * @return A JSON payload containing a paginated result of the medias retrieved
      */
     @GetMapping
     @Operation(summary = "Retrieve all medias",
