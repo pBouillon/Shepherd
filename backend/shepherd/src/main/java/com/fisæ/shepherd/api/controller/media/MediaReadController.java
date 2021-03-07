@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequestMapping(
         path = "/api/medias",
         produces = MediaType.APPLICATION_JSON_VALUE)
-@Api(tags = MediaController.CONTROLLER_TAG)
+@Api(value = MediaController.CONTROLLER_TAG, tags = { MediaController.CONTROLLER_TAG })
 public class MediaReadController extends MediaController {
 
     /**
@@ -49,7 +49,7 @@ public class MediaReadController extends MediaController {
      * @return A JSON payload containing a paginated result of the medias retrieved
      */
     @GetMapping
-    @Operation(summary = "Retrieve all medias",
+    @Operation(summary = "Retrieve the medias",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
             })

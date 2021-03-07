@@ -1,5 +1,6 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
+import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entity.Media;
 import org.mapstruct.Mapper;
@@ -30,5 +31,14 @@ public interface MediaMapper {
      * @return The associated DTOs
      */
     List<MediaDto> toDtos(List<Media> medias);
+
+    /**
+     * Convert a {@link CreateMediaCommand} to a {@link Media}
+     *
+     * @param command Command to convert
+     *
+     * @return The associated media
+     */
+    Media toMedia(CreateMediaCommand command);
 
 }

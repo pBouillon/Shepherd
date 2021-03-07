@@ -1,5 +1,6 @@
 package com.fisæ.shepherd.application.media;
 
+import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.domain.entity.Media;
@@ -44,7 +45,20 @@ public class MediaService implements MediaCommandService, MediaQueryService {
 
     /**
      * {@inheritDoc}
-     * @param query
+     */
+    @Override
+    public MediaDto create(CreateMediaCommand command) {
+        log.info("Creating a new media from {}", command);
+
+        Media entity = repository.save(mapper.toMedia(command));
+
+        log.info("{} created", entity);
+
+        return mapper.toDto(entity);
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Page<MediaDto> getMedias(Optional<GetMediasQuery> query) {

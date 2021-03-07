@@ -49,7 +49,6 @@ public class MediaQueryServiceTests {
         service = new MediaService(mapper, repository);
     }
 
-
     /**
      * Create a page of the provided list according to the provided page request
      *

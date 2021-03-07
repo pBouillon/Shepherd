@@ -1,5 +1,6 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
+import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entity.Media;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +31,6 @@ public class MediaMapperTests {
         mapper = Mappers.getMapper(MediaMapper.class);
     }
 
-
     /**
      * Utility method to generate a collection of medias
      *
@@ -50,16 +50,28 @@ public class MediaMapperTests {
     }
 
     @Test
+    public void givenACreateMediaCommand_WhenMappingIt_ThenAMediaShouldKeepTheProvidedProperties() {
+        CreateMediaCommand command = new CreateMediaCommand();
+        command.setName("A trustworthy source");
+
+        Media media = mapper.toMedia(command);
+
+        assertAll("media",
+                () -> assertEquals(0L, media.getId()),
+                () -> assertEquals(command.getName(), media.getName()));
+    }
+
+    @Test
     public void givenAMedia_WhenMappingIt_ThenThePropertiesShouldRemainTheSame() {
         Media media = new Media("A trustworthy source");
         media.setId(1L);
 
         MediaDto dto = mapper.toDto(media);
 
-        assertAll("media",
-                () -> assertEquals(media.getCreationDate(), dto.getCreationDate()),
-                () -> assertEquals(media.getId(), dto.getId()),
-                () -> assertEquals(media.getCreationDate(), dto.getCreationDate()));
+        assertAll("media DTO",
+                () -> assertEquals(dto.getCreationDate(), media.getCreationDate()),
+                () -> assertEquals(dto.getId(), media.getId()),
+                () -> assertEquals(dto.getCreationDate(), media.getCreationDate()));
     }
 
     @Test
@@ -72,10 +84,11 @@ public class MediaMapperTests {
             Media media = medias.get(i);
             MediaDto dto = dtos.get(i);
 
-            assertAll("media",
-                    () -> assertEquals(media.getCreationDate(), dto.getCreationDate()),
-                    () -> assertEquals(media.getId(), dto.getId()),
-                    () -> assertEquals(media.getCreationDate(), dto.getCreationDate()));
+            assertAll("media DTO",
+                    () -> assertEquals(dto.getCreationDate(), media.getCreationDate()),
+                    () -> assertEquals(dto.getId(), media.getId()),
+                    () -> assertEquals(dto.getCreationDate(), media.getCreationDate()));
         }
     }
+
 }
