@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.application.media.exception;
+package com.fisæ.shepherd.application.commons.exception;
 
 /**
  * Exception thrown when attempting to retrieve a non-existing entity

@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.application.media.exception;
+package com.fisæ.shepherd.application.commons.exception;
 
 import java.util.Collections;
 import java.util.Map;

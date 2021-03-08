@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
-import com.fisæ.shepherd.application.media.exception.EntityNotFoundException;
+import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.domain.entity.Media;
@@ -76,7 +76,7 @@ public class MediaQueryServiceTests {
                 .thenReturn(Optional.empty());
 
         assertThrows(
-                EntityNotFoundException.class,
+                MediaNotFoundException.class,
                 () -> service.getMedia(query));
     }
 

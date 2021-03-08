@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.application.media;
 
+import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
-import com.fisæ.shepherd.application.media.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import org.springframework.data.domain.Page;

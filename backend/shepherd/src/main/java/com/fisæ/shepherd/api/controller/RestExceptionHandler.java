@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.api.controller;
 
-import com.fisæ.shepherd.application.media.exception.EntityNotFoundException;
-import com.fisæ.shepherd.application.media.exception.ShepherdApplicationException;
+import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
+import com.fisæ.shepherd.application.commons.exception.ShepherdApplicationException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
