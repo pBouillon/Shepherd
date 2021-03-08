@@ -65,8 +65,7 @@ public class MediaService implements MediaCommandService, MediaQueryService {
      */
     @Override
     public void delete(DeleteMediaCommand command) {
-        Media entity = repository.
-                findById(command.getId())
+        Media entity = repository.findById(command.getId())
                 .orElseThrow(() -> new MediaNotFoundException(command.getId()));
 
         repository.delete(entity);
