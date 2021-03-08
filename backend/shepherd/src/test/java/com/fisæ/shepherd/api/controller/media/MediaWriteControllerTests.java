@@ -2,6 +2,7 @@ package com.fisæ.shepherd.api.controller.media;
 
 import com.fisæ.shepherd.api.controller.ControllerTests;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
+import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class MediaWriteControllerTests extends ControllerTests {
 
     @ParameterizedTest
+    @ValueSource(longs = { -1L, 0L })
+    public void givenAnInvalidCommand_WhenCallingDelete_ThenABadRequestShouldBeReturned(long id)
+            throws URISyntaxException {
+        DeleteMediaCommand command = new DeleteMediaCommand();
+        command.setId(id);
+
+        String mediaUri = getUriForRoute("/api/medias/") + command.getId().toString();
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.delete(mediaUri));
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = {
             "",
             "a",
@@ -38,6 +53,19 @@ public class MediaWriteControllerTests extends ControllerTests {
         Assertions.assertThrows(
                 HttpClientErrorException.BadRequest.class,
                 () -> restTemplate.postForEntity(mediaUri, command, MediaDto.class));
+    }
+
+    @Test
+    public void givenAValidCommand_WhenCallingDeleteOnAnUnknownId_ThenABadRequestShouldBeReturned()
+            throws URISyntaxException {
+        DeleteMediaCommand command = new DeleteMediaCommand();
+        command.setId(Long.MAX_VALUE);
+
+        String mediaUri = getUriForRoute("/api/medias/") + command.getId().toString();
+
+        Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                () -> restTemplate.delete(mediaUri));
     }
 
     @Test
