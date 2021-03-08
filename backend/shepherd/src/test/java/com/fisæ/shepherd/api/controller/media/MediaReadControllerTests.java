@@ -3,6 +3,7 @@ package com.fisæ.shepherd.api.controller.media;
 import com.fisæ.shepherd.api.controller.ControllerTests;
 import com.fisæ.shepherd.api.controller.RestPageImpl;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -34,6 +35,33 @@ public class MediaReadControllerTests extends ControllerTests {
     public static String asQueryParam(GetMediasQuery query) {
         return "?itemsPerPages=" + query.getItemsPerPages()
                 + "&pageId=" + query.getPageId();
+    }
+
+    @Test
+    public void givenAnIdThatDoesNotBelongToAMedia_WhenQueryingIt_ThenANotFoundShouldBeReturned()
+            throws URISyntaxException {
+        GetMediaQuery query = new GetMediaQuery();
+        query.setId(Long.MAX_VALUE);
+
+        String getPaginatedMediasUri = getUriForRoute("/api/medias") + "/" + query.getId();
+
+        Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                () -> restTemplate.getForEntity(getPaginatedMediasUri, RestPageImpl.class));
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = { -1L, 0L })
+    public void givenAnInvalidMediaId_WhenQueryingIt_ThenABadRequestShouldBeReturned(Long id)
+            throws URISyntaxException {
+        GetMediaQuery query = new GetMediaQuery();
+        query.setId(id);
+
+        String getPaginatedMediasUri = getUriForRoute("/api/medias") + "/" + query.getId();
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.getForEntity(getPaginatedMediasUri, RestPageImpl.class));
     }
 
     @ParameterizedTest
