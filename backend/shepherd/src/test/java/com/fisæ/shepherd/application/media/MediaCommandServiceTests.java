@@ -1,7 +1,9 @@
 package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
+import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.domain.entity.Media;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
@@ -13,9 +15,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -46,7 +50,31 @@ public class MediaCommandServiceTests {
     }
 
     @Test
-    public void givenAValidRequest_WhenCreatingIt_ThenTheMediaShouldBeSaved() {
+    public void givenAnId_WhenDeletingTheAssociatedMedia_ThenItShouldBeDeleted() {
+        Mockito.when(repository.findById(anyLong()))
+                .thenReturn(Optional.of(new Media()));
+
+        DeleteMediaCommand command = new DeleteMediaCommand();
+
+        service.delete(command);
+
+        verify(repository, times(1)).delete(any(Media.class));
+    }
+
+    @Test
+    public void givenAnUnknownId_WhenDeletingTheAssociatedMedia_ThenAnExceptionShouldBeThrown() {
+        Mockito.when(repository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+        DeleteMediaCommand command = new DeleteMediaCommand();
+
+        assertThrows(
+                MediaNotFoundException.class,
+                () -> service.delete(command));
+    }
+
+    @Test
+    public void givenAValidRequest_WhenCreatingAMedia_ThenItShouldBeSaved() {
         Mockito.when(repository.save(any(Media.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 

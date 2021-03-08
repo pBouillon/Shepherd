@@ -2,6 +2,7 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
+import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
@@ -56,6 +57,20 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         log.info("{} created", entity);
 
         return mapper.toDto(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void delete(DeleteMediaCommand command) {
+        Media entity = repository.
+                findById(command.getId())
+                .orElseThrow(() -> new MediaNotFoundException(command.getId()));
+
+        repository.delete(entity);
+
+        log.info("{} deleted", entity);
     }
 
     /**
