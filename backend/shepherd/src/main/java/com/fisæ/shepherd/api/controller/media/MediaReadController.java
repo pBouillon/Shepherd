@@ -4,6 +4,7 @@ import com.fisæ.shepherd.application.media.MediaQueryService;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
+import com.fisæ.shepherd.domain.entity.Media;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
 
-import static com.fisæ.shepherd.application.media.query.GetMediaQuery.ID_MIN_VALUE;
 import static com.fisæ.shepherd.application.media.query.GetMediasQuery.*;
 
 /**
@@ -67,7 +67,7 @@ public class MediaReadController extends MediaController {
     public ResponseEntity<MediaDto> getMedia(
             @ApiParam(value = "Id of the media to retrieve")
             @PathVariable
-            @Min(ID_MIN_VALUE) long id) {
+            @Min(Media.ID_MIN_VALUE) long id) {
         GetMediaQuery query = new GetMediaQuery();
         query.setId(id);
 

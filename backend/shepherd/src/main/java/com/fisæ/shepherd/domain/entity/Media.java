@@ -21,6 +21,11 @@ import java.time.Instant;
 public class Media {
 
     /**
+     * Minimum value of the media id
+     */
+    public static final long ID_MIN_VALUE = 1L;
+
+    /**
      * Maximum length of the media name
      */
     public static final int NAME_MAX_LENGTH = 32;

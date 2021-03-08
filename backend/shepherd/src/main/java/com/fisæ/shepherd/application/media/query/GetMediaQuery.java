@@ -12,14 +12,9 @@ import javax.validation.constraints.Min;
 public class GetMediaQuery {
 
     /**
-     * Minimum value of the id of a {@link Media}
-     */
-    public static final long ID_MIN_VALUE = 1L;
-
-    /**
      * id of the media to retrieve
      */
-    @Min(ID_MIN_VALUE)
-    public Long id = ID_MIN_VALUE;
+    @Min(Media.ID_MIN_VALUE)
+    public Long id = Media.ID_MIN_VALUE;
 
 }
