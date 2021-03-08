@@ -12,16 +12,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Unit test suite for {@link CreateMediaCommand}
+ * Unit test suite for {@link UpdateMediaCommand}
  */
-public class CreateMediaCommandTests extends ConstraintValidatorTests {
+public class UpdateMediaCommandTests extends ConstraintValidatorTests {
 
     @Test
     public void givenABlankName_WhenCreatingTheCommand_ThenTheValidationShouldFail() {
-        CreateMediaCommand command = new CreateMediaCommand();
+        UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("     ");
 
-        Set<ConstraintViolation<CreateMediaCommand>> constraintViolations = validator.validate(command);
+        Set<ConstraintViolation<UpdateMediaCommand>> constraintViolations = validator.validate(command);
         List<String> constraintViolationsMessages = getConstraintViolationMessages(constraintViolations);
 
         assertEquals(1, constraintViolations.size());
@@ -30,20 +30,20 @@ public class CreateMediaCommandTests extends ConstraintValidatorTests {
 
     @Test
     public void givenAName_WhenCreatingTheCommand_ThenTheValidationShouldPass() {
-        CreateMediaCommand command = new CreateMediaCommand();
+        UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A completely valid name");
 
-        Set<ConstraintViolation<CreateMediaCommand>> constraintViolations = validator.validate(command);
+        Set<ConstraintViolation<UpdateMediaCommand>> constraintViolations = validator.validate(command);
 
         assertEquals(0, constraintViolations.size());
     }
 
     @Test
     public void givenAnEmptyName_WhenCreatingTheCommand_ThenTheValidationShouldFail() {
-        CreateMediaCommand command = new CreateMediaCommand();
+        UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("");
 
-        Set<ConstraintViolation<CreateMediaCommand>> constraintViolations = validator.validate(command);
+        Set<ConstraintViolation<UpdateMediaCommand>> constraintViolations = validator.validate(command);
         List<String> constraintViolationsMessages = getConstraintViolationMessages(constraintViolations);
 
         assertEquals(2, constraintViolations.size());
