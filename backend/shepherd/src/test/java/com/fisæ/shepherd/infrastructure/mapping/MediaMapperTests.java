@@ -1,6 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
+import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entity.Media;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,6 +90,18 @@ public class MediaMapperTests {
                     () -> assertEquals(dto.getId(), media.getId()),
                     () -> assertEquals(dto.getCreationDate(), media.getCreationDate()));
         }
+    }
+
+    @Test
+    public void givenAMedia_WhenUpdatingItFromTheCommand_ThenThePropertiesShouldHaveBeenUpdated() {
+        Media media = new Media("A trustworthy source");
+
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("The new source's name");
+
+        mapper.updateFromCommand(command, media);
+
+        assertEquals(command.getName(), media.getName());
     }
 
 }

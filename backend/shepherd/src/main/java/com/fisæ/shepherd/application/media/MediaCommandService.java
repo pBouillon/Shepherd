@@ -2,6 +2,7 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
+import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 
 /**
@@ -26,5 +27,15 @@ public interface MediaCommandService {
      * @param command Payload containing about the media to delete
      */
     void delete(DeleteMediaCommand command);
+
+    /**
+     * Update an existing media
+     *
+     * @param id Id of the media to update
+     * @param command Payload containing the details to update the media
+     *
+     * @return The updated media
+     */
+    MediaDto updateMedia(long id, UpdateMediaCommand command);
 
 }

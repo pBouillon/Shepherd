@@ -2,6 +2,7 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
+import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.domain.entity.Media;
@@ -87,6 +88,36 @@ public class MediaCommandServiceTests {
                 () -> verify(repository, times(1))
                         .save(any(Media.class)),
                 () -> assertEquals(command.getName(), created.getName()));
+    }
+
+    @Test
+    public void givenAnExistingMedia_WhenUpdatingItFromAValidPayload_ThenItShouldBeUpdated() {
+        Media media = new Media("A trustworthy source");
+
+        Mockito.when(repository.findById(anyLong()))
+                .thenReturn(Optional.of(media));
+
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("A trustworthy source");
+
+        service.updateMedia(media.getId(), command);
+
+        assertAll("updated media",
+                () -> assertEquals(command.getName(), media.getName()),
+                () -> verify(repository, times(1)).save(any(Media.class)));
+    }
+
+    @Test
+    public void givenANonExistingMedia_WhenUpdatingItFromAValidPayload_ThenAnExceptionShouldBeThrown() {
+        Mockito.when(repository.findById(anyLong()))
+                .thenReturn(Optional.empty());
+
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("A trustworthy source");
+
+        assertThrows(
+                MediaNotFoundException.class,
+                () -> service.updateMedia(1L, command));
     }
 
 }
