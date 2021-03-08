@@ -9,6 +9,10 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 
 configurations {
+
+	// Resolve SLF4J error: "Class path contains multiple SLF4J bindings"
+	all*.exclude module : 'spring-boot-starter-logging'
+
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -24,13 +28,29 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Hibernate Validator
+	implementation 'org.hibernate.validator:hibernate-validator:6.1.6.Final'
+
 	// Lombok
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// Log4j2
+	implementation 'org.springframework.boot:spring-boot-starter-logging'
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	// MapStruct
+	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.1.Final'
+
     // Persistence (PostgreSQL, H2)
 	runtimeOnly 'org.postgresql:postgresql'
 	runtimeOnly 'com.h2database:h2'
+
+	// Swagger
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'io.swagger.core.v3:swagger-jaxrs2:2.1.2'
+	implementation 'io.swagger.core.v3:swagger-jaxrs2-servlet-initializer-v2:2.1.2'
 }
 
 test {
