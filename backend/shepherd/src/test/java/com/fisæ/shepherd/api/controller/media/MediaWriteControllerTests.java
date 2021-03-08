@@ -3,6 +3,7 @@ package com.fisæ.shepherd.api.controller.media;
 import com.fisæ.shepherd.api.controller.ControllerTests;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
+import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -55,6 +56,24 @@ public class MediaWriteControllerTests extends ControllerTests {
                 () -> restTemplate.postForEntity(mediaUri, command, MediaDto.class));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "",
+            "a",
+            "     ",
+            "a very very long name, too long for the application to accept it"})
+    public void givenAnInvalidCommand_WhenCallingUpdateOnAValidId_ThenABadRequestShouldBeReturned(String name)
+            throws URISyntaxException {
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName(name);
+
+        URI mediaUri = getUriForRoute("/api/medias/1");
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.put(mediaUri, command));
+    }
+
     @Test
     public void givenAValidCommand_WhenCallingDeleteOnAnUnknownId_ThenABadRequestShouldBeReturned()
             throws URISyntaxException {
@@ -82,6 +101,33 @@ public class MediaWriteControllerTests extends ControllerTests {
         assertAll("media created",
                 () -> assertEquals(HttpStatus.CREATED, createdMediaResponse.getStatusCode()),
                 () -> assertEquals(command.getName(), created.getName()));
+    }
+
+    @ParameterizedTest
+    @ValueSource(longs = { -1L, 0L })
+    public void givenAValidCommand_WhenCallingUpdateOnAnInvalidId_ThenABadRequestShouldBeReturned(long id)
+            throws URISyntaxException {
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("A trustworthy source");
+
+        String mediaUri = getUriForRoute("/api/medias/") + String.valueOf(id);
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.put(mediaUri, command));
+    }
+
+    @Test
+    public void givenAValidCommand_WhenCallingUpdateOnAnUnknownId_ThenANotFoundShouldBeReturned()
+            throws URISyntaxException {
+        UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("A trustworthy source");
+
+        String mediaUri = getUriForRoute("/api/medias/") + String.valueOf(Long.MAX_VALUE);
+
+        Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                () -> restTemplate.delete(mediaUri));
     }
 
 }

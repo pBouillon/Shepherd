@@ -1,9 +1,9 @@
 package com.fisæ.shepherd.api.controller.media;
 
-import com.fasterxml.jackson.databind.deser.CreatorProperty;
 import com.fisæ.shepherd.application.media.MediaCommandService;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
+import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entity.Media;
 import io.swagger.annotations.Api;
@@ -64,8 +64,7 @@ public class MediaWriteController extends MediaController {
             })
     public ResponseEntity<?> deleteMedia(
             @ApiParam(value = "Id of the media to delete")
-            @PathVariable
-            @Min(Media.ID_MIN_VALUE) long id) {
+            @PathVariable @Min(Media.ID_MIN_VALUE) long id) {
         DeleteMediaCommand command = new DeleteMediaCommand();
         command.setId(id);
 
@@ -79,9 +78,9 @@ public class MediaWriteController extends MediaController {
      *
      * Create a new media
      *
-     * @param command CQRS command  containing the details needed to create a new media
+     * @param command CQRS command containing the details needed to create a new media
      *
-     * @return A JSON payload containing the medias created
+     * @return A JSON payload containing the media created
      */
     @PostMapping
     @Operation(summary = "Create a new media",
@@ -106,6 +105,32 @@ public class MediaWriteController extends MediaController {
 
         return ResponseEntity.created(location)
                 .body(created);
+    }
+
+    /**
+     * Endpoint for: PUT /medias/:id
+     *
+     * Update a media by its id
+     *
+     * @param id Id of the media to update
+     * @param command CQRS command containing the details needed to update the media
+     *
+     * @return The JSON payload containing the updated media
+     */
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Update an existing media",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Media successfully updated"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters"),
+                    @ApiResponse(responseCode = "404", description = "Media not found")
+    })
+    public ResponseEntity<MediaDto> putMedia(
+            @ApiParam("Id of the media to update")
+            @PathVariable @Min(Media.ID_MIN_VALUE) long id,
+            @ApiParam("Payload from which the media will be updated")
+            @Valid @RequestBody UpdateMediaCommand command) {
+        return ResponseEntity.ok(mediaService.updateMedia(id, command));
     }
 
 }
