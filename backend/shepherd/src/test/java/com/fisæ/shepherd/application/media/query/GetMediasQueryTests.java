@@ -23,7 +23,7 @@ public class GetMediasQueryTests extends ConstraintValidatorTests {
         List<String> constraintViolationsMessages = getConstraintViolationMessages(constraintViolations);
 
         assertEquals(1, constraintViolations.size());
-        assertEquals("must be between 0 and 50", constraintViolationsMessages.get(0));
+        assertEquals("must be greater than or equal to 0", constraintViolationsMessages.get(0));
     }
 
     @Test

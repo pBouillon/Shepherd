@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Rest exception handler to digest inner exceptions and filter them before sending them to the client
@@ -29,7 +30,7 @@ public class RestExceptionHandler {
      */
     @ResponseBody
     @ExceptionHandler(value = ShepherdApplicationException.class)
-    public ResponseEntity<?> handleMembershipManagementException(ShepherdApplicationException exception) {
+    public ResponseEntity<?> handleShepherdApplicationException(ShepherdApplicationException exception) {
         log.error(
                 "BAD REQUEST | {} : {}",
                 exception.getClass().getSimpleName(),
@@ -80,6 +81,40 @@ public class RestExceptionHandler {
         log.error("VALIDATION | Intercepted validation errors for {} with messages : {}",
                 exception.getBindingResult().getTarget().getClass(),
                 errors);
+
+        return ResponseEntity.badRequest()
+                .body(errors);
+    }
+
+    /**
+     * Handle Hibernate validator exceptions on single fields
+     * Wrap each of them as: ["field": "reason", ...]
+     *
+     * @param exception Constraint validation exception
+     *
+     * @return The formatted 400 associated
+     */
+    @ResponseBody
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<?> handleValidationException(ConstraintViolationException exception) {
+        Map<String, String> errors = Arrays.stream(exception
+                .getMessage()
+                .split(", "))
+                .map(rawError -> {
+                    String[] reasonAndMessages = rawError.split(": ");
+
+                    String[] fieldIdentifiers = reasonAndMessages[0].split("\\.");
+                    String field = fieldIdentifiers[fieldIdentifiers.length - 1];
+
+                    String reason = reasonAndMessages[1];
+
+                    return List.of(field, reason);
+                })
+                .collect(Collectors.toMap(
+                        key -> key.get(0),
+                        value -> value.get(1)));
+
+        log.error("VALIDATION | Intercepted validation errors : {}", errors);
 
         return ResponseEntity.badRequest()
                 .body(errors);

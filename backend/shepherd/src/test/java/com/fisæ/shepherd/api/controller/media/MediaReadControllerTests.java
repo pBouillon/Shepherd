@@ -50,6 +50,20 @@ public class MediaReadControllerTests extends ControllerTests {
                 () -> restTemplate.getForEntity(getPaginatedMediasUri, RestPageImpl.class));
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = { -1, 0 })
+    public void givenAnInvalidNumberOfItemsPerPages_WhenCallingMediasGet_ThenABadRequestShouldBeReturned(int count)
+            throws URISyntaxException {
+        GetMediasQuery query = new GetMediasQuery();
+        query.setItemsPerPages(count);
+
+        String getPaginatedMediasUri = getUriForRoute("/api/medias") + asQueryParam(query);
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.getForEntity(getPaginatedMediasUri, RestPageImpl.class));
+    }
+
     @Test
     public void givenTheDefaultGetMediasQuery_WhenCallingMediasGet_ThenTheMediasShouldBeReturned()
             throws URISyntaxException {
