@@ -2,17 +2,23 @@ package com.fisæ.shepherd.api.controller.media;
 
 import com.fisæ.shepherd.application.media.MediaQueryService;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import javax.validation.constraints.Min;
+
+import static com.fisæ.shepherd.application.media.query.GetMediaQuery.ID_MIN_VALUE;
+import static com.fisæ.shepherd.application.media.query.GetMediasQuery.*;
 
 /**
  * API controller used for the read-only operations on the media resource
@@ -40,24 +46,63 @@ public class MediaReadController extends MediaController {
     }
 
     /**
-     * Endpoint for: GET /medias
+     * Endpoint for: GET /medias/{id}
      *
-     * Retrieve all medias
+     * Retrieve a media by its id
      *
-     * @param query CQRS query containing any details that might be needed to filter the media
+     * @param id Id of the media to retrieve
+     *
+     * @return A JSON payload containing the media retrieved
+     */
+    @GetMapping(path = "/{id}")
+    @Operation(
+            summary = "Retrieve a specific media",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Media successfully retrieved"),
+                    @ApiResponse(responseCode = "400", description = "Invalid id"),
+                    @ApiResponse(responseCode = "404", description = "No media found for the provided id")
+            })
+    public ResponseEntity<MediaDto> getMedia(
+            @ApiParam(value = "Id of the media to retrieve")
+            @PathVariable
+            @Min(ID_MIN_VALUE) long id) {
+        GetMediaQuery query = new GetMediaQuery();
+        query.setId(id);
+
+        return ResponseEntity.ok()
+                .body(mediaService.getMedia(query));
+    }
+
+    /**
+     * Endpoint for: GET /medias?pageId=_&itemsPerPages=_
+     *
+     * Retrieve a paginated view of all medias
+     *
+     * @param pageId Offset of the page to retrieve
+     * @param itemsPerPages Number of items to display per page
      *
      * @return A JSON payload containing a paginated result of the medias retrieved
      */
     @GetMapping
-    @Operation(summary = "Retrieve the medias",
+    @Operation(
+            summary = "Retrieve the medias",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Medias successfully retrieved")
+                    @ApiResponse(responseCode = "200", description = "Medias successfully retrieved"),
+                    @ApiResponse(responseCode = "400", description = "Invalid pagination options")
             })
-    public ResponseEntity<Page<MediaDto>> get(
-            @ModelAttribute @RequestParam(required = false) Optional<GetMediasQuery> query) {
+    public ResponseEntity<Page<MediaDto>> getMedias(
+            @ApiParam(value = "Offset of the page to retrieve")
+            @RequestParam(defaultValue = "0")
+            @Min(PAGE_ID_MIN_VALUE) int pageId,
+            @ApiParam(value = "Number of items to display per page")
+            @RequestParam(defaultValue = "10")
+            @Range(min = ITEMS_PER_PAGES_MIN_VALUE, max = ITEMS_PER_PAGES_MAX_VALUE) int itemsPerPages) {
+        GetMediasQuery query = new GetMediasQuery();
+        query.setPageId(pageId);
+        query.setItemsPerPages(itemsPerPages);
+
         return ResponseEntity.ok()
                 .body(mediaService.getMedias(query));
-
     }
 
 }

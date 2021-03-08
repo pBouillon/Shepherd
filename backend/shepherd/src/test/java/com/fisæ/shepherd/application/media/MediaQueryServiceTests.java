@@ -87,7 +87,7 @@ public class MediaQueryServiceTests {
 
         GetMediasQuery query = new GetMediasQuery();
 
-        Page<MediaDto> paginatedMedias = service.getMedias(Optional.of(query));
+        Page<MediaDto> paginatedMedias = service.getMedias(query);
 
         assertTrue(paginatedMedias.isEmpty());
     }
@@ -105,7 +105,7 @@ public class MediaQueryServiceTests {
         query.setPageId(0);
         query.setItemsPerPages(1);
 
-        Page<MediaDto> paginatedMedias = service.getMedias(Optional.of(query));
+        Page<MediaDto> paginatedMedias = service.getMedias(query);
 
         assertEquals(query.getItemsPerPages(), paginatedMedias.getSize());
         assertEquals(medias.size(), paginatedMedias.getTotalElements());

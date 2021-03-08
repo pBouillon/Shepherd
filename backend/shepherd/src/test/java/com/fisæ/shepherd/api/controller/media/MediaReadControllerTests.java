@@ -4,11 +4,16 @@ import com.fisæ.shepherd.api.controller.ControllerTests;
 import com.fisæ.shepherd.api.controller.RestPageImpl;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.net.URISyntaxException;
 
@@ -29,6 +34,20 @@ public class MediaReadControllerTests extends ControllerTests {
     public static String asQueryParam(GetMediasQuery query) {
         return "?itemsPerPages=" + query.getItemsPerPages()
                 + "&pageId=" + query.getPageId();
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { -1 })
+    public void givenAnInvalidPageId_WhenCallingMediasGet_ThenABadRequestShouldBeReturned(int pageId)
+            throws URISyntaxException {
+        GetMediasQuery query = new GetMediasQuery();
+        query.setPageId(pageId);
+
+        String getPaginatedMediasUri = getUriForRoute("/api/medias") + asQueryParam(query);
+
+        Assertions.assertThrows(
+                HttpClientErrorException.BadRequest.class,
+                () -> restTemplate.getForEntity(getPaginatedMediasUri, RestPageImpl.class));
     }
 
     @Test
