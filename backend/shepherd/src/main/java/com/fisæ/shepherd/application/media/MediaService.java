@@ -2,6 +2,8 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.EntityNotFoundException;
+import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.domain.entity.Media;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
@@ -53,6 +55,21 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         Media entity = repository.save(mapper.toMedia(command));
 
         log.info("{} created", entity);
+
+        return mapper.toDto(entity);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public MediaDto getMedia(GetMediaQuery query) throws EntityNotFoundException {
+        // TODO: test + exception filter
+
+        Media entity = repository.findById(query.getId())
+                .orElseThrow(() -> new EntityNotFoundException(Media.class, query.getId().toString()));
+
+        log.info("{} retrieved for the query {}", entity, query);
 
         return mapper.toDto(entity);
     }

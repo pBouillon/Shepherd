@@ -1,6 +1,8 @@
 package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.EntityNotFoundException;
+import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import com.fisæ.shepherd.domain.entity.Media;
 import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
@@ -19,8 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 /**
@@ -67,6 +68,19 @@ public class MediaQueryServiceTests {
     }
 
     @Test
+    public void givenAnIdThatDoesNotBelongToAnyMedia_WhenQueryingIt_ThenAnExceptionShouldBeThrown() {
+        GetMediaQuery query = new GetMediaQuery();
+        query.setId(1L);
+
+        Mockito.when(repository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        assertThrows(
+                EntityNotFoundException.class,
+                () -> service.getMedia(query));
+    }
+
+    @Test
     public void givenNoMedias_WhenQueryingAPage_ThenNoMediasShouldBeReturned() {
         Mockito.when(repository.findAll(any(PageRequest.class)))
                 .thenReturn(Page.empty());
@@ -102,6 +116,26 @@ public class MediaQueryServiceTests {
                 .get();
 
         assertEquals(returned.getName(), medias.get(0).getName());
+    }
+
+    @Test
+    public void givenTheIdOfAMedia_WhenQueryingIt_ThenTheMediaShouldBeReturned() {
+        Media media = new Media();
+        media.setId(1L);
+        media.setName("A trustworthy source");
+
+        GetMediaQuery query = new GetMediaQuery();
+        query.setId(1L);
+
+        Mockito.when(repository.findById(1L))
+                .thenReturn(Optional.of(media));
+
+        MediaDto returned = service.getMedia(query);
+
+        assertAll("media",
+                () -> assertEquals(media.getId(), returned.getId()),
+                () -> assertEquals(media.getName(), returned.getName()),
+                () -> assertEquals(media.getCreationDate(), returned.getCreationDate()));
     }
 
 }

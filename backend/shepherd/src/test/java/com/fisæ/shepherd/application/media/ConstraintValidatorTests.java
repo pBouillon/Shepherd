@@ -1,6 +1,5 @@
 package com.fisæ.shepherd.application.media;
 
-import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import org.junit.jupiter.api.BeforeEach;
 
 import javax.validation.ConstraintViolation;

@@ -25,8 +25,7 @@ public class CreateMediaCommandTests extends ConstraintValidatorTests {
         List<String> constraintViolationsMessages = getConstraintViolationMessages(constraintViolations);
 
         assertEquals(1, constraintViolations.size());
-
-        assertTrue(constraintViolationsMessages.contains("must not be blank"));
+        assertEquals("must not be blank", constraintViolationsMessages.get(0));
     }
 
     @Test
