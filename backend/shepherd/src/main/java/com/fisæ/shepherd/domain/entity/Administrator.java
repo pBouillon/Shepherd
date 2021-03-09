@@ -28,6 +28,7 @@ public class Administrator {
      * Minimum length of an administrator's nickname
      */
     public static final int NICKNAME_MIN_LENGTH = 3;
+
     /**
      * Id of the administrator
      */
