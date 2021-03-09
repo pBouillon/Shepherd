@@ -2,7 +2,9 @@ package com.fisæ.shepherd.application.administrator;
 
 import com.fisæ.shepherd.application.administrator.command.CreateAdministratorCommand;
 import com.fisæ.shepherd.application.administrator.contracts.AdministratorDto;
+import com.fisæ.shepherd.domain.entity.Administrator;
 import com.fisæ.shepherd.infrastructure.mapping.AdministratorMapper;
+import com.fisæ.shepherd.infrastructure.persistence.repository.AdministratorRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,21 @@ public class AdministratorService implements AdministratorCommandService {
     private final AdministratorMapper mapper;
 
     /**
+     * DAO to access the persisted {@link Administrator} entities
+     */
+    private final AdministratorRepository repository;
+
+    /**
      * Create the service
      *
      * @param administratorMapper Mapper to convert Administrator entities to their DTO
+     * @param administratorRepository DAO to access the persisted {@link Administrator} entities
      */
     @Autowired
-    public AdministratorService(AdministratorMapper administratorMapper) {
+    public AdministratorService(
+            AdministratorMapper administratorMapper, AdministratorRepository administratorRepository) {
         mapper = administratorMapper;
+        repository = administratorRepository;
     }
 
     /**
