@@ -20,6 +20,15 @@ import javax.persistence.Id;
 public class Administrator {
 
     /**
+     * Maximum length of an administrator's nickname
+     */
+    public static final int NICKNAME_MAX_LENGTH = 32;
+
+    /**
+     * Minimum length of an administrator's nickname
+     */
+    public static final int NICKNAME_MIN_LENGTH = 3;
+    /**
      * Id of the administrator
      */
     @Id
