@@ -1,6 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.administrator.command.CreateAdministratorCommand;
+import com.fisæ.shepherd.application.administrator.contracts.AdministratorDto;
 import com.fisæ.shepherd.domain.entity.Administrator;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
@@ -22,5 +23,14 @@ public interface AdministratorMapper {
      * @return The associated administrator
      */
     Administrator toAdministrator(CreateAdministratorCommand command);
+
+     /**
+      * Convert an administrator entity to its DTO
+      *
+      * @param administrator The entity to convert
+      *
+      * @return The associated DTO
+      */
+     AdministratorDto toDto(Administrator administrator);
 
 }

@@ -1,6 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.administrator.command.CreateAdministratorCommand;
+import com.fisæ.shepherd.application.administrator.contracts.AdministratorDto;
 import com.fisæ.shepherd.domain.entity.Administrator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,18 @@ public class AdministratorMapperTests {
         assertAll("administrator",
                 () -> assertEquals(0L, administrator.getId()),
                 () -> assertEquals(command.getNickname(), administrator.getNickname()));
+    }
+
+    @Test
+    public void givenAnAdministrator_WhenMappingIt_ThenThePropertiesShouldRemainTheSame() {
+        Administrator administrator = new Administrator("My administrator");
+        administrator.setId(1L);
+
+        AdministratorDto dto = mapper.toDto(administrator);
+
+        assertAll("administrator DTO",
+                () -> assertEquals(administrator.getId(), dto.getId()),
+                () -> assertEquals(administrator.getNickname(), dto.getNickname()));
     }
 
 }

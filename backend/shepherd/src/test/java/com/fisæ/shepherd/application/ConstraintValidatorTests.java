@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.application.media;
+package com.fisæ.shepherd.application;
 
 import org.junit.jupiter.api.BeforeEach;
 

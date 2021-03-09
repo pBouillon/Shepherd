@@ -44,7 +44,13 @@ public class AdministratorService implements AdministratorCommandService {
      */
     @Override
     public AdministratorDto create(CreateAdministratorCommand command) {
-        return null;
+        log.info("Creating a new administrator from {}", command);
+
+        Administrator entity = repository.save(mapper.toAdministrator(command));
+
+        log.info("{} created", entity);
+
+        return mapper.toDto(entity);
     }
 
 }
