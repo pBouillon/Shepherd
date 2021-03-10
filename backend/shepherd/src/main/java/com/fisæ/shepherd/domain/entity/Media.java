@@ -28,6 +28,16 @@ public class Media {
     public static final long ID_MIN_VALUE = 1L;
 
     /**
+     * Maximum length of the media description
+     */
+    public static final int DESCRIPTION_MAX_LENGTH = 256;
+
+    /**
+     * Minimum length of the media description
+     */
+    public static final int DESCRIPTION_MIN_LENGTH = 16;
+
+    /**
      * Maximum length of the media name
      */
     public static final int NAME_MAX_LENGTH = 32;
@@ -56,7 +66,8 @@ public class Media {
     /**
      * Media description such as when it was founded, its country, etc.
      */
-    @NonNull private String description = "";
+    @NonNull
+    private String description = "";
 
     /**
      * Media brand name

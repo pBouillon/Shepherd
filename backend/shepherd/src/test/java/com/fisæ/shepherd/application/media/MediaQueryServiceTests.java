@@ -18,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,6 +124,8 @@ public class MediaQueryServiceTests {
         Media media = new Media();
         media.setId(1L);
         media.setName("A trustworthy source");
+        media.setDescription("A detailed description");
+        media.setWebsite(Optional.of(URI.create("https://news.org")));
 
         GetMediaQuery query = new GetMediaQuery();
         query.setId(1L);
@@ -134,8 +137,10 @@ public class MediaQueryServiceTests {
 
         assertAll("media",
                 () -> assertEquals(media.getId(), returned.getId()),
+                () -> assertEquals(media.getCreationDate(), returned.getCreationDate()),
+                () -> assertEquals(media.getDescription(), returned.getDescription()),
                 () -> assertEquals(media.getName(), returned.getName()),
-                () -> assertEquals(media.getCreationDate(), returned.getCreationDate()));
+                () -> assertEquals(media.getWebsite().get(), returned.getWebsite().get()));
     }
 
 }
