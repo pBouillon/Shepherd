@@ -40,19 +40,22 @@ public class Media {
      *
      * For more details related to the way its stored, see: https://stackoverflow.com/a/62307301/6152689
      */
-    @NonNull private Instant creationDate = Instant.now();
+    @NonNull
+    private Instant creationDate = Instant.now();
 
     /**
      * Id of the media
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NonNull private Long id = 0L;
+    @NonNull
+    private Long id = 0L;
 
     /**
      * Media brand name
      */
-    @NonNull private String name = "";
+    @NonNull
+    private String name = "";
 
     /**
      * Create a new media

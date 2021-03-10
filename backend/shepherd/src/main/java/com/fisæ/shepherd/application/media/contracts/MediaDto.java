@@ -13,16 +13,16 @@ public class MediaDto {
     /**
      * Creation date of the media, represented in UTC
      */
-    private Instant creationDate;
+    private Instant creationDate = Instant.now();
 
     /**
      * Id of the media
      */
-    private Long id;
+    private Long id = 0L;
 
     /**
      * Media brand name
      */
-    private String name;
+    private String name = "";
 
 }

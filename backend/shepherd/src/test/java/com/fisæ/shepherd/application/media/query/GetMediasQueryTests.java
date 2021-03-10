@@ -1,6 +1,6 @@
 package com.fisæ.shepherd.application.media.query;
 
-import com.fisæ.shepherd.application.media.ConstraintValidatorTests;
+import com.fisæ.shepherd.application.ConstraintValidatorTests;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.ConstraintViolation;

@@ -22,7 +22,8 @@ public class MediaTests {
 
     @Test
     public void givenNullAsTheName_WhenCreatingANewMediaByItsName_ThenAnExceptionShouldBeThrown() {
-        assertThrows(NullPointerException.class,
+        assertThrows(
+                NullPointerException.class,
                 () -> new Media(null));
     }
 
