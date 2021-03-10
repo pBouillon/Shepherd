@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.net.URI;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,6 +82,8 @@ public class MediaCommandServiceTests {
 
         CreateMediaCommand command = new CreateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         MediaDto created = service.create(command);
 
@@ -92,18 +95,22 @@ public class MediaCommandServiceTests {
 
     @Test
     public void givenAnExistingMedia_WhenUpdatingItFromAValidPayload_ThenItShouldBeUpdated() {
-        Media media = new Media("A trustworthy source");
+        Media media = new Media("An untrustworthy source");
 
         Mockito.when(repository.findById(anyLong()))
                 .thenReturn(Optional.of(media));
 
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         service.updateMedia(media.getId(), command);
 
         assertAll("updated media",
                 () -> assertEquals(command.getName(), media.getName()),
+                () -> assertEquals(command.getDescription(), media.getDescription()),
+                () -> assertEquals(command.getWebsite().get(), media.getWebsite().get().toString()),
                 () -> verify(repository, times(1)).save(any(Media.class)));
     }
 
@@ -114,6 +121,8 @@ public class MediaCommandServiceTests {
 
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         assertThrows(
                 MediaNotFoundException.class,

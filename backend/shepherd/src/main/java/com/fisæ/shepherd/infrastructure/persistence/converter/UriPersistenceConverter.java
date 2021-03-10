@@ -8,7 +8,7 @@ import java.net.URI;
 import java.util.Optional;
 
 /**
- * TODO: doc
+ * JPA attribute converter, converting an optional URI to a String back and forth
  */
 @Converter(autoApply = true)
 public class UriPersistenceConverter implements AttributeConverter<Optional<URI>, String> {
