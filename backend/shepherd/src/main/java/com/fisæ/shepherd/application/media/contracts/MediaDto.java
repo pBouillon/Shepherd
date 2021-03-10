@@ -23,6 +23,11 @@ public class MediaDto {
     private String description;
 
     /**
+     * Media description such as when it was founded, its country, etc.
+     */
+    private String description;
+
+    /**
      * Id of the media
      */
     private Long id = 0L;
@@ -31,6 +36,11 @@ public class MediaDto {
      * Media brand name
      */
     private String name = "";
+
+    /**
+     * External website, referring to the official media's webpage
+     */
+    private Optional<URI> website;
 
     /**
      * External website, referring to the official media's webpage

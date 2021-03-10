@@ -70,6 +70,12 @@ public class Media {
     private String description = "";
 
     /**
+     * Media description such as when it was founded, its country, etc.
+     */
+    @NonNull
+    private String description = "";
+
+    /**
      * Media brand name
      */
     @NonNull
