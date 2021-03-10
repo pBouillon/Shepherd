@@ -11,8 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Unit test suite for the {@link MediaMapper}
@@ -47,26 +46,28 @@ public class MediaMapperTests {
     @Test
     public void givenACreateMediaCommand_WhenMappingIt_ThenAMediaShouldKeepTheProvidedProperties() {
         CreateMediaCommand command = new CreateMediaCommand();
+        command.setDescription("This is a pretty good description");
         command.setName("A trustworthy source");
 
         Media media = mapper.toMedia(command);
 
-        assertAll("media",
-                () -> assertEquals(0L, media.getId()),
-                () -> assertEquals(command.getName(), media.getName()));
+        assertThat(media.getId()).isEqualTo(0L);
+        assertThat(media.getDescription()).isEqualTo(media.getDescription());
+        assertThat(media.getName()).isEqualTo(media.getName());
     }
 
     @Test
     public void givenAMedia_WhenMappingIt_ThenThePropertiesShouldRemainTheSame() {
         Media media = new Media("A trustworthy source");
         media.setId(1L);
+        media.setDescription("This is a pretty good description");
 
         MediaDto dto = mapper.toDto(media);
 
-        assertAll("media DTO",
-                () -> assertEquals(dto.getCreationDate(), media.getCreationDate()),
-                () -> assertEquals(dto.getId(), media.getId()),
-                () -> assertEquals(dto.getCreationDate(), media.getCreationDate()));
+        assertThat(media.getCreationDate()).isEqualTo(dto.getCreationDate());
+        assertThat(media.getDescription()).isEqualTo(dto.getDescription());
+        assertThat(media.getId()).isEqualTo(dto.getId());
+        assertThat(media.getName()).isEqualTo(dto.getName());
     }
 
     @Test
@@ -79,10 +80,10 @@ public class MediaMapperTests {
             Media media = medias.get(i);
             MediaDto dto = dtos.get(i);
 
-            assertAll("media DTO",
-                    () -> assertEquals(dto.getCreationDate(), media.getCreationDate()),
-                    () -> assertEquals(dto.getId(), media.getId()),
-                    () -> assertEquals(dto.getCreationDate(), media.getCreationDate()));
+            assertThat(media.getCreationDate()).isEqualTo(dto.getCreationDate());
+            assertThat(media.getDescription()).isEqualTo(dto.getDescription());
+            assertThat(media.getId()).isEqualTo(dto.getId());
+            assertThat(media.getName()).isEqualTo(dto.getName());
         }
     }
 
@@ -95,7 +96,7 @@ public class MediaMapperTests {
 
         mapper.updateFromCommand(command, media);
 
-        assertEquals(command.getName(), media.getName());
+        assertThat(media.getName()).isEqualTo(command.getName());
     }
 
 }

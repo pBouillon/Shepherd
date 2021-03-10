@@ -28,6 +28,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// Assertj
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
 	// Hibernate Validator
 	implementation 'org.hibernate.validator:hibernate-validator:6.1.6.Final'
 
@@ -37,7 +40,7 @@ dependencies {
 
 	// Log4j2
 	implementation 'org.springframework.boot:spring-boot-starter-logging'
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+	testImplementation("org.assertj:assertj-core:3.19.0")
 
 	// MapStruct
 	implementation 'org.mapstruct:mapstruct:1.4.1.Final'
