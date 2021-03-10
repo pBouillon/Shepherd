@@ -4,9 +4,9 @@ import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.domain.entity.Media;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +17,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit test suite for the {@link MediaMapper}
  */
+@SpringBootTest
 public class MediaMapperTests {
 
     /**
      * Instance of the mapper to be tested, cleaned-up before each test
      */
+    @Autowired
     private MediaMapper mapper;
-
-    /**
-     * Setup method, executed before each test
-     */
-    @BeforeEach
-    public void setup() {
-        mapper = Mappers.getMapper(MediaMapper.class);
-    }
 
     /**
      * Utility method to generate a collection of medias

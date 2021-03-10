@@ -18,7 +18,7 @@ public abstract class ConstraintValidatorTests {
     /**
      * Instance of the validator to verify the constraints of the command
      */
-    protected static Validator validator;
+    protected Validator validator;
 
     /**
      * Setup method, executed before each test

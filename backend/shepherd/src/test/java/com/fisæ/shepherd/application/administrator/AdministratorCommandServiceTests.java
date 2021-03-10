@@ -1,18 +1,16 @@
-package com.fisæ.shepherd.application.administrator.command;
+package com.fisæ.shepherd.application.administrator;
 
-import com.fisæ.shepherd.application.administrator.AdministratorCommandService;
-import com.fisæ.shepherd.application.administrator.AdministratorService;
+import com.fisæ.shepherd.application.administrator.command.CreateAdministratorCommand;
 import com.fisæ.shepherd.application.administrator.contracts.AdministratorDto;
 import com.fisæ.shepherd.domain.entity.Administrator;
-import com.fisæ.shepherd.infrastructure.mapping.AdministratorMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.AdministratorRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,28 +21,21 @@ import static org.mockito.Mockito.verify;
 /**
  * Unit test suite for the {@link AdministratorCommandService}
  */
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class AdministratorCommandServiceTests {
 
     /**
      * Mocked AdministratorRepository, acting as the {@link Administrator} DAO
      */
-    @Mock
+    @MockBean
     private AdministratorRepository repository;
 
     /**
      * Instance of the service to be tested, cleaned-up before each test
      */
+    @Autowired
     private AdministratorCommandService service;
-
-    /**
-     * Setup method, executed before each test
-     */
-    @BeforeEach
-    public void setup() {
-        AdministratorMapper mapper = Mappers.getMapper(AdministratorMapper.class);
-        service = new AdministratorService(mapper, repository);
-    }
 
     @Test
     public void givenAValidRequest_WhenCreatingAnAdministrator_ThenItShouldBeSaved() {

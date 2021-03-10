@@ -5,6 +5,7 @@ import com.fisæ.shepherd.domain.entity.Media;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit test suite for {@link UpdateMediaCommand}
  */
+@SpringBootTest
 public class UpdateMediaCommandTests extends ConstraintValidatorTests {
 
     /**

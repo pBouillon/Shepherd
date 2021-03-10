@@ -14,11 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public abstract class ControllerTests {
 
     /**
-     * Default port of the API
-     */
-    public static final int DEFAULT_PORT = 8080;
-
-    /**
      * Default URL to access the API
      */
     public static final String DEFAULT_URL = "http://localhost";
@@ -32,7 +27,7 @@ public abstract class ControllerTests {
      * Port used to perform integration tests
      */
     @LocalServerPort
-    protected int serverPort = DEFAULT_PORT;
+    protected int serverPort;
 
     /**
      * Extract the payload of a response entity and ensure it exists

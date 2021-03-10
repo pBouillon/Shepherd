@@ -2,6 +2,7 @@ package com.fisæ.shepherd.application.media.command;
 
 import com.fisæ.shepherd.application.ConstraintValidatorTests;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Unit test suite for {@link DeleteMediaCommand}
  */
+@SpringBootTest
 public class DeleteMediaCommandTests extends ConstraintValidatorTests {
 
     @Test
