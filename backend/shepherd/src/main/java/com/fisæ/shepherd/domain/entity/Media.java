@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.net.URI;
 import java.time.Instant;
+import java.util.Optional;
 
 /**
  * Represent a media
@@ -24,6 +26,16 @@ public class Media {
      * Minimum value of the media id
      */
     public static final long ID_MIN_VALUE = 1L;
+
+    /**
+     * Maximum length of the media description
+     */
+    public static final int DESCRIPTION_MAX_LENGTH = 256;
+
+    /**
+     * Minimum length of the media description
+     */
+    public static final int DESCRIPTION_MIN_LENGTH = 16;
 
     /**
      * Maximum length of the media name
@@ -52,10 +64,21 @@ public class Media {
     private Long id = 0L;
 
     /**
+     * Media description such as when it was founded, its country, etc.
+     */
+    @NonNull
+    private String description = "";
+
+    /**
      * Media brand name
      */
     @NonNull
     private String name = "";
+
+    /**
+     * External website, referring to the official media's webpage
+     */
+    private Optional<URI> website = Optional.empty();
 
     /**
      * Create a new media

@@ -1,11 +1,8 @@
 package com.fisæ.shepherd.api.controller.administrator;
 
 import com.fisæ.shepherd.api.controller.ControllerTests;
-import com.fisæ.shepherd.api.controller.media.MediaWriteController;
 import com.fisæ.shepherd.application.administrator.command.CreateAdministratorCommand;
 import com.fisæ.shepherd.application.administrator.contracts.AdministratorDto;
-import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
-import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

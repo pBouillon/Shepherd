@@ -15,6 +15,7 @@ import java.util.List;
  * {@link Media} utility mappings
  */
 @Mapper(componentModel = "spring",
+        uses = UriMapper.class,
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface MediaMapper {

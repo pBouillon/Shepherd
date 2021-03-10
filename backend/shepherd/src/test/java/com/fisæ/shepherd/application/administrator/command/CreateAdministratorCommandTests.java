@@ -3,6 +3,7 @@ package com.fisæ.shepherd.application.administrator.command;
 import com.fisæ.shepherd.application.ConstraintValidatorTests;
 import com.fisæ.shepherd.domain.entity.Administrator;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.validation.ConstraintViolation;
 import java.util.List;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Unit test suite for {@link CreateAdministratorCommand}
  */
+@SpringBootTest
 public class CreateAdministratorCommandTests extends ConstraintValidatorTests {
 
     @Test

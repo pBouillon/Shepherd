@@ -16,8 +16,10 @@ public class MediaTests {
 
         assertAll("media",
                 () -> assertNotNull(media.getCreationDate()),
+                () -> assertNotNull(media.getDescription()),
                 () -> assertNotNull(media.getId()),
-                () -> assertEquals(name, media.getName()));
+                () -> assertEquals(name, media.getName()),
+                () -> assertTrue(media.getWebsite().isEmpty()));
     }
 
     @Test
@@ -33,8 +35,10 @@ public class MediaTests {
 
         assertAll("media",
             () -> assertNotNull(media.getCreationDate()),
+            () -> assertNotNull(media.getDescription()),
             () -> assertNotNull(media.getId()),
-            () -> assertNotNull(media.getName()));
+            () -> assertNotNull(media.getName()),
+            () -> assertTrue(media.getWebsite().isEmpty()));
     }
 
 }

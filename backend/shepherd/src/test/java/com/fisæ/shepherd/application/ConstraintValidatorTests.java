@@ -1,6 +1,7 @@
 package com.fisæ.shepherd.application;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,16 +19,8 @@ public abstract class ConstraintValidatorTests {
     /**
      * Instance of the validator to verify the constraints of the command
      */
-    protected static Validator validator;
-
-    /**
-     * Setup method, executed before each test
-     */
-    @BeforeEach
-    public void setup() {
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        validator = factory.getValidator();
-    }
+    @Autowired
+    protected Validator validator;
 
     /**
      * Convert a set of {@link ConstraintViolation} to a list of the associated messages

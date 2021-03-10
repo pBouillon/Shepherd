@@ -6,15 +6,14 @@ import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.domain.entity.Media;
-import com.fisæ.shepherd.infrastructure.mapping.MediaMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Optional;
 
@@ -27,28 +26,21 @@ import static org.mockito.Mockito.verify;
 /**
  * Unit test suite for the {@link MediaCommandService}
  */
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 public class MediaCommandServiceTests {
 
     /**
      * Mocked MediaRepository, acting as the {@link Media} DAO
      */
-    @Mock
+    @MockBean
     private MediaRepository repository;
 
     /**
      * Instance of the service to be tested, cleaned-up before each test
      */
+    @Autowired
     private MediaCommandService service;
-
-    /**
-     * Setup method, executed before each test
-     */
-    @BeforeEach
-    public void setup() {
-        MediaMapper mapper = Mappers.getMapper(MediaMapper.class);
-        service = new MediaService(mapper, repository);
-    }
 
     @Test
     public void givenAnId_WhenDeletingTheAssociatedMedia_ThenItShouldBeDeleted() {
@@ -81,6 +73,8 @@ public class MediaCommandServiceTests {
 
         CreateMediaCommand command = new CreateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         MediaDto created = service.create(command);
 
@@ -92,18 +86,22 @@ public class MediaCommandServiceTests {
 
     @Test
     public void givenAnExistingMedia_WhenUpdatingItFromAValidPayload_ThenItShouldBeUpdated() {
-        Media media = new Media("A trustworthy source");
+        Media media = new Media("An untrustworthy source");
 
         Mockito.when(repository.findById(anyLong()))
                 .thenReturn(Optional.of(media));
 
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         service.updateMedia(media.getId(), command);
 
         assertAll("updated media",
                 () -> assertEquals(command.getName(), media.getName()),
+                () -> assertEquals(command.getDescription(), media.getDescription()),
+                () -> assertEquals(command.getWebsite().get(), media.getWebsite().get().toString()),
                 () -> verify(repository, times(1)).save(any(Media.class)));
     }
 
@@ -114,6 +112,8 @@ public class MediaCommandServiceTests {
 
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
+        command.setDescription("Hey that's a pretty long description !");
+        command.setWebsite(Optional.of("https://fake.news"));
 
         assertThrows(
                 MediaNotFoundException.class,
