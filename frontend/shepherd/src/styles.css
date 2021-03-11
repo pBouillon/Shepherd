@@ -2,6 +2,14 @@
 
 
 /* Default styles */
+.shepherd-title {
+  color: var(--blue-200);
+}
+
+.shepherd-subtitle {
+  color: var(--blue-100);
+}
+
 .shepherd-link, .shepherd-link:hover {
   color: var(--blue-400);
 }
