@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './pages/homepage/homepage.component';
+import { HowItWorksComponent } from './pages/how-it-works/how-it-works.component';
+import { MediasComponent } from './pages/medias/medias.component';
 
 const routes: Routes = [
+  { path: 'medias', component: MediasComponent },
+  { path: 'how-it-works', component: HowItWorksComponent },
   { path: '', component: HomepageComponent }
 ];
 
