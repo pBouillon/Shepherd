@@ -1,1 +1,26 @@
 @import '~bootstrap-icons/font/bootstrap-icons';
+
+/* Default styles */
+a, a:hover {
+  text-decoration: none;
+  color: var(--blue-400);
+}
+
+/* Theming */
+:root {
+  --gray-100: hsl(0, 0%, 10%);
+  --gray-200: hsl(0, 0%, 25%);
+  --gray-300: hsl(0, 0%, 46%);
+  --gray-400: hsl(0, 0%, 83%);
+  --gray-500: hsl(0, 0%, 96%);
+
+  --white: hsl(0, 0%, 100%);
+}
+
+:root {
+  --blue-100: hsl(190, 75%, 15%);
+  --blue-200: hsl(190, 100%, 20%);
+  --blue-300: hsl(190, 100%, 30%);
+  --blue-400: hsl(190, 50%, 50%);
+  --blue-500: hsl(190, 50%, 75%);
+}
