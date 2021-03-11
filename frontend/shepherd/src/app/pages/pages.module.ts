@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomepageComponent } from './homepage/homepage.component';
 import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { MediasComponent } from './medias/medias.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -13,10 +14,13 @@ import { MediasComponent } from './medias/medias.component';
     MediasComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
   ],
   exports: [
     HomepageComponent,
+    HowItWorksComponent,
+    MediasComponent,
   ]
 })
 export class PagesModule { }

@@ -1,1 +1,14 @@
-<p>medias works!</p>
+<div class="m-4">
+
+  <div class="container justify-content-center text-center my-3">
+    <h1 class="shepherd-title">Rated medias</h1>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+
+    <app-media-card
+      *ngFor="let i of [].constructor(15)"
+      class="col-sm-6">
+    </app-media-card>
+
+</div>
