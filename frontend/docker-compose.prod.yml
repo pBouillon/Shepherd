@@ -7,4 +7,4 @@ services:
       context: ./shepherd
       dockerfile: Dockerfile.prod
     ports:
-    - 3000:80
+      - 4200:80
