@@ -1,6 +1,5 @@
 package com.fisæ.shepherd.application.media;
 
-import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;

@@ -6,7 +6,6 @@ import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
 import com.fisæ.shepherd.application.vote.VoteCommandService;
-import com.fisæ.shepherd.application.vote.VoteService;
 import com.fisæ.shepherd.application.vote.command.UpdateVoteCommand;
 import com.fisæ.shepherd.domain.entity.Media;
 import io.swagger.annotations.Api;

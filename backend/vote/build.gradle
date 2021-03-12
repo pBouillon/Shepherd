@@ -4,11 +4,15 @@ plugins {
 	id 'java'
 }
 
-group = 'com.fis.services'
+group = 'com.fisæ.services'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '15'
 
 configurations {
+
+	// Resolve SLF4J error: "Class path contains multiple SLF4J bindings"
+	all*.exclude module : 'spring-boot-starter-logging'
+
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -24,6 +28,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.amqp:spring-rabbit-test'
+
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.12.2'
+	implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.2'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.2'
 
 	// Assertj
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'

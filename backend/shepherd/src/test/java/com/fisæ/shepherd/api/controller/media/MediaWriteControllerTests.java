@@ -78,8 +78,8 @@ public class MediaWriteControllerTests extends ControllerTests {
             "a",
             "     ",
             """
-            a very very very very very very very very very very very very very very very very very very very very very 
-            very very very very very very very very very very very very very very very very very very very very very 
+            a very very very very very very very very very very very very very very very very very very very very very
+            very very very very very very very very very very very very very very very very very very very very very
             very very very very very very very very very very very very very very very very very very long description,
             too long for the application to accept it
             """})

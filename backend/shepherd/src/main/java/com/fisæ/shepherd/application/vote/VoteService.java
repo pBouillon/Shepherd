@@ -1,10 +1,9 @@
 package com.fisæ.shepherd.application.vote;
 
-import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.application.vote.command.UpdateVoteCommand;
-import com.fisæ.shepherd.application.vote.messages.VoteMessage;
 import com.fisæ.shepherd.domain.entity.Media;
+import com.fisæ.shepherd.infrastructure.amqp.message.VoteMessage;
 import com.fisæ.shepherd.infrastructure.mapping.VoteMapper;
 import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
 import lombok.extern.log4j.Log4j2;

@@ -1,4 +1,4 @@
-package com.fis.services.vote;
+package com.fisæ.services.vote;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

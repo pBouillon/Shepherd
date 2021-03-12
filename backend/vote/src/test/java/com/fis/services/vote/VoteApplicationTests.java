@@ -1,4 +1,4 @@
-package com.fis.services.vote;
+package com.fisæ.services.vote;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

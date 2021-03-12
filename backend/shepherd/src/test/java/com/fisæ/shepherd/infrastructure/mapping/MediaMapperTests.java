@@ -11,8 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * Unit test suite for the {@link MediaMapper}
  */

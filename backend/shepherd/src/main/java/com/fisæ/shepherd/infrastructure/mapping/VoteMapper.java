@@ -1,7 +1,7 @@
 package com.fisæ.shepherd.infrastructure.mapping;
 
 import com.fisæ.shepherd.application.vote.command.UpdateVoteCommand;
-import com.fisæ.shepherd.application.vote.messages.VoteMessage;
+import com.fisæ.shepherd.infrastructure.amqp.message.VoteMessage;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
