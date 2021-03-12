@@ -5,6 +5,7 @@ import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.vote.command.UpdateVoteCommand;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -178,13 +179,26 @@ public class MediaWriteControllerTests extends ControllerTests {
     public void givenAValidCommand_WhenCallingUpdateOnAnUnknownId_ThenANotFoundShouldBeReturned()
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setDescription("A pretty useful description");
         command.setName("A trustworthy source");
 
         String mediaUri = getUriForRoute("/api/medias/") + String.valueOf(Long.MAX_VALUE);
 
         Assertions.assertThrows(
                 HttpClientErrorException.NotFound.class,
-                () -> restTemplate.delete(mediaUri));
+                () -> restTemplate.put(mediaUri, command));
+    }
+
+    @Test
+    public void givenAValidCommand_WhenCallingUpdateVotesOnAnUnknownId_ThenABadRequestShouldBeReturned()
+            throws URISyntaxException {
+        UpdateVoteCommand command = new UpdateVoteCommand();
+
+        String mediaVoteUri = getUriForRoute("/api/medias/") + String.valueOf(Long.MAX_VALUE) + "/votes";
+
+        Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                () -> restTemplate.put(mediaVoteUri, command));
     }
 
 }

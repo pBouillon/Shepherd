@@ -2,6 +2,7 @@ package com.fisæ.shepherd.application.media;
 
 import com.fisæ.shepherd.application.commons.exception.EntityNotFoundException;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
 import org.springframework.data.domain.Page;
@@ -19,9 +20,9 @@ public interface MediaQueryService {
      * @param query Payload containing the details about the search
      *
      * @return The media found
-     * @throws EntityNotFoundException If no entity is found for the given query
+     * @throws EntityNotFoundException If there is not media that matches the provided id
      */
-    MediaDto getMedia(GetMediaQuery query) throws EntityNotFoundException;
+    MediaDto getMedia(GetMediaQuery query) throws MediaNotFoundException;
 
     /**
      * Retrieve the medias stored in the system

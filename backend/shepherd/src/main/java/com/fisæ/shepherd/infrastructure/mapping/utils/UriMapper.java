@@ -1,4 +1,4 @@
-package com.fisæ.shepherd.infrastructure.mapping;
+package com.fisæ.shepherd.infrastructure.mapping.utils;
 
 import org.mapstruct.Mapper;
 
