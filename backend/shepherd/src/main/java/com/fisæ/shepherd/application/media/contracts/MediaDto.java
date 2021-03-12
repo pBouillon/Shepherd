@@ -33,6 +33,11 @@ public class MediaDto {
     private String name = "";
 
     /**
+     * Represent the trustworthy-ness of a media
+     */
+    private TrustReportDto trustReport;
+
+    /**
      * External website, referring to the official media's webpage
      */
     private Optional<URI> website;

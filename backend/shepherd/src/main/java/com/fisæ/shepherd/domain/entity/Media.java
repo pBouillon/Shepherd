@@ -4,13 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.net.URI;
 import java.time.Instant;
 import java.util.Optional;
+
+import static javax.persistence.FetchType.EAGER;
 
 /**
  * Represent a media
@@ -74,6 +73,14 @@ public class Media {
      */
     @NonNull
     private String name = "";
+
+    /**
+     * Represent the trustworthy-ness of a media
+     */
+    @OneToOne(cascade = CascadeType.ALL, fetch = EAGER)
+    @JoinColumn(name = "trust_report_id", referencedColumnName = "id")
+    @NonNull
+    private TrustReport trustReport = new TrustReport();
 
     /**
      * External website, referring to the official media's webpage

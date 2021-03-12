@@ -3,7 +3,9 @@ package com.fisæ.shepherd.infrastructure.mapping;
 import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.contracts.TrustReportDto;
 import com.fisæ.shepherd.domain.entity.Media;
+import com.fisæ.shepherd.domain.entity.TrustReport;
 import com.fisæ.shepherd.infrastructure.mapping.utils.UriMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -29,6 +31,15 @@ public interface MediaMapper {
      * @return The associated DTO
      */
     MediaDto toDto(Media media);
+
+    /**
+     * Convert a report entity to its DTO
+     *
+     * @param trustReport The report to convert
+     *
+     * @return The associated DTO
+     */
+    TrustReportDto toDto(TrustReport trustReport);
 
     /**
      * Convert a collection of media entities to the associated list of DTO
