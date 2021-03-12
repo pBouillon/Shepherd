@@ -15,4 +15,9 @@ public class VoteMessage implements Serializable {
      */
     public long targetedMediaId = 0;
 
+    /**
+     * Vote formulated by the user
+     */
+    public boolean trustworthy;
+
 }

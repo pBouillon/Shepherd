@@ -9,7 +9,9 @@ import lombok.Data;
 @Data
 public class UpdateVoteCommand {
 
-    // TODO: structure the vote
-    String vote = "";
+    /**
+     * Vote formulated by the user
+     */
+    public boolean trustworthy;
 
 }
