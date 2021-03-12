@@ -5,10 +5,11 @@
   </div>
 
   <div class="row row-cols-1 row-cols-md-3 g-4">
-
     <app-media-card
-      *ngFor="let i of [].constructor(15)"
+      *ngFor="let media of medias"
+      [media]="media"
       class="col-sm-6">
     </app-media-card>
+  </div>
 
 </div>

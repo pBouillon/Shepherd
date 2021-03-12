@@ -4,6 +4,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { MediasComponent } from './medias/medias.component';
 import { SharedModule } from '../shared/shared.module';
+import { MediaComponent } from './media/media.component';
 
 
 
@@ -12,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
     HomepageComponent,
     HowItWorksComponent,
     MediasComponent,
+    MediaComponent,
   ],
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
     HomepageComponent,
     HowItWorksComponent,
     MediasComponent,
+    MediaComponent,
   ]
 })
 export class PagesModule { }
