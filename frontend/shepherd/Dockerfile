@@ -1,5 +1,5 @@
 # Pull the official base image
-FROM node:alpine3.13
+FROM node:alpine3.13 as build
 
 # Set your working directory
 WORKDIR /usr/src/app
@@ -12,7 +12,17 @@ COPY package*.json ./
 RUN npm install --silent
 
 # Add app
-COPY . ./
+COPY . .
 
-# Will run the app
-CMD ["ng", "serve", "--host=0.0.0.0"]
+# Will build app
+RUN npm run build --prod
+
+# Will serve it from nginx
+FROM nginx:1.19-alpine
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /usr/src/app/dist/shepherd /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

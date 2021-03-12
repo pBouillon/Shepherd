@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,14 +8,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MediaComponent implements OnInit {
 
-  slang: string = 'TO_FETCH_FROM_ROUTE';
+  slug: string = 'TO_FETCH_FROM_ROUTE';
 
   constructor(
     private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.slang = this.route.snapshot.paramMap.get('name') || 'err';
+    this.slug = this.route.snapshot.paramMap.get('name') || 'err';
   }
 
 }
