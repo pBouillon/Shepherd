@@ -17,6 +17,13 @@ services:
     ports:
       - 8080:8080
 
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq-container
+    ports:
+      - 5672:5672
+      - 15672:15672
+
   db:
     image: 'postgres:13.2-alpine'
     container_name: db
