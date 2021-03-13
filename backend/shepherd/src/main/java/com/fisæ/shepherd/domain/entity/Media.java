@@ -8,7 +8,6 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.net.URI;
 import java.time.Instant;
-import java.util.Optional;
 
 import static javax.persistence.FetchType.EAGER;
 

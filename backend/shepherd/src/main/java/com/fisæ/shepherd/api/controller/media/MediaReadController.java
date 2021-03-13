@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -18,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Min;
+import java.util.Optional;
 
 import static com.fisæ.shepherd.application.media.query.GetMediasQuery.*;
 
@@ -93,15 +95,25 @@ public class MediaReadController extends MediaController {
                     @ApiResponse(responseCode = "400", description = "Invalid pagination options")
             })
     public ResponseEntity<Page<MediaDto>> getMedias(
-            @ApiParam(value = "Offset of the page to retrieve")
-            @RequestParam(defaultValue = "0")
-            @Min(PAGE_ID_MIN_VALUE) int pageId,
             @ApiParam(value = "Number of items to display per page")
             @RequestParam(defaultValue = "10")
-            @Range(min = ITEMS_PER_PAGES_MIN_VALUE, max = ITEMS_PER_PAGES_MAX_VALUE) int itemsPerPages) {
+            @Range(min = ITEMS_PER_PAGES_MIN_VALUE, max = ITEMS_PER_PAGES_MAX_VALUE)
+            int itemsPerPages,
+            @ApiParam(value = "Name of the media to filter the results on")
+            @RequestParam(required = false)
+            Optional<String> name,
+            @ApiParam(value = "Offset of the page to retrieve")
+            @RequestParam(defaultValue = "0")
+            @Min(PAGE_ID_MIN_VALUE)
+            int pageId,
+            @ApiParam(value = "Website of the media to filter the results on")
+            @RequestParam(required = false)
+            Optional<@URL(protocol = "https") String> website) {
         GetMediasQuery query = new GetMediasQuery();
-        query.setPageId(pageId);
         query.setItemsPerPages(itemsPerPages);
+        query.setPageId(pageId);
+        query.setName(name);
+        query.setWebsite(website);
 
         return ResponseEntity.ok()
                 .body(mediaService.getMedias(query));

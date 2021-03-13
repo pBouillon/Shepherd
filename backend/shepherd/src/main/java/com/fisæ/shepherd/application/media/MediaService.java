@@ -13,8 +13,13 @@ import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Optional;
 
 /**
  * Define a service able to handle the operations performed on medias
@@ -96,7 +101,27 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         PageRequest request = PageRequest.of(pageId, itemsPerPage);
         log.info("{} medias on page {} requested", pageId, itemsPerPage);
 
-        Page<Media> medias = repository.findAll(request);
+        Optional<String> name = query.getName();
+        Optional<String> website = query.getWebsite();
+
+        Page<Media> medias = new PageImpl<>(new ArrayList<>());
+        if (name.isEmpty() && website.isEmpty())
+        {
+            medias = repository.findAll(request);
+        }
+        else if (name.isPresent() && website.isEmpty())
+        {
+            medias = repository.findAllByName(name.get(), request);
+        }
+        else if (name.isEmpty())
+        {
+            medias = repository.findAllByWebsite(URI.create(website.get()), request);
+        }
+        else
+        {
+            medias = repository.findAllByNameAndWebsite(URI.create(name.get()), website.get(), request);
+        }
+
         log.info("{} medias on {} pages retrieved", medias.getTotalElements(), medias.getTotalPages());
 
         return medias.map(mapper::toDto);
