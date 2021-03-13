@@ -40,6 +40,6 @@ public class MediaDto {
     /**
      * External website, referring to the official media's webpage
      */
-    private Optional<URI> website;
+    private URI website;
 
 }

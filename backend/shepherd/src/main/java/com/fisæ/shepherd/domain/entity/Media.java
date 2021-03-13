@@ -3,6 +3,7 @@ package com.fisæ.shepherd.domain.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.net.URI;
@@ -77,6 +78,7 @@ public class Media {
     /**
      * Represent the trustworthy-ness of a media
      */
+    @ToString.Exclude
     @OneToOne(cascade = CascadeType.ALL, fetch = EAGER)
     @JoinColumn(name = "trust_report_id", referencedColumnName = "id")
     @NonNull
@@ -85,15 +87,7 @@ public class Media {
     /**
      * External website, referring to the official media's webpage
      */
-    private Optional<URI> website = Optional.empty();
-
-    /**
-     * Create a new media
-     *
-     * @param name Media brand name such as "CNN", "Fox News", etc.
-     */
-    public Media(@NonNull String name) {
-        this.name = name;
-    }
+    @NonNull
+    private URI website;
 
 }

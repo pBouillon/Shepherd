@@ -34,8 +34,9 @@ public class MediaWriteControllerTests extends ControllerTests {
     private CreateMediaCommand getValidCreateMediaCommand() {
         CreateMediaCommand command = new CreateMediaCommand();
 
-        command.setName("A completely valid name");
-        command.setDescription("A valid description too");
+        command.setDescription("This is a pretty good description");
+        command.setName("A trustworthy source");
+        command.setWebsite("https://news.org");
 
         return command;
     }
@@ -87,6 +88,8 @@ public class MediaWriteControllerTests extends ControllerTests {
             String description)
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setName("A trustworthy source");
+        command.setWebsite("https://news.org");
         command.setDescription(description);
 
         URI mediaUri = getUriForRoute("/api/medias/1");
@@ -106,6 +109,8 @@ public class MediaWriteControllerTests extends ControllerTests {
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName(name);
+        command.setDescription("This is a pretty good description");
+        command.setWebsite("https://news.org");
 
         URI mediaUri = getUriForRoute("/api/medias/1");
 
@@ -124,7 +129,9 @@ public class MediaWriteControllerTests extends ControllerTests {
     public void givenAnInvalidUrlInTheCommand_WhenCallingUpdateOnAValidId_ThenABadRequestShouldBeReturned(String rawUrl)
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
-        command.setWebsite(Optional.of(rawUrl));
+        command.setDescription("This is a pretty good description");
+        command.setName("A trustworthy source");
+        command.setWebsite(rawUrl);
 
         URI mediaUri = getUriForRoute("/api/medias/1");
 
@@ -150,6 +157,9 @@ public class MediaWriteControllerTests extends ControllerTests {
     public void givenAValidCommand_WhenCallingPost_ThenAMediaShouldHaveBeenCreatedAndReturned()
             throws URISyntaxException {
         CreateMediaCommand command = getValidCreateMediaCommand();
+        command.setDescription("This is a pretty good description");
+        command.setName("A trustworthy source");
+        command.setWebsite("https://news.org");
 
         URI mediaUri = getUriForRoute("/api/medias");
 
@@ -166,7 +176,9 @@ public class MediaWriteControllerTests extends ControllerTests {
     public void givenAValidCommand_WhenCallingUpdateOnAnInvalidId_ThenABadRequestShouldBeReturned(long id)
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
+        command.setDescription("This is a pretty good description");
         command.setName("A trustworthy source");
+        command.setWebsite("https://news.org");
 
         String mediaUri = getUriForRoute("/api/medias/") + String.valueOf(id);
 
@@ -179,8 +191,9 @@ public class MediaWriteControllerTests extends ControllerTests {
     public void givenAValidCommand_WhenCallingUpdateOnAnUnknownId_ThenANotFoundShouldBeReturned()
             throws URISyntaxException {
         UpdateMediaCommand command = new UpdateMediaCommand();
-        command.setDescription("A pretty useful description");
+        command.setDescription("This is a pretty good description");
         command.setName("A trustworthy source");
+        command.setWebsite("https://news.org");
 
         String mediaUri = getUriForRoute("/api/medias/") + String.valueOf(Long.MAX_VALUE);
 

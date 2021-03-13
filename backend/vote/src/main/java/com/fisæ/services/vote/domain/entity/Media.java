@@ -87,6 +87,7 @@ public class Media {
     /**
      * External website, referring to the official media's webpage
      */
-    private Optional<URI> website = Optional.empty();
+    @NonNull
+    private URI website;
 
 }
