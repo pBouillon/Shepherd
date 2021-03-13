@@ -13,16 +13,16 @@ const media = new Request(
   }
 );
 const mediaScore = 0;
-const mediaName = "Default Media Name";
-const mediaTags = ["News", "World", "Reporting"];
+const mediaName = 'Default Media Name';
+const mediaTags = ['News', 'World', 'Reporting'];
 
 /*
  * Change content of HTML elements
  */
-document.getElementById("mediaName").innerHTML = mediaName;
+document.getElementById('mediaName').innerHTML = mediaName;
 
 // Generate tag list
-var tagList = document.getElementById("tagList");
+var tagList = document.getElementById('tagList');
 mediaTags.forEach(function (tag) {
   var htmlTag = document.createElement('span');
   htmlTag.classList.add('badge');
@@ -61,9 +61,9 @@ function sendMediaVote(vote) {
  * API routes functions
  */
 function getApiMediaUrlFor(mediaId) {
-  return config.apiUrl + "medias/" + mediaId;
+  return config.apiUrl + 'medias/' + mediaId;
 }
 
 function getApiMediaVotesUrlFor(mediaId) {
-  return config.apiUrl + "medias/" + mediaId + "/votes";
+  return config.apiUrl + 'medias/' + mediaId + '/votes';
 }

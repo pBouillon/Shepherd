@@ -1,45 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-  <link rel="stylesheet" href="popup.css"><meta charset="utf-8">
+  <link rel='stylesheet' href='popup.css'><meta charset='utf-8'>
   <title>Shepherd</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <base href='/'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='icon' type='image/x-icon' href='favicon.ico'>
 
   <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl' crossorigin='anonymous'>
 </head>
 <body>
 
-  <div class="d-flex justify-content-center">
-    <div id="scoreGauge" class="gauge-container-three"></div>
+  <div class='d-flex justify-content-center'>
+    <div id='scoreGauge' class='gauge-container-three'></div>
   </div>
 
-  <h1 id="mediaName" class="text-center"></h1>
+  <h1 id='mediaName' class='text-center'></h1>
 
-  <div id="tagList" class="d-flex justify-content-center"></div>
+  <div id='tagList' class='d-flex justify-content-center'></div>
 
-  <p class="text-center">
-    <a href="http://localhost:4200" target="_blank">How is this website judged?</a>
+  <p class='text-center'>
+    <a href='http://localhost:4200' target='_blank'>How is this website judged?</a>
   </p>
 
-  <div class="d-flex justify-content-center" style="margin: 20px 0px 20px 0px;">
-    <a href="http://localhost:4200/medias" target="_blank">
+  <div class='d-flex justify-content-center' style='margin: 20px 0px 20px 0px;'>
+    <a href='http://localhost:4200/medias' target='_blank'>
       <button>Find out more on Shepherd</button>
     </a>
   </div>
 
-  <p class="text-center">
+  <p class='text-center'>
     Do you find this source trustworthy?
   </p>
 
-  <div class="d-flex justify-content-center">
-    <button type="button" onclick="sendMediaVote(1)" class="btn btn-outline-success">Yes</button>
-    <button type="button" onclick="sendMediaVote(0)" class="btn btn-outline-danger">No</button>
+  <div class='d-flex justify-content-center'>
+    <button type='button' onclick='sendMediaVote(1)' class='btn btn-outline-success'>Yes</button>
+    <button type='button' onclick='sendMediaVote(0)' class='btn btn-outline-danger'>No</button>
   </div>
 
-  <script src="gauge.min.js"></script>
-  <script type="module" src="popup.js"></script>
+  <script src='gauge.min.js'></script>
+  <script type='module' src='popup.js'></script>
 </body>
 </html>
