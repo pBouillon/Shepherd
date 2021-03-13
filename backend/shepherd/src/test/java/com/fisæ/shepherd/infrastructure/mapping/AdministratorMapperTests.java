@@ -36,8 +36,9 @@ public class AdministratorMapperTests {
 
     @Test
     public void givenAnAdministrator_WhenMappingIt_ThenThePropertiesShouldRemainTheSame() {
-        Administrator administrator = new Administrator("My administrator");
+        Administrator administrator = new Administrator();
         administrator.setId(1L);
+        administrator.setNickname("My administrator");
 
         AdministratorDto dto = mapper.toDto(administrator);
 

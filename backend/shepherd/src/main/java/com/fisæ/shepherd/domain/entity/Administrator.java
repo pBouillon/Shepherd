@@ -43,13 +43,4 @@ public class Administrator {
     @NonNull
     private String nickname = "";
 
-    /**
-     * Create a new administrator
-     *
-     * @param nickname Administrator's displayable name
-     */
-    public Administrator(@NonNull String nickname) {
-        this.nickname = nickname;
-    }
-
 }

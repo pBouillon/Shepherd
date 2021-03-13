@@ -9,12 +9,20 @@ services:
     depends_on:
       - db
     environment:
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
       - SPRING_DATASOURCE_USERNAME=compose-postgres
       - SPRING_DATASOURCE_PASSWORD=compose-postgres
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
       - 8080:8080
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    hostname: rabbitmq-container
+    ports:
+      - 5672:5672
+      - 15672:15672
 
   db:
     image: 'postgres:13.2-alpine'

@@ -74,7 +74,7 @@ public class MediaCommandServiceTests {
         CreateMediaCommand command = new CreateMediaCommand();
         command.setName("A trustworthy source");
         command.setDescription("Hey that's a pretty long description !");
-        command.setWebsite(Optional.of("https://fake.news"));
+        command.setWebsite("https://fake.news");
 
         MediaDto created = service.create(command);
 
@@ -86,7 +86,8 @@ public class MediaCommandServiceTests {
 
     @Test
     public void givenAnExistingMedia_WhenUpdatingItFromAValidPayload_ThenItShouldBeUpdated() {
-        Media media = new Media("An untrustworthy source");
+        Media media = new Media();
+        media.setName("An untrustworthy source");
 
         Mockito.when(repository.findById(anyLong()))
                 .thenReturn(Optional.of(media));
@@ -94,14 +95,14 @@ public class MediaCommandServiceTests {
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
         command.setDescription("Hey that's a pretty long description !");
-        command.setWebsite(Optional.of("https://fake.news"));
+        command.setWebsite("https://fake.news");
 
         service.updateMedia(media.getId(), command);
 
         assertAll("updated media",
                 () -> assertEquals(command.getName(), media.getName()),
                 () -> assertEquals(command.getDescription(), media.getDescription()),
-                () -> assertEquals(command.getWebsite().get(), media.getWebsite().get().toString()),
+                () -> assertEquals(command.getWebsite(), media.getWebsite().toString()),
                 () -> verify(repository, times(1)).save(any(Media.class)));
     }
 
@@ -113,7 +114,7 @@ public class MediaCommandServiceTests {
         UpdateMediaCommand command = new UpdateMediaCommand();
         command.setName("A trustworthy source");
         command.setDescription("Hey that's a pretty long description !");
-        command.setWebsite(Optional.of("https://fake.news"));
+        command.setWebsite("https://fake.news");
 
         assertThrows(
                 MediaNotFoundException.class,

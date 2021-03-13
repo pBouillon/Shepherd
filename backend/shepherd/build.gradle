@@ -24,9 +24,11 @@ repositories {
 
 dependencies {
 	// Spring Boot
+	implementation 'org.springframework.boot:spring-boot-starter-amqp:2.4.3'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.amqp:spring-rabbit-test'
 
 	// Assertj
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'

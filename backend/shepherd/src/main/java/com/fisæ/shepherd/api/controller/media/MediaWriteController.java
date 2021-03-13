@@ -5,6 +5,8 @@ import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.vote.VoteCommandService;
+import com.fisæ.shepherd.application.vote.command.UpdateVoteCommand;
 import com.fisæ.shepherd.domain.entity.Media;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -32,17 +34,24 @@ import java.net.URI;
 public class MediaWriteController extends MediaController {
 
     /**
-     * Service handling the read-only operations on the medias
+     * Service handling the write-only operations on the medias
      */
     private final MediaCommandService mediaService;
+
+    /**
+     * Service handling the write-only operations regarding the votes
+     */
+    private final VoteCommandService voteService;
 
     /**
      * Instantiate the controller
      *
      * @param mediaCommandService Service handling the write-only operations on the medias
+     * @param voteCommandService Service handling the write-only operations regarding the votes
      */
-    public MediaWriteController(MediaCommandService mediaCommandService) {
+    public MediaWriteController(MediaCommandService mediaCommandService, VoteCommandService  voteCommandService) {
         mediaService = mediaCommandService;
+        voteService = voteCommandService;
     }
 
     /**
@@ -131,6 +140,33 @@ public class MediaWriteController extends MediaController {
             @ApiParam("Payload from which the media will be updated")
             @Valid @RequestBody UpdateMediaCommand command) {
         return ResponseEntity.ok(mediaService.updateMedia(id, command));
+    }
+
+    /**
+     * Endpoint for: PUT /medias/:id/votes
+     *
+     * Update the media's score by modifying its votes
+     *
+     * @param id Id of the media to update
+     * @param command CQRS command containing the details needed to handle the vote
+     *
+     * @return Accepted to when the vote is acknowledged and differed
+     */
+    @PutMapping("/{id}/votes")
+    @Operation(
+            summary = "Update the media's score by modifying its votes",
+            responses = {
+                    @ApiResponse(responseCode = "202", description = "Vote successfully received"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters"),
+                    @ApiResponse(responseCode = "404", description = "Media not found")
+            })
+    public ResponseEntity<?> putMediaVote(
+            @ApiParam("Id of the media to update")
+            @PathVariable @Min(Media.ID_MIN_VALUE) long id,
+            @ApiParam("Payload from which the vote for the media will be handled")
+            @Valid @RequestBody UpdateVoteCommand command) {
+        voteService.updateMediaVotes(id, command);
+        return ResponseEntity.accepted().build();
     }
 
 }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,23 +43,6 @@ public class MediaQueryServiceTests {
      */
     @Autowired
     private MediaQueryService service;
-
-    /**
-     * Create a page of the provided list according to the provided page request
-     *
-     * @param medias Original list to be paginated
-     * @param pageRequest Page parameters
-     *
-     * @return The page wrapping the sliced list
-     */
-    public static Page<Media> getPageFromList(List<Media> medias, PageRequest pageRequest) {
-        int start = Math.toIntExact(pageRequest.getOffset());
-        int end = Math.min((start + pageRequest.getPageSize()), medias.size());
-
-        List<Media> slice = medias.subList(start, end);
-
-        return new PageImpl<>(slice, pageRequest, medias.size());
-    }
 
     @Test
     public void givenAnIdThatDoesNotBelongToAnyMedia_WhenQueryingIt_ThenAnExceptionShouldBeThrown() {
@@ -86,38 +70,12 @@ public class MediaQueryServiceTests {
     }
 
     @Test
-    public void givenSeveralMedias_WhenQueryingAPage_ThenTheResultShouldBePaginated() {
-        List<Media> medias = List.of(
-                new Media("CNN"),
-                new Media("Fox News"));
-
-        Mockito.when(repository.findAll(any(PageRequest.class)))
-                .thenAnswer(invocation -> getPageFromList(medias, invocation.getArgument(0)));
-
-        GetMediasQuery query = new GetMediasQuery();
-        query.setPageId(0);
-        query.setItemsPerPages(1);
-
-        Page<MediaDto> paginatedMedias = service.getMedias(query);
-
-        assertEquals(query.getItemsPerPages(), paginatedMedias.getSize());
-        assertEquals(medias.size(), paginatedMedias.getTotalElements());
-
-        @SuppressWarnings("OptionalGetWithoutIsPresent")
-        MediaDto returned = paginatedMedias.get()
-                .findFirst()
-                .get();
-
-        assertEquals(returned.getName(), medias.get(0).getName());
-    }
-
-    @Test
     public void givenTheIdOfAMedia_WhenQueryingIt_ThenTheMediaShouldBeReturned() {
         Media media = new Media();
         media.setId(1L);
         media.setName("A trustworthy source");
         media.setDescription("A detailed description");
-        media.setWebsite(Optional.of(URI.create("https://news.org")));
+        media.setWebsite(URI.create("https://news.org"));
 
         GetMediaQuery query = new GetMediaQuery();
         query.setId(1L);
@@ -132,7 +90,7 @@ public class MediaQueryServiceTests {
                 () -> assertEquals(media.getCreationDate(), returned.getCreationDate()),
                 () -> assertEquals(media.getDescription(), returned.getDescription()),
                 () -> assertEquals(media.getName(), returned.getName()),
-                () -> assertEquals(media.getWebsite().get(), returned.getWebsite().get()));
+                () -> assertEquals(media.getWebsite(), returned.getWebsite()));
     }
 
 }

@@ -31,6 +31,7 @@ public class UpdateMediaCommandTests extends ConstraintValidatorTests {
 
         command.setName("A completely valid name");
         command.setDescription("A valid description too");
+        command.setWebsite("https://news.org");
 
         return command;
     }
@@ -112,7 +113,7 @@ public class UpdateMediaCommandTests extends ConstraintValidatorTests {
     @ParameterizedTest
     public void givenAnInvalidUrl_WhenCreatingTheCommand_ThenTheValidationShouldFail(String rawUrl) {
         UpdateMediaCommand command = getValidCommand();
-        command.setWebsite(Optional.of(rawUrl));
+        command.setWebsite(rawUrl);
 
         Set<ConstraintViolation<UpdateMediaCommand>> constraintViolations = validator.validate(command);
         List<String> constraintViolationsMessages = getConstraintViolationMessages(constraintViolations);
