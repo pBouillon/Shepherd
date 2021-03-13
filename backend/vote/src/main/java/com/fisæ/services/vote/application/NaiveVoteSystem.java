@@ -42,9 +42,12 @@ public class NaiveVoteSystem implements VoteHandler {
         }
 
         TrustReport report = entity.get();
-
         float currentRate = report.getRate();
-        report.setRate(currentRate - 1);
+
+        float newRate = report.getRate();
+        report.setRate(vote.trustworthy
+            ? ++newRate
+            : --newRate);
 
         repository.save(report);
 

@@ -53,7 +53,11 @@ public class AmqpConfiguration {
         return template;
     }
 
-    // TODO: doc
+    /**
+     * Create the JSON converter used for the RabbitMQ message sending
+     *
+     * @return The message converter
+     */
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
