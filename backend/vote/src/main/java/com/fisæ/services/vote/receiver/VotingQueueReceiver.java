@@ -1,6 +1,6 @@
 package com.fisæ.services.vote.receiver;
 
-import com.fisæ.application.vote.VoteHandler;
+import com.fisæ.services.vote.application.VoteHandler;
 import com.fisæ.services.vote.domain.message.VoteMessage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

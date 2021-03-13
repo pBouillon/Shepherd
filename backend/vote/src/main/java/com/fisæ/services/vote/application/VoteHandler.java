@@ -1,4 +1,4 @@
-package com.fisæ.application.vote;
+package com.fisæ.services.vote.application;
 
 import com.fisæ.services.vote.domain.message.VoteMessage;
 

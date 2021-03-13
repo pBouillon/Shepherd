@@ -3,6 +3,7 @@ package com.fisæ.services.vote.domain.entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 
 import javax.persistence.*;
 
