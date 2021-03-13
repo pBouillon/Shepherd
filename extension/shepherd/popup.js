@@ -1,10 +1,13 @@
 /*
+ * Imports
+ */
+import { config } from './config.js';
+
+/*
  * Media variables to be fetched
  */
-var mediaId = 0;
-const apiUrl = "http://localhost:4200/api";
 const media = new Request(
-  apiUrl + "/medias/" + mediaId,
+  getApiMediaUrlFor(config.mediaId),
   {
     method: 'GET'
   }
@@ -32,12 +35,12 @@ mediaTags.forEach(function (tag) {
  * Initialize media score gauge
  */
 var scoreGauge = Gauge(
-  document.getElementById("scoreGauge"),
+  document.getElementById('scoreGauge'),
   {
     min: 0,
     max: 100,
     value: mediaScore,
-    label: function(val) {return val + "%";}
+    label: function(val) {return val + '%';}
   }
 );
 
@@ -46,10 +49,21 @@ var scoreGauge = Gauge(
  */
 function sendMediaVote(vote) {
   const voteRequest = new Request(
-    apiUrl + "/medias/" + mediaId + "/votes",
+    getApiMediaVotesUrlFor(config.mediaId),
     {
       method: 'PUT',
       body: '{}'
     }
   );
+}
+
+/*
+ * API routes functions
+ */
+function getApiMediaUrlFor(mediaId) {
+  return config.apiUrl + "medias/" + mediaId;
+}
+
+function getApiMediaVotesUrlFor(mediaId) {
+  return config.apiUrl + "medias/" + mediaId + "/votes";
 }
