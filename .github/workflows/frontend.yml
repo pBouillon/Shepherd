@@ -1,4 +1,6 @@
-name: ReactJS SPA
+# FIXME: This is a ReactJS workflow
+
+name: Angular SPA
 
 on: [push]
 

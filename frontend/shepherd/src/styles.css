@@ -1,0 +1,52 @@
+@import '~bootstrap-icons/font/bootstrap-icons';
+
+
+/* Default styles */
+.shepherd-title {
+  color: var(--blue-200);
+}
+
+.shepherd-subtitle {
+  color: var(--blue-300);
+}
+
+.shepherd-link, .shepherd-link:hover {
+  color: var(--blue-400);
+}
+
+.shepherd-link {
+  color: var(--blue-400);
+  display: inline-block;
+  text-decoration: none;
+}
+
+.shepherd-link::after {
+  background: var(--blue-400);
+  content: '';
+  display: block;
+  height: 1px;
+  transition: 300ms;
+  width: 0px;
+}
+
+.shepherd-link:hover::after {
+  width: 100%;
+}
+
+
+/* Theming */
+:root {
+  --blue-100: hsl(190, 75%, 15%);
+  --blue-200: hsl(190, 100%, 20%);
+  --blue-300: hsl(190, 100%, 30%);
+  --blue-400: hsl(190, 50%, 50%);
+  --blue-500: hsl(190, 50%, 75%);
+
+  --gray-100: hsl(0, 0%, 10%);
+  --gray-200: hsl(0, 0%, 25%);
+  --gray-300: hsl(0, 0%, 46%);
+  --gray-400: hsl(0, 0%, 83%);
+  --gray-500: hsl(0, 0%, 96%);
+
+  --white: hsl(0, 0%, 100%);
+}
