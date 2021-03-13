@@ -24,10 +24,7 @@ document.getElementById('mediaName').innerHTML = mediaName;
 // Generate tag list
 var tagList = document.getElementById('tagList');
 mediaTags.forEach(function (tag) {
-  var htmlTag = document.createElement('span');
-  htmlTag.classList.add('badge');
-  htmlTag.classList.add('bg-secondary');
-  htmlTag.innerHTML = tag;
+  var htmlTag = generateHtmlTag(tag);
   tagList.appendChild(htmlTag);
 });
 
@@ -36,13 +33,31 @@ mediaTags.forEach(function (tag) {
  */
 var RateGauge = Gauge(
   document.getElementById('rateGauge'),
-  {
-    min: 0,
-    max: 100,
+  getGaugeConfigurationFor(mediaRate)
+);
+
+/*
+ * Generate configuration dictionary for the gauge instanciation
+ */
+function getGaugeConfigurationFor(mediaRate) {
+  return {
+    min: config.mediaRateMin,
+    max: config.mediaRateMax,
     value: mediaRate,
     label: function(val) {return val + '%';}
   }
-);
+};
+
+/*
+ * Generate HTML tag
+ */
+function generateHtmlTag(tag) {
+  var htmlTag = document.createElement('span');
+  htmlTag.classList.add('badge');
+  htmlTag.classList.add('bg-secondary');
+  htmlTag.innerHTML = tag;
+  return htmlTag;
+};
 
 /*
  * Send media vote
@@ -55,15 +70,15 @@ function sendMediaVote(vote) {
       body: '{}'
     }
   );
-}
+};
 
 /*
  * API routes functions
  */
 function getApiMediaUrlFor(mediaId) {
   return config.apiUrl + 'medias/' + mediaId;
-}
+};
 
 function getApiMediaVotesUrlFor(mediaId) {
   return config.apiUrl + 'medias/' + mediaId + '/votes';
-}
+};
