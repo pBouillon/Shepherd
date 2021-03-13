@@ -12,7 +12,7 @@ const media = new Request(
     method: 'GET'
   }
 );
-const mediaScore = 0;
+const mediaRate = 0;
 const mediaName = 'Default Media Name';
 const mediaTags = ['News', 'World', 'Reporting'];
 
@@ -32,14 +32,14 @@ mediaTags.forEach(function (tag) {
 });
 
 /*
- * Initialize media score gauge
+ * Initialize media Rate gauge
  */
-var scoreGauge = Gauge(
-  document.getElementById('scoreGauge'),
+var RateGauge = Gauge(
+  document.getElementById('rateGauge'),
   {
     min: 0,
     max: 100,
-    value: mediaScore,
+    value: mediaRate,
     label: function(val) {return val + '%';}
   }
 );
