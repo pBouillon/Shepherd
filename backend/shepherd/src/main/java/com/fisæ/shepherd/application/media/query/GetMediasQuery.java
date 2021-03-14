@@ -3,8 +3,11 @@ package com.fisæ.shepherd.application.media.query;
 import com.fisæ.shepherd.domain.entity.Media;
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.Optional;
 
 /**
  * Query to get all the {@link Media} stored in Shepherd
@@ -28,6 +31,17 @@ public class GetMediasQuery {
     public static final int PAGE_ID_MIN_VALUE = 0;
 
     /**
+     * Number of the items displayed per pages
+     */
+    @Range(min = ITEMS_PER_PAGES_MIN_VALUE, max = ITEMS_PER_PAGES_MAX_VALUE)
+    private int itemsPerPages = 10;
+
+    /**
+     * Name by which the media should be filtered
+     */
+    private Optional<String> name = Optional.empty();
+
+    /**
      * Id of the page to be displayed
      *
      * The first page is at index 0
@@ -36,9 +50,8 @@ public class GetMediasQuery {
     private int pageId = 0;
 
     /**
-     * Number of the items displayed per pages
+     * Website by which the medias should be filtered
      */
-    @Range(min = ITEMS_PER_PAGES_MIN_VALUE, max = ITEMS_PER_PAGES_MAX_VALUE)
-    private int itemsPerPages = 10;
+    private Optional<@URL(protocol = "https") String> website = Optional.empty();
 
 }

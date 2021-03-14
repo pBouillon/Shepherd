@@ -4,7 +4,6 @@ import lombok.Data;
 
 import java.net.URI;
 import java.time.Instant;
-import java.util.Optional;
 
 /**
  * Media DTO, served by the API
