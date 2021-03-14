@@ -39,7 +39,7 @@ public class GetMediasQuery {
     /**
      * Name by which the media should be filtered
      */
-    private Optional<@NotBlank String> name = Optional.empty();
+    private Optional<String> name = Optional.empty();
 
     /**
      * Id of the page to be displayed

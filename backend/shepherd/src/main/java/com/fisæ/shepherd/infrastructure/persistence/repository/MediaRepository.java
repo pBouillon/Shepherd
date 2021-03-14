@@ -22,7 +22,7 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this name
      */
-    Page<Media> findAllByName(String name, Pageable request);
+    Page<Media> findAllByNameContainingIgnoreCase(String name, Pageable request);
 
     /**
      * Get a paginated list of all medias using a specific name and website
@@ -33,7 +33,7 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this name and this website
      */
-    Page<Media> findAllByNameAndWebsite(URI name, String website, Pageable request);
+    Page<Media> findAllByNameContainingIgnoreCaseAndWebsite(URI name, String website, Pageable request);
 
     /**
      * Get a paginated list of all medias using a specific website

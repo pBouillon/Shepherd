@@ -104,14 +104,14 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         Optional<String> name = query.getName();
         Optional<String> website = query.getWebsite();
 
-        Page<Media> medias = new PageImpl<>(new ArrayList<>());
+        Page<Media> medias;
         if (name.isEmpty() && website.isEmpty())
         {
             medias = repository.findAll(request);
         }
         else if (name.isPresent() && website.isEmpty())
         {
-            medias = repository.findAllByName(name.get(), request);
+            medias = repository.findAllByNameContainingIgnoreCase(name.get(), request);
         }
         else if (name.isEmpty())
         {
@@ -119,7 +119,8 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         }
         else
         {
-            medias = repository.findAllByNameAndWebsite(URI.create(name.get()), website.get(), request);
+            medias = repository.findAllByNameContainingIgnoreCaseAndWebsite(
+                    URI.create(name.get()), website.get(), request);
         }
 
         log.info("{} medias on {} pages retrieved", medias.getTotalElements(), medias.getTotalPages());
