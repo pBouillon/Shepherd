@@ -1,5 +1,4 @@
 import { config } from './config.js';
-// const axios = require('axios');
 
 /**
  * @const {number} MEDIA_NAME_MAX_LENGTH - Maximum length for media name
@@ -14,12 +13,17 @@ const api = axios.create({
 });
 
 /**
+ * @const {Object} buttons - Buttons 
+ */
+const buttons = {
+  yes: document.getElementById('buttonYes'),
+  no: document.getElementById('buttonNo')
+};
+
+/**
  * Hold the current media's information
  */
-let media = {
-  id: 1,
-  rate: 50.0
-};
+let currentMedia = {};
 
 /**
  * Create a new stylized tag from a label
@@ -33,7 +37,7 @@ function createTag(label) {
   tag.innerHTML = label;
 
   return tag;
-}
+};
 
 /**
  * Retrieve the information related to the current media from the API
@@ -42,11 +46,12 @@ function createTag(label) {
  */
 function fetchMediaByWebsite(website) {
   return {
+    id: 1,
     name: 'Les Inrockuptibles',
     rate: .0,
     tags: ['News', 'World', 'Reporting'],
   };
-}
+};
 
 /**
  * @todo doc
@@ -86,7 +91,15 @@ function getTrimmed(value) {
   return value.length <= MEDIA_NAME_MAX_LENGTH
     ? value
     : value.substring(0, MEDIA_NAME_MAX_LENGTH) + '...';
-}
+};
+
+/**
+ * Initialize listener events for the buttons
+ */
+function linkButtons() {
+  buttons.yes.addEventListener('click', sendPositiveVote);
+  buttons.no.addEventListener('click', sendNegativeVote);
+};
 
 /**
  * Populate the extension's main window
@@ -94,18 +107,18 @@ function getTrimmed(value) {
 function populateContent() {
   // Retrieve media's website
   let uri = window.location.protocol + '//' + window.location.host;
-  media = fetchMediaByWebsite(uri);
+  currentMedia = fetchMediaByWebsite(uri);
   
   // Load title
-  document.getElementById('mediaName').innerHTML = media.name;
+  document.getElementById('mediaName').innerHTML = currentMedia.name;
 
   // Populate tags
-  populateTagsFrom(media);
+  populateTagsFrom(currentMedia);
 
   // Initialize gauge
   Gauge(
     document.getElementById('rateGauge'),
-    getGaugeConfigurationFor(media)
+    getGaugeConfigurationFor(currentMedia)
   );
 };
 
@@ -120,7 +133,7 @@ function populateTagsFrom(media) {
     let tag = createTag(label);
     tags.appendChild(tag);
   });
-}
+};
 
 /**
  * Style a given element as a tag
@@ -131,7 +144,7 @@ function styleElementAsTag(el) {
   el.classList.add('badge');
   el.classList.add('bg-secondary');
   return el;
-}
+};
 
 /**
  * @todo doc
@@ -152,7 +165,7 @@ function sendPositiveVote() {
  */
 function sendVote(value) { 
   axios.put(
-    getUrlForMediaVote(media.id), 
+    getUrlForMediaVote(currentMedia), 
     {
       "trustworthy": value
     }
@@ -163,3 +176,4 @@ function sendVote(value) {
  * Load the extension's display
  */
 populateContent();
+linkButtons();
