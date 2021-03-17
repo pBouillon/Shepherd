@@ -1,4 +1,5 @@
 import { config } from './config.js';
+// const axios = require('axios');
 
 /**
  * @const {number} MEDIA_NAME_MAX_LENGTH - Maximum length for media name
@@ -6,16 +7,26 @@ import { config } from './config.js';
 const MEDIA_NAME_MAX_LENGTH = 15;
 
 /**
+ * @const {Object} api - Axios instance of the API
+ */
+const api = axios.create({
+  baseUrl: config.apiUrl
+});
+
+/**
  * Hold the current media's information
  */
-let media = { };
+let media = {
+  id: 1,
+  rate: 50.0
+};
 
 /**
  * Create a new stylized tag from a label
  * @param {string} label - Label of the tag to be created
  * @returns {HTMLElement} - Generated tag HTML element
  */
- function createTag(label) {
+function createTag(label) {
   let tag = document.createElement('span');
 
   tag = styleElementAsTag(tag);
@@ -36,6 +47,20 @@ function fetchMediaByWebsite(website) {
     tags: ['News', 'World', 'Reporting'],
   };
 }
+
+/**
+ * @todo doc
+ */
+function getUrlForMedia(media) {
+  return config.apiUri + "media/" + media.id
+};
+
+/**
+ * @todo doc
+ */
+function getUrlForMediaVote(media) {
+  return config.apiUri + "media/" + media.id + "/votes"
+};
 
 /**
  * Generate configuration dictionary for the gauge instanciation
@@ -80,7 +105,8 @@ function populateContent() {
   // Initialize gauge
   Gauge(
     document.getElementById('rateGauge'),
-    getGaugeConfigurationFor(media));
+    getGaugeConfigurationFor(media)
+  );
 };
 
 /**
@@ -108,9 +134,30 @@ function styleElementAsTag(el) {
 }
 
 /**
- * Placeholder - To be implemented later
+ * @todo doc
  */
-function vote() { }
+function sendNegativeVote() { 
+  sendVote(false);
+};
+
+/**
+ * @todo doc
+ */
+function sendPositiveVote() { 
+  sendVote(true);
+};
+
+/**
+ * @todo doc
+ */
+function sendVote(value) { 
+  axios.put(
+    getUrlForMediaVote(media.id), 
+    {
+      "trustworthy": value
+    }
+  );
+};
 
 /**
  * Load the extension's display
