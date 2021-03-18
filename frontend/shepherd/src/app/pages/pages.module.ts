@@ -5,6 +5,7 @@ import { HowItWorksComponent } from './how-it-works/how-it-works.component';
 import { MediasComponent } from './medias/medias.component';
 import { SharedModule } from '../shared/shared.module';
 import { MediaComponent } from './media/media.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -18,6 +19,7 @@ import { MediaComponent } from './media/media.component';
   imports: [
     CommonModule,
     SharedModule,
+    HttpClientModule,
   ],
   exports: [
     HomepageComponent,
