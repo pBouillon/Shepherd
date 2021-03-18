@@ -26,6 +26,7 @@ import static com.fisæ.shepherd.application.media.query.GetMediasQuery.*;
 /**
  * API controller used for the read-only operations on the media resource
  */
+@CrossOrigin
 @RestController
 @RequestMapping(
         path = "/api/medias",
