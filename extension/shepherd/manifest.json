@@ -2,7 +2,10 @@
     "name": "Shepherd extension",
     "version": "0.1",
     "description": "Official Chrome extension for the Shepherd application",
-    "permissions": ["declarativeContent", "storage", "tabs"],
+    "permissions": [
+        "declarativeContent", "storage", "tabs",
+        "http://localtest.me:8080/"
+    ],
     "background": {
         "scripts": ["background.js"],
         "persistent": false

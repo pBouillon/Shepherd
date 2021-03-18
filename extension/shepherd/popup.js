@@ -9,7 +9,8 @@ const MEDIA_NAME_MAX_LENGTH = 15;
  * @const {Object} api - Axios instance of the API
  */
 const api = axios.create({
-  baseUrl: config.apiUrl
+  baseUrl: config.apiUrl,
+  headers: { 'Content-Type': 'application/json' }
 });
 
 /**
@@ -51,6 +52,13 @@ function fetchMediaByWebsite(website) {
     rate: .0,
     tags: ['News', 'World', 'Reporting'],
   };
+};
+
+/**
+ * @todo doc
+ */
+function getCurrentPageUri() {
+  return window.location.protocol + '//' + window.location.host;
 };
 
 /**
@@ -106,7 +114,7 @@ function linkButtons() {
  */
 function populateContent() {
   // Retrieve media's website
-  let uri = window.location.protocol + '//' + window.location.host;
+  let uri = getCurrentPageUri();
   currentMedia = fetchMediaByWebsite(uri);
   
   // Load title
@@ -164,7 +172,7 @@ function sendPositiveVote() {
  * @todo doc
  */
 function sendVote(value) { 
-  axios.put(
+  api.put(
     getUrlForMediaVote(currentMedia), 
     {
       "trustworthy": value
