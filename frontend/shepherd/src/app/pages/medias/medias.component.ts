@@ -33,10 +33,10 @@ export class MediasComponent implements OnInit, AfterContentInit  {
   ngAfterContentInit(): void {
     this.searchForm?.get('search')?.valueChanges.pipe(
       debounceTime(500),
-      filter((text: string) => text.length > 2),
+      map((text: string) => text.trim()),
       distinctUntilChanged(),
     ).subscribe(
-      (search: string) => console.log(search)
+      (search: string) => this.searchMedias(search),
     );
   }
 
@@ -60,8 +60,21 @@ export class MediasComponent implements OnInit, AfterContentInit  {
     --this.pageIndex;
     this.loadMedias();
   }
-}
-function tap(arg0: (text: string) => string): any {
-  throw new Error('Function not implemented.');
+
+  private searchMedias(name: string): void {
+    this.mediaService.getMedias({
+      itemsPerPages: 9,
+      name: name,
+    })
+    .subscribe(
+      (medias: PaginatedMedias) => {
+        this.page = medias;
+        // When a result has successfully been fetched, the pagination is
+        // reset to fit the newly displayed medias
+        this.pageIndex = 0;
+      },
+      (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
+    );
+  }
 }
 
