@@ -42,7 +42,6 @@ export class MediasComponent implements OnInit, AfterContentInit  {
 
   private loadMedias(): void {
     this.mediaService.getMedias({
-      itemsPerPages: 9,
       pageId: this.pageIndex
     })
     .subscribe(
@@ -63,7 +62,6 @@ export class MediasComponent implements OnInit, AfterContentInit  {
 
   private searchMedias(name: string): void {
     this.mediaService.getMedias({
-      itemsPerPages: 9,
       name: name,
     })
     .subscribe(
