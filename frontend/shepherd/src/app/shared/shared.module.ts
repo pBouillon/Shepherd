@@ -20,7 +20,7 @@ import { MediaCardComponent } from './media-card/media-card.component';
   exports: [
     NavbarComponent,
     FooterComponent,
-    MediaCardComponent,
+    MediaCardComponent
   ]
 })
 export class SharedModule { }

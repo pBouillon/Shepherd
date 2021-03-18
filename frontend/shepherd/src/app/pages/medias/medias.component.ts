@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MediaService } from 'src/app/shared/services/media/media.service';
 import { Media } from '../../models/medias/media';
 
 @Component({
@@ -8,16 +10,19 @@ import { Media } from '../../models/medias/media';
 })
 export class MediasComponent implements OnInit {
 
-  public medias : Array<Media> = [
-    new Media('L\'Ouest Répbulicain', 'lorem ipsum dolor sit amet'),
-    new Media('Le canard déchainé', 'lorem ipsum dolor sit amet'),
-    new Media('Le Superflu', 'lorem ipsum dolor sit amet'),
-    new Media('La Planète', 'lorem ipsum dolor sit amet'),
-  ];
+  public medias : Array<Media> = [];
 
-  constructor() { }
+  constructor(
+    private mediaService: MediaService,
+  ) { }
 
   ngOnInit(): void {
+    this.mediaService.getMedias()
+      .subscribe(
+        medias => this.medias = medias.content,
+        // TODO: proper error handling
+        (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
+      );
   }
 
 }
