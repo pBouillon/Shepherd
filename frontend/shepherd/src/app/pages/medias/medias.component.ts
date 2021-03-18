@@ -11,18 +11,33 @@ import { Media } from '../../models/medias/media';
 })
 export class MediasComponent implements OnInit {
 
-  public medias : Array<Media> = [];
+  public pageIndex = 0;
+
+  public page: PaginatedMedias = new PaginatedMedias();
 
   constructor(
     private mediaService: MediaService,
   ) { }
 
   ngOnInit(): void {
-    this.mediaService.getMedias()
+    this.loadMedias();
+  }
+
+  private loadMedias(): void {
+    this.mediaService.getMedias({ pageId: this.pageIndex })
       .subscribe(
-        (medias: PaginatedMedias) => this.medias = medias.content,
+        (medias: PaginatedMedias) => this.page = medias,
         (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
       );
   }
 
+  searchNextPage(): void {
+    ++this.pageIndex;
+    this.loadMedias();
+  }
+
+  searchPreviousPage(): void {
+    --this.pageIndex;
+    this.loadMedias();
+  }
 }
