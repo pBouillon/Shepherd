@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -14,8 +14,28 @@ export class MediaService {
     private http: HttpClient
   ) { }
 
-  getMedias(): Observable<PaginatedMedias> {
-    return this.http.get<PaginatedMedias>(`${environment.apiUrl}/medias`)
-  }
+  getMedias(params?: {
+    itemsPerPages?: number,
+    name?: string,
+    pageId?: number,
+    website?: string
+  }): Observable<PaginatedMedias> {
+    let httpParams = new HttpParams();
 
+    if (params?.itemsPerPages) 
+      httpParams = httpParams.set('itemsPerPages', params.itemsPerPages + '');
+
+    if (params?.name)
+      httpParams = httpParams.set('name', params.name);
+
+    if (params?.pageId)
+      httpParams = httpParams.set('pageId', params.pageId + '');
+
+    if (params?.website)
+      httpParams = httpParams.set('website', params.website);
+
+    return this.http.get<PaginatedMedias>(`${environment.apiUrl}/medias`, {
+      params: httpParams
+    });
+  }
 }

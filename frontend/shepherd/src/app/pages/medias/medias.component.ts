@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { PaginatedMedias } from 'src/app/models/medias/paginated-medias';
 import { MediaService } from 'src/app/shared/services/media/media.service';
 import { Media } from '../../models/medias/media';
 
@@ -19,8 +20,7 @@ export class MediasComponent implements OnInit {
   ngOnInit(): void {
     this.mediaService.getMedias()
       .subscribe(
-        medias => this.medias = medias.content,
-        // TODO: proper error handling
+        (medias: PaginatedMedias) => this.medias = medias.content,
         (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
       );
   }
