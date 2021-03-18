@@ -11,9 +11,9 @@ import { Media } from '../../models/medias/media';
 })
 export class MediasComponent implements OnInit {
 
-  public pageIndex = 0;
-
   public page: PaginatedMedias = new PaginatedMedias();
+  
+  public pageIndex = 0;
 
   constructor(
     private mediaService: MediaService,
@@ -24,19 +24,22 @@ export class MediasComponent implements OnInit {
   }
 
   private loadMedias(): void {
-    this.mediaService.getMedias({ pageId: this.pageIndex })
-      .subscribe(
-        (medias: PaginatedMedias) => this.page = medias,
-        (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
-      );
+    this.mediaService.getMedias({
+      itemsPerPages: 15,
+      pageId: this.pageIndex
+    })
+    .subscribe(
+      (medias: PaginatedMedias) => this.page = medias,
+      (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
+    );
   }
 
-  searchNextPage(): void {
+  loadNextPage(): void {
     ++this.pageIndex;
     this.loadMedias();
   }
 
-  searchPreviousPage(): void {
+  loadPreviousPage(): void {
     --this.pageIndex;
     this.loadMedias();
   }

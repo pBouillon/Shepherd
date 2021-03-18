@@ -4,28 +4,38 @@
     <h1 class="shepherd-title">Rated medias</h1>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-3 g-4">
-    <app-media-card
-      *ngFor="let media of page.content"
-      [media]="media"
-      class="col-sm-6">
-    </app-media-card>
+  <div *ngIf="page.empty; else mediasBoard">
+    <div class="container d-flex justify-content-center text-center my-3">
+      <h5 class="shepherd-text-muted my-5">
+        Looks like there is no media reviewed yet, time to buy the newspaper?
+      </h5>
+    </div>
   </div>
 
-  <div class="container d-flex justify-content-center text-center my-3">
-    <button class="btn btn-primary"
-      [disabled]='page.first'
-      (click)='searchPreviousPage()'>&lt;
-    </button>
-
-    <span class="fs-3 text-primary mx-4">
-      {{ pageIndex + 1 }} / {{ page.totalPages }}
-    </span>
-
-    <button class="btn btn-primary"
-      [disabled]='page.last'
-      (click)='searchNextPage()'>&gt;
-    </button>  
-  </div>
+  <ng-template #mediasBoard>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <app-media-card
+        *ngFor="let media of page.content"
+        [media]="media"
+        class="col-sm-6">
+      </app-media-card>
+    </div>
+  
+    <div class="container d-flex justify-content-center text-center my-3">
+      <button class="btn btn-primary"
+        [disabled]='page.first'
+        (click)='loadPreviousPage()'>&lt;
+      </button>
+  
+      <span class="fs-3 mx-4 shepherd-text">
+        {{ pageIndex + 1 }} / {{ page.totalPages }}
+      </span>
+  
+      <button class="btn btn-primary"
+        [disabled]='page.last'
+        (click)='loadNextPage()'>&gt;
+      </button>  
+    </div>
+  </ng-template>
 
 </div>
