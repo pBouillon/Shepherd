@@ -25,6 +25,7 @@ import java.net.URI;
 /**
  * API controller used for the write-only operations on the media resource
  */
+@CrossOrigin
 @RestController
 @RequestMapping(
         path = "/api/medias",

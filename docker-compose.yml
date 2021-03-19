@@ -34,6 +34,6 @@ services:
   spa:
     build:
       context: ./frontend/shepherd
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
     ports:
       - 4200:80
