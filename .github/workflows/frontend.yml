@@ -26,10 +26,10 @@ jobs:
         cd frontend/shepherd
         npm ci
 
-    - name: Build with Node
+    - name: Build with Angular
       run: |
         cd frontend/shepherd
-        ng build
+        npm run build:ci
 
   test:
     runs-on: ubuntu-latest
@@ -57,4 +57,4 @@ jobs:
     - name: Run tests
       run: |
         cd frontend/shepherd
-        ng test
+        npm run test:ci
