@@ -16,14 +16,15 @@ export class MediaService {
     private http: HttpClient
   ) { }
 
-  getMediaByName(name: string): Observable<Media> {
+  getMediaByName(name: string): Observable<Media | null> {
     const params = new HttpParams().set('name', name);
 
     return this.http.get<PaginatedMedias>(`${environment.apiUri}/medias`, {
       params: params,
     }).pipe(
-      filter((page: PaginatedMedias) => page.totalElements === 1),
-      map((page: PaginatedMedias) => page.content[0]),
+      map((page: PaginatedMedias) => page.totalElements === 1
+        ? page.content[0]
+        : null),
     );
   }
 
