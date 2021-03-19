@@ -10,7 +10,9 @@ export class Media {
 
     name: string;
 
-    trustReport: TrustReport = TrustReport.DEFAULT;
+    trustReport: TrustReport = new TrustReport();
+
+    website?: URL;
 
     constructor(name: string, description?: string) {
         this.name = name;

@@ -2,9 +2,14 @@
 
   <div class="container justify-content-center text-center my-3">
     <h1 class="shepherd-title">{{ media?.name }}</h1>
+
+    <a [href]="media?.website" target="_blank">Check out the website !</a>
+
     <p>
       {{ media?.description }}
     </p>
+
+    <p>Score: {{ media?.trustReport?.rate }}%</p>
   </div>
 
 </div>
