@@ -4,6 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { PaginatedMedias } from 'src/app/models/medias/paginated-medias';
+import { Media } from 'src/app/models/medias/media';
+import { filter, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +15,17 @@ export class MediaService {
   constructor(
     private http: HttpClient
   ) { }
+
+  getMediaByName(name: string): Observable<Media> {
+    const params = new HttpParams().set('name', name);
+
+    return this.http.get<PaginatedMedias>(`${environment.apiUri}/medias`, {
+      params: params,
+    }).pipe(
+      filter((page: PaginatedMedias) => page.totalElements === 1),
+      map((page: PaginatedMedias) => page.content[0]),
+    );
+  }
 
   getMedias(params?: {
     itemsPerPages?: number,
@@ -34,8 +47,9 @@ export class MediaService {
     if (params?.website)
       httpParams = httpParams.set('website', params.website);
 
-    return this.http.get<PaginatedMedias>(`${environment.apiUrl}/medias`, {
+    return this.http.get<PaginatedMedias>(`${environment.apiUri}/medias`, {
       params: httpParams
     });
   }
+
 }
