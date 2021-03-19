@@ -62,20 +62,6 @@ function getCurrentPageUri() {
 };
 
 /**
- * @todo doc
- */
-function getUrlForMedia(media) {
-  return config.apiUri + "media/" + media.id
-};
-
-/**
- * @todo doc
- */
-function getUrlForMediaVote(media) {
-  return config.apiUri + "media/" + media.id + "/votes"
-};
-
-/**
  * Generate configuration dictionary for the gauge instanciation
  * @param {Object} - The media's information from which the gauge will be set up
  * @returns {Object} - The preconfigured configuration object
@@ -87,6 +73,20 @@ function getGaugeConfigurationFor(media) {
     value: Math.round(media.rate),
     label: (val) => val + '%'
   }
+};
+
+/**
+ * @todo doc
+ */
+function getUrlForMedia(media) {
+  return config.apiUri + "medias/" + media.id
+};
+
+/**
+ * @todo doc
+ */
+function getUrlForMediaVote(media) {
+  return config.apiUri + "medias/" + media.id + "/votes"
 };
 
 /**
@@ -144,17 +144,6 @@ function populateTagsFrom(media) {
 };
 
 /**
- * Style a given element as a tag
- * @param {HTMLElement} el - HTML element 
- * @returns {HTMLElement} - The same element with Tag properties
- */
-function styleElementAsTag(el) {
-  el.classList.add('badge');
-  el.classList.add('bg-secondary');
-  return el;
-};
-
-/**
  * @todo doc
  */
 function sendNegativeVote() { 
@@ -178,6 +167,17 @@ function sendVote(value) {
       "trustworthy": value
     }
   );
+};
+
+/**
+ * Style a given element as a tag
+ * @param {HTMLElement} el - HTML element 
+ * @returns {HTMLElement} - The same element with Tag properties
+ */
+function styleElementAsTag(el) {
+  el.classList.add('badge');
+  el.classList.add('bg-secondary');
+  return el;
 };
 
 /**
