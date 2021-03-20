@@ -11,7 +11,7 @@ import { Media } from 'src/app/models/medias/media';
 })
 export class MediaComponent implements OnInit {
 
-  media?: Media;
+  media!: Media;
 
   constructor(
     private activatedRoute: ActivatedRoute,

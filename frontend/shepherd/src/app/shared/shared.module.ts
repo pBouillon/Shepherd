@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { MediaCardComponent } from './media-card/media-card.component';
+import { MediaRatingComponent } from './media-rating/media-rating.component';
 
 
 
@@ -12,6 +14,7 @@ import { MediaCardComponent } from './media-card/media-card.component';
     NavbarComponent,
     FooterComponent,
     MediaCardComponent,
+    MediaRatingComponent,
   ],
   imports: [
     CommonModule,
@@ -20,7 +23,8 @@ import { MediaCardComponent } from './media-card/media-card.component';
   exports: [
     NavbarComponent,
     FooterComponent,
-    MediaCardComponent
+    MediaCardComponent,
+    MediaRatingComponent,
   ]
 })
 export class SharedModule { }
