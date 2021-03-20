@@ -85,8 +85,7 @@ function getGaugeConfigurationFor(media) {
 
 /**
  * Get API URL for the media resource
- * @param {Object} media - 
- * @param {Media} media - 
+ * @param {Object} media - Media object
  * @returns {URL} - API resource URL for the given media
  */
 function getUrlForMedia(media) {
@@ -95,7 +94,7 @@ function getUrlForMedia(media) {
 
 /**
  * Get API URL for the media's votes resource
- * @param {Media} media - 
+ * @param {Object} media - Media object
  */
 function getUrlForMediaVote(media) {
   return config.apiUri + "medias/" + media.id + "/votes"
