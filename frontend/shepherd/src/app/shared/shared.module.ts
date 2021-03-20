@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { MediaCardComponent } from './media-card/media-card.component';
 import { MediaRatingComponent } from './media-rating/media-rating.component';
+import { GaugeModule } from 'angular-gauge';
 
 
 
@@ -18,7 +19,15 @@ import { MediaRatingComponent } from './media-rating/media-rating.component';
   ],
   imports: [
     CommonModule,
-    AppRoutingModule
+    AppRoutingModule,
+    GaugeModule.forRoot({
+      label: (value) => value+'%',
+      animated: true,
+      dialRadius: 40,
+      max: 100,
+      dialStartAngle: 40,
+      dialEndAngle: 140,
+    }),
   ],
   exports: [
     NavbarComponent,
