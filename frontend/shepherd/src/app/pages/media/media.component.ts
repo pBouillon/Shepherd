@@ -1,9 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Media } from 'src/app/models/medias/media';
-import { MediaService } from 'src/app/shared/services/media/media.service';
 
 @Component({
   selector: 'app-media',
@@ -15,25 +14,13 @@ export class MediaComponent implements OnInit {
   media?: Media;
 
   constructor(
-    private mediaService: MediaService,
-    private route: ActivatedRoute,
-    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    const name = this.route.snapshot.paramMap.get('name')!;
-
-    this.mediaService.getMediaByName(name).subscribe(
-      (media: Media | null) => {
-        if (!media) {
-          this.router.navigate(['medias']);
-          return;
-        }
-        
-        this.media = media;
-      },
-      (error: HttpErrorResponse) => console.log(`Unable to retrieve the media: ${error}`),
-    );
+    this.activatedRoute.data.subscribe(
+      (data: any) => this.media = data['media'] as Media,
+      (error: HttpErrorResponse) => console.log(`Unable to retrieve the media: ${error}`),);
   }
 
 }
