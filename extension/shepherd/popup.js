@@ -17,14 +17,22 @@ const api = axios.create({
  * @const {Object} buttons - Buttons 
  */
 const buttons = {
-  yes: document.getElementById('buttonYes'),
-  no: document.getElementById('buttonNo')
+  suspicious: document.getElementById('buttonVoteSuspicious'),
+  trustworthy: document.getElementById('buttonVoteTrustworthy')
 };
 
 /**
  * Hold the current media's information
  */
-let currentMedia = {};
+let currentMedia = { };
+
+/**
+ * Initialize listener events for the buttons
+ */
+function attachListenersToVoteButtons() {
+  buttons.suspicious.addEventListener('click', sendNegativeVote);
+  buttons.trustworthy.addEventListener('click', sendPositiveVote);
+};
 
 /**
  * Create a new stylized tag from a label
@@ -55,7 +63,7 @@ function fetchMediaByWebsite(website) {
 };
 
 /**
- * @todo doc
+ * @returns {string} - URI of the current page
  */
 function getCurrentPageUri() {
   return window.location.protocol + '//' + window.location.host;
@@ -63,7 +71,7 @@ function getCurrentPageUri() {
 
 /**
  * Generate configuration dictionary for the gauge instanciation
- * @param {Object} - The media's information from which the gauge will be set up
+ * @param {Object} media - The media for which the gauge will be set up
  * @returns {Object} - The preconfigured configuration object
  */
 function getGaugeConfigurationFor(media) {
@@ -76,14 +84,18 @@ function getGaugeConfigurationFor(media) {
 };
 
 /**
- * @todo doc
+ * Get API URL for the media resource
+ * @param {Object} media - 
+ * @param {Media} media - 
+ * @returns {URL} - API resource URL for the given media
  */
 function getUrlForMedia(media) {
   return config.apiUri + "medias/" + media.id
 };
 
 /**
- * @todo doc
+ * Get API URL for the media's votes resource
+ * @param {Media} media - 
  */
 function getUrlForMediaVote(media) {
   return config.apiUri + "medias/" + media.id + "/votes"
@@ -102,18 +114,10 @@ function getTrimmed(value) {
 };
 
 /**
- * Initialize listener events for the buttons
- */
-function linkButtons() {
-  buttons.yes.addEventListener('click', sendPositiveVote);
-  buttons.no.addEventListener('click', sendNegativeVote);
-};
-
-/**
  * Populate the extension's main window
  */
 function populateContent() {
-  // Retrieve media's website
+  // Fetch media from API based on current page's domain
   let uri = getCurrentPageUri();
   currentMedia = fetchMediaByWebsite(uri);
   
@@ -144,21 +148,22 @@ function populateTagsFrom(media) {
 };
 
 /**
- * @todo doc
+ * Send 'SUSPICIOUS' vote request to the API for the current media
  */
 function sendNegativeVote() { 
   sendVote(false);
 };
 
 /**
- * @todo doc
+ * Send 'TRUSTWORTHY' vote request to the API for the current media
  */
 function sendPositiveVote() { 
   sendVote(true);
 };
 
 /**
- * @todo doc
+ * Send vote request to the API for the current media
+ * @param {boolean} value - Value of the vote
  */
 function sendVote(value) { 
   api.put(
@@ -183,5 +188,5 @@ function styleElementAsTag(el) {
 /**
  * Load the extension's display
  */
+attachListenersToVoteButtons();
 populateContent();
-linkButtons();
