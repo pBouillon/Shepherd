@@ -15,6 +15,15 @@ import java.net.URI;
 public interface MediaRepository extends PagingAndSortingRepository<Media, Long> {
 
     /**
+     * Get whether or not a media exists with the same name (case insensitive)
+     *
+     * @param name Media name
+     *
+     * @return True if any other media has the same name; false otherwise
+     */
+    boolean existsByNameIgnoreCase(String name);
+
+    /**
      * Get a paginated list of all medias using a specific name
      *
      * @param name Media name
@@ -33,7 +42,7 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this name and this website
      */
-    Page<Media> findAllByNameContainingIgnoreCaseAndWebsite(URI name, String website, Pageable request);
+    Page<Media> findAllByNameContainingIgnoreCaseAndWebsite(String name, URI website, Pageable request);
 
     /**
      * Get a paginated list of all medias using a specific website
