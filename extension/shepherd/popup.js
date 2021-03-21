@@ -137,9 +137,34 @@ function getTrimmed(value) {
 };
 
 /**
+ * @param {string} uri - Website URI of the media
+ * @return {boolean} - Boolean of whether the media exists in the database
+ */
+function isKnownMedia(uri) {
+  return false;
+}
+
+/**
+ * Load view for a media that is in the database
+ */
+function loadViewForKnownMedia() {
+  // Load title
+  document.getElementById('mediaName').innerHTML = currentMedia.name;
+  
+  // Populate tags
+  populateTagsFrom(currentMedia);
+
+  // Initialize gauge
+  Gauge(
+    document.getElementById('rateGauge'),
+    getGaugeConfigurationFor(currentMedia)
+  );
+};
+
+/**
  * Load view for a media that is not in the database
  */
-function loadViewForUnknownmedia() {
+function loadViewForUnknownMedia() {
   let body = document.querySelector('body');
   let html = document.querySelector('html');
   
@@ -153,26 +178,14 @@ function loadViewForUnknownmedia() {
 function populateContent() {
   // Fetch media from API based on current page's domain
   let uri = getCurrentPageUri();
-  currentMedia = fetchMediaByWebsite(uri);
 
-  // Temporary check for existing site
-  let exists = false;
-  if (exists) {
-    // Load title
-    document.getElementById('mediaName').innerHTML = currentMedia.name;
-  
-    // Populate tags
-    populateTagsFrom(currentMedia);
-  
-    // Initialize gauge
-    Gauge(
-      document.getElementById('rateGauge'),
-      getGaugeConfigurationFor(currentMedia)
-    );
+  if (!isKnownMedia(uri)) {
+    currentMedia = fetchMediaByWebsite(uri);
+    loadViewForUnknownMedia();
+    return;
   }
 
-  // Load display for unkown media
-  loadViewForUnknownmedia();
+  loadViewForKnownMedia();
 };
 
 /**
