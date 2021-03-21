@@ -27,6 +27,21 @@ const buttons = {
 let currentMedia = { };
 
 /**
+ * @const {string} viewForUnknownMedia - HTML string for the body content of unknown media
+ */
+const viewForUnknownMedia = `
+<div class="container">
+  <div class="row text-center">
+    <p>This website is not yet rated by Shepherd</p>
+  </div>
+
+  <div class="row text-center">
+    <p>Help the community by suggesting this media on the <a class="shepherd-link" href="${config.websiteUri}" target="_blank">Shepherd website</a></p>
+  </div>
+</div>
+`;
+
+/**
  * Initialize listener events for the buttons
  */
 function attachListenersToVoteButtons() {
@@ -189,7 +204,7 @@ function styleElementAsTag(el) {
  */
 let exists = false;
 if (!exists) {
-  document.querySelector('body').innerHTML = "This website is not yet rated by Shepherd";
+  document.querySelector('body').innerHTML = viewForUnknownMedia;
 };
 
 
