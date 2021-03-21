@@ -5,6 +5,7 @@ import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.CollidingMediaException;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 
 /**
@@ -20,8 +21,9 @@ public interface MediaCommandService {
      * @param command Payload containing the details to create the media
      *
      * @return The newly created media
+     * @throws CollidingMediaException If a media already exists for the same name
      */
-    MediaDto create(CreateMediaCommand command);
+    MediaDto create(CreateMediaCommand command) throws CollidingMediaException;
 
     /**
      * Delete an existing media

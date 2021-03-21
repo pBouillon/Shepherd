@@ -1,7 +1,31 @@
 <div class="m-4">
 
   <div class="container justify-content-center text-center my-3">
-    <h1 class="shepherd-title">{{ slang | titlecase }}</h1>
+    <h1 class="shepherd-title">{{ media.name }}</h1>
+    <p class="text-muted">Evaluated since {{ media.creationDate | date }}</p>
+  </div>
+
+  <div class="container">
+
+    <div class="row">
+      <p>{{ media.description }}</p>
+    </div>
+
+    <div class="row">
+      <app-media-rating [report]="media.trustReport"
+        class="container justify-content-center text-center" >
+      </app-media-rating>
+    </div>
+
+    <div class="row justify-content-end">
+      <a [href]="media.website"
+        target="_blank"
+        class="btn btn-outline-secondary col-12 col-md-3">
+        Visit the official website
+        <i class="bi bi-box-arrow-up-right"></i>
+      </a>
+    </div>
+
   </div>
 
 </div>
