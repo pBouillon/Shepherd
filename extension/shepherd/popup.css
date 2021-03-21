@@ -3,13 +3,21 @@
 
 /* Extension popup specifics */
 html {
-  height: 500px;
   width: 300px;
   outline: none;
   padding: 0px;
 }
 
+html.known {
+  height: 500px;
+}
+
+html.unknown {
+  height: 150px;
+}
+
 body {
+  height: 100%;
   width: 100%;
   display: grid;
 }

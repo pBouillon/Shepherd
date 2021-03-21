@@ -14,6 +14,21 @@ const api = axios.create({
 });
 
 /**
+ * @const {string} bodyForUnknownMedia - HTML string for the body content of unknown media
+ */
+const bodyForUnknownMedia = `
+  <div class="container">
+    <div class="row text-center h-50 d-flex align-content-center">
+      <p class="pt-4">This website is not yet rated by Shepherd</p>
+    </div>
+
+    <div class="row text-center h-50 d-flex align-content-center">
+      <p class="pt-2">Help the community by suggesting this media on the <a class="shepherd-link" href="${config.websiteUri}" target="_blank">Shepherd website</a></p>
+    </div>
+  </div>
+`;
+
+/**
  * @const {Object} buttons - Buttons 
  */
 const buttons = {
@@ -25,21 +40,6 @@ const buttons = {
  * Hold the current media's information
  */
 let currentMedia = { };
-
-/**
- * @const {string} viewForUnknownMedia - HTML string for the body content of unknown media
- */
-const viewForUnknownMedia = `
-<div class="container">
-  <div class="row text-center">
-    <p>This website is not yet rated by Shepherd</p>
-  </div>
-
-  <div class="row text-center">
-    <p>Help the community by suggesting this media on the <a class="shepherd-link" href="${config.websiteUri}" target="_blank">Shepherd website</a></p>
-  </div>
-</div>
-`;
 
 /**
  * Initialize listener events for the buttons
@@ -104,7 +104,16 @@ function getGaugeConfigurationFor(media) {
  * @returns {URL} - API resource URL for the given media
  */
 function getUrlForMedia(media) {
-  return config.apiUri + "medias/" + media.id
+  return config.apiUri + "medias/" + media.id;
+};
+
+/**
+ * Get API URL for the media resource
+ * @param {Object} media - Media object
+ * @returns {URL} - API resource URL for the given media
+ */
+function getUrlForMedias(media) {
+  return config.apiUri + "medias";
 };
 
 /**
@@ -112,7 +121,7 @@ function getUrlForMedia(media) {
  * @param {Object} media - Media object
  */
 function getUrlForMediaVote(media) {
-  return config.apiUri + "medias/" + media.id + "/votes"
+  return config.apiUri + "medias/" + media.id + "/votes";
 };
 
 /**
@@ -128,24 +137,42 @@ function getTrimmed(value) {
 };
 
 /**
+ * Load view for a media that is not in the database
+ */
+function loadViewForUnknownmedia() {
+  let body = document.querySelector('body');
+  let html = document.querySelector('html');
+  
+  body.innerHTML = bodyForUnknownMedia;
+  html.className = "unknown";
+};
+
+/**
  * Populate the extension's main window
  */
 function populateContent() {
   // Fetch media from API based on current page's domain
   let uri = getCurrentPageUri();
   currentMedia = fetchMediaByWebsite(uri);
+
+  // Temporary check for existing site
+  let exists = false;
+  if (exists) {
+    // Load title
+    document.getElementById('mediaName').innerHTML = currentMedia.name;
   
-  // Load title
-  document.getElementById('mediaName').innerHTML = currentMedia.name;
+    // Populate tags
+    populateTagsFrom(currentMedia);
+  
+    // Initialize gauge
+    Gauge(
+      document.getElementById('rateGauge'),
+      getGaugeConfigurationFor(currentMedia)
+    );
+  }
 
-  // Populate tags
-  populateTagsFrom(currentMedia);
-
-  // Initialize gauge
-  Gauge(
-    document.getElementById('rateGauge'),
-    getGaugeConfigurationFor(currentMedia)
-  );
+  // Load display for unkown media
+  loadViewForUnknownmedia();
 };
 
 /**
@@ -197,14 +224,6 @@ function styleElementAsTag(el) {
   el.classList.add('badge');
   el.classList.add('bg-secondary');
   return el;
-};
-
-/**
- * Temporary check for existing site
- */
-let exists = false;
-if (!exists) {
-  document.querySelector('body').innerHTML = viewForUnknownMedia;
 };
 
 
