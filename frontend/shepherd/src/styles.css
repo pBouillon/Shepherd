@@ -1,5 +1,30 @@
-@import '~bootstrap-icons/font/bootstrap-icons';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
 
+/* Gauge global styles: https://github.com/mattlewis92/angular-gauge#installation */
+mwl-gauge {
+  width: 150px;
+  height: 150px;
+  display: block;
+}
+
+mwl-gauge > .gauge > .dial {
+  stroke: #eee;
+  stroke-width: 2;
+  fill: rgba(0, 0, 0, 0);
+}
+
+mwl-gauge > .gauge > .value {
+  stroke: var(--blue-400);
+  stroke-width: 2;
+  fill: rgba(0, 0, 0, 0);
+}
+
+mwl-gauge > .gauge > .value-text {
+  fill: var(--blue-200);
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 1em;
+}
 
 /* Default styles */
 .shepherd-title {

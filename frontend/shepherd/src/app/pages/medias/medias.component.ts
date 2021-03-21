@@ -43,8 +43,7 @@ export class MediasComponent implements OnInit, AfterContentInit  {
   private loadMedias(): void {
     this.mediaService.getMedias({
       pageId: this.pageIndex
-    })
-    .subscribe(
+    }).subscribe(
       (medias: PaginatedMedias) => this.page = medias,
       (err: HttpErrorResponse) => console.log('Unable to fetch medias :' + err)
     );

@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { HowItWorksComponent } from './pages/how-it-works/how-it-works.component';
 import { MediaComponent } from './pages/media/media.component';
 import { MediasComponent } from './pages/medias/medias.component';
+import { MediaResolver } from './shared/resolvers/media.resolver';
 
 const routes: Routes = [
   { path: 'medias', component: MediasComponent },
-  { path: 'medias/:name', component: MediaComponent },
+  { path: 'medias/:name', component: MediaComponent, resolve: { media: MediaResolver } },
   { path: 'how-it-works', component: HowItWorksComponent },
   { path: '', component: HomepageComponent }
 ];
