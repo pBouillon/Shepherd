@@ -4,6 +4,7 @@ import com.fisæ.shepherd.application.media.command.CreateMediaCommand;
 import com.fisæ.shepherd.application.media.command.DeleteMediaCommand;
 import com.fisæ.shepherd.application.media.command.UpdateMediaCommand;
 import com.fisæ.shepherd.application.media.contracts.MediaDto;
+import com.fisæ.shepherd.application.media.exception.CollidingMediaException;
 import com.fisæ.shepherd.application.media.exception.MediaNotFoundException;
 import com.fisæ.shepherd.application.media.query.GetMediaQuery;
 import com.fisæ.shepherd.application.media.query.GetMediasQuery;
@@ -13,12 +14,10 @@ import com.fisæ.shepherd.infrastructure.persistence.repository.MediaRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.Optional;
 
 /**
@@ -54,7 +53,13 @@ public class MediaService implements MediaCommandService, MediaQueryService {
      * {@inheritDoc}
      */
     @Override
-    public MediaDto create(CreateMediaCommand command) {
+    public MediaDto create(CreateMediaCommand command) throws CollidingMediaException {
+        if (repository.existsByNameIgnoreCase(command.getName()))
+        {
+            log.warn("Unable to create a media from {}: another media already exists with the provided name", command);
+            throw new CollidingMediaException("A media already exists with the name " + command.getName());
+        }
+
         log.info("Creating a new media from {}", command);
 
         Media entity = repository.save(mapper.toMedia(command));
@@ -105,6 +110,7 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         Optional<String> website = query.getWebsite();
 
         Page<Media> medias;
+
         if (name.isEmpty() && website.isEmpty())
         {
             medias = repository.findAll(request);
@@ -120,7 +126,7 @@ public class MediaService implements MediaCommandService, MediaQueryService {
         else
         {
             medias = repository.findAllByNameContainingIgnoreCaseAndWebsite(
-                    URI.create(name.get()), website.get(), request);
+                    name.get(), URI.create(website.get()), request);
         }
 
         log.info("{} medias on {} pages retrieved", medias.getTotalElements(), medias.getTotalPages());

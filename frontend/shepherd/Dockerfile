@@ -19,8 +19,8 @@ RUN npm run build --prod
 
 # Will serve it from nginx
 FROM nginx:1.19-alpine
-# COPY nginx.conf /etc/nginx/nginx.conf
 
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /usr/src/app/dist/shepherd /usr/share/nginx/html
 
 EXPOSE 80
