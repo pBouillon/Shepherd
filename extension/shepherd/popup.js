@@ -185,6 +185,15 @@ function styleElementAsTag(el) {
 };
 
 /**
+ * Temporary check for existing site
+ */
+let exists = false;
+if (!exists) {
+  document.querySelector('body').innerHTML = "This website is not yet rated by Shepherd";
+};
+
+
+/**
  * Load the extension's display
  */
 attachListenersToVoteButtons();
