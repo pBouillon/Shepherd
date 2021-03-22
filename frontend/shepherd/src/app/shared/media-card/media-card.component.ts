@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Media } from '../../models/medias/media';
 
 @Component({
@@ -6,14 +6,11 @@ import { Media } from '../../models/medias/media';
   templateUrl: './media-card.component.html',
   styleUrls: ['./media-card.component.css']
 })
-export class MediaCardComponent implements OnInit {
+export class MediaCardComponent {
 
   @Input()
   public media!: Media;
 
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }
