@@ -8,8 +8,8 @@ const privateConfig = {
 };
 
 export const config = {
-    apiUri: privateConfig.serverUri + ":" + privateConfig.apiPort + "/api/",
-    websiteUri: privateConfig.serverUri + ":" + privateConfig.websitePort + "/",
+    apiUri:      privateConfig.serverUri + ":" + privateConfig.apiPort + "/api/",
+    shepherdUri: privateConfig.serverUri + ":" + privateConfig.websitePort + "/",
     mediaId: 0,
     mediaRateMin: 0,
     mediaRateMax: 100,

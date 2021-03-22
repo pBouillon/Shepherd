@@ -23,7 +23,7 @@ const bodyForUnknownMedia = `
     </div>
 
     <div class="row text-center h-50 d-flex align-content-center">
-      <p class="pt-2">Help the community by <a class="shepherd-link" href="${config.websiteUri}" target="_blank">suggesting this media</a> on Shepherd.</p>
+      <p class="pt-2">Help the community by <a class="shepherd-link" href="${config.shepherdUri}" target="_blank">suggesting this media</a> on Shepherd.</p>
     </div>
   </div>
 `;
@@ -90,7 +90,7 @@ async function getCurrentPageUri() {
 
   // Extract website URI from the tab's full URL
   let pageFullUrl = await promise;
-  let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{,50}/g)[0];
+  let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{1,50}/g)[0];
   
   return pageUri;
 };
