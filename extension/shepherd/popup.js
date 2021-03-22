@@ -19,11 +19,11 @@ const api = axios.create({
 const bodyForUnknownMedia = `
   <div class="container">
     <div class="row text-center h-50 d-flex align-content-center">
-      <p class="pt-4">This website is not yet rated by Shepherd</p>
+      <p class="pt-4">This website is not yet rated by Shepherd.</p>
     </div>
 
     <div class="row text-center h-50 d-flex align-content-center">
-      <p class="pt-2">Help the community by suggesting this media on the <a class="shepherd-link" href="${config.websiteUri}" target="_blank">Shepherd website</a></p>
+      <p class="pt-2">Help the community by <a class="shepherd-link" href="${config.websiteUri}" target="_blank">suggesting this media</a> on Shepherd.</p>
     </div>
   </div>
 `;
@@ -80,8 +80,19 @@ function fetchMediaByWebsite(website) {
 /**
  * @returns {string} - URI of the current page
  */
-function getCurrentPageUri() {
-  return window.location.protocol + '//' + window.location.host;
+async function getCurrentPageUri() {
+  // Create a promise for getting the tab URL
+  const promise = new Promise(resolve => {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+      resolve(tabs[0].url);
+    });
+  });
+
+  // Extract website URI from the tab's full URL
+  let pageFullUrl = await promise;
+  let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{,50}/g)[0];
+  
+  return pageUri;
 };
 
 /**
@@ -105,6 +116,15 @@ function getGaugeConfigurationFor(media) {
  */
 function getUrlForMedia(media) {
   return config.apiUri + "medias/" + media.id;
+};
+
+/**
+ * Get API URL for searching medias by website
+ * @param {string} website - Website URI to search
+ * @returns {URL} - API URL for the meadia search
+ */
+function getUrlForMediaSearchByWebsite(website) {
+  return config.apiUri + "medias?website=" + website;
 };
 
 /**
@@ -140,8 +160,13 @@ function getTrimmed(value) {
  * @param {string} uri - Website URI of the media
  * @return {boolean} - Boolean of whether the media exists in the database
  */
-function isKnownMedia(uri) {
-  return false;
+async function isKnownMedia(uri) {
+  const response = await api.get(
+    getUrlForMediaSearchByWebsite(uri)
+  );
+
+  let atLeastOneResult = response.data.totalElements > 0;
+  return atLeastOneResult;
 }
 
 /**
@@ -175,16 +200,17 @@ function loadViewForUnknownMedia() {
 /**
  * Populate the extension's main window
  */
-function populateContent() {
+async function populateContent() {
   // Fetch media from API based on current page's domain
-  let uri = getCurrentPageUri();
+  let uri = await getCurrentPageUri();
+  let isKnown = await isKnownMedia(uri);
 
-  if (!isKnownMedia(uri)) {
-    currentMedia = fetchMediaByWebsite(uri);
+  if (!isKnown) {
     loadViewForUnknownMedia();
     return;
   }
 
+  currentMedia = fetchMediaByWebsite(uri);
   loadViewForKnownMedia();
 };
 
@@ -244,4 +270,4 @@ function styleElementAsTag(el) {
  * Load the extension's display
  */
 attachListenersToVoteButtons();
-populateContent();
+await populateContent();
