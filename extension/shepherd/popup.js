@@ -68,13 +68,13 @@ function createTag(label) {
  * @param {string} website - The URL of the website currently displayed
  * @returns {Object} - The media details
  */
-function fetchMediaByWebsite(website) {
-  return {
-    id: 1,
-    name: 'Les Inrockuptibles',
-    rate: .0,
-    tags: ['News', 'World', 'Reporting'],
-  };
+async function fetchMediaByWebsite(website) {
+  const response = await api.get(
+    getUrlForMediaSearchByWebsite(website)
+  );
+
+  let media = response.data.content[0];
+  return media;
 };
 
 /**
@@ -104,7 +104,7 @@ function getGaugeConfigurationFor(media) {
   return {
     min: config.mediaRateMin,
     max: config.mediaRateMax,
-    value: Math.round(media.rate),
+    value: Math.round(media.trustReport.rate),
     label: (val) => val + '%'
   }
 };
@@ -177,7 +177,7 @@ function loadViewForKnownMedia() {
   document.getElementById('mediaName').innerHTML = currentMedia.name;
   
   // Populate tags
-  populateTagsFrom(currentMedia);
+  // populateTagsFrom(currentMedia);
 
   // Initialize gauge
   Gauge(
@@ -210,7 +210,7 @@ async function populateContent() {
     return;
   }
 
-  currentMedia = fetchMediaByWebsite(uri);
+  currentMedia = await fetchMediaByWebsite(uri);
   loadViewForKnownMedia();
 };
 
