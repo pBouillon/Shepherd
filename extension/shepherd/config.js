@@ -13,5 +13,5 @@ export const config = {
     mediaId: 0,
     mediaRateMin: 0,
     mediaRateMax: 100,
-    console: chrome.extension.getBackgroundPage().console
+    bgPage: chrome.extension.getBackgroundPage()
 };
