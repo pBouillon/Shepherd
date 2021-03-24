@@ -36,6 +36,7 @@ button[type="button"] {
 
 .gauge-container-three > .gauge > .value {
   stroke-width: 8px;
+  stroke: var(--blue-400);
 }
 
 .gauge-container-three > .gauge > .dial {
