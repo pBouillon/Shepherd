@@ -74,6 +74,7 @@ async function fetchMediaByWebsite(website) {
   );
 
   let media = response.data.content[0];
+  media.tags = ["World", "News", "Reporting"];
   return media;
 };
 
@@ -177,7 +178,7 @@ function loadViewForKnownMedia() {
   document.getElementById('mediaName').innerHTML = currentMedia.name;
   
   // Populate tags
-  // populateTagsFrom(currentMedia);
+  populateTagsFrom(currentMedia);
 
   // Initialize gauge
   Gauge(
