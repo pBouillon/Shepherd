@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Represent a vote
@@ -31,5 +28,12 @@ public class Vote {
      * User's opinion regarding the media
      */
     private boolean isTrustworthy = false;
+
+    /**
+     * The media that is targeted by this vote
+     */
+    @ManyToOne
+    @JoinColumn(name="media_id", nullable=false)
+    private Media media;
 
 }

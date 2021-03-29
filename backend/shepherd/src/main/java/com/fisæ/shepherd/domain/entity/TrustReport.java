@@ -31,6 +31,6 @@ public class TrustReport {
     /**
      * Rating of how blindly the media can be trusted, in percentages
      */
-    private float rate = 50;
+    private float rate = 50f;
 
 }

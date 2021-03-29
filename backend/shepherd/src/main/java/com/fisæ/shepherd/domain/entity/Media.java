@@ -8,8 +8,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.net.URI;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.FetchType.LAZY;
 
 /**
  * Represent a media
@@ -82,6 +85,12 @@ public class Media {
     @JoinColumn(name = "trust_report_id", referencedColumnName = "id")
     @NonNull
     private TrustReport trustReport = new TrustReport();
+
+    /**
+     * Collection of the votes that this media has received
+     */
+    @OneToMany(mappedBy="media", cascade = CascadeType.ALL)
+    private Set<Vote> votes = new HashSet<>();
 
     /**
      * External website, referring to the official media's webpage
