@@ -14,6 +14,21 @@ const api = axios.create({
 });
 
 /**
+ * @const {string} bodyForApiConnectionError - HTML string for the body content of API connection error
+ */
+const bodyForApiConnectionError = `
+<div class="container">
+  <div class="row text-center h-50 d-flex align-content-center">
+    <p class="pt-4">There's been an error trying to reach Shepherd.</p>
+  </div>
+
+  <div class="row text-center h-50 d-flex align-content-center">
+    <p class="pt-2">Please check your internet connection and try again.</p>
+  </div>
+</div>
+`;
+
+/**
  * @const {string} bodyForUnknownMedia - HTML string for the body content of unknown media
  */
 const bodyForUnknownMedia = `
@@ -33,7 +48,8 @@ const bodyForUnknownMedia = `
  */
 const buttons = {
   suspicious: document.getElementById('buttonVoteSuspicious'),
-  trustworthy: document.getElementById('buttonVoteTrustworthy')
+  trustworthy: document.getElementById('buttonVoteTrustworthy'),
+  findOutMore: document.getElementById('buttonFindOutMore')
 };
 
 /**
@@ -157,6 +173,15 @@ function getTrimmed(value) {
 };
 
 /**
+ * Get Shepherd page URL for the media
+ * @param {Object} media - Media object
+ * @returns {URL} - Shepherd page URL for the given media
+ */
+function getPageUrlForMedia(media) {
+  return config.shepherdUri + "medias/" + media.name;
+};
+
+/**
  * @param {string} uri - Website URI of the media
  * @return {boolean} - Boolean of whether the media exists in the database
  */
@@ -175,6 +200,9 @@ async function isKnownMedia(uri) {
 function loadViewForKnownMedia() {
   // Load title
   document.getElementById('mediaName').innerHTML = currentMedia.name;
+
+  // Generate Find out more button link
+  buttons.findOutMore.href = getPageUrlForMedia(currentMedia);
   
   // Populate tags
   populateTagsFrom(currentMedia);
@@ -198,20 +226,41 @@ function loadViewForUnknownMedia() {
 };
 
 /**
+ * Load view for a connection error with the API
+ */
+function loadViewForConnectionError() {
+  let body = document.querySelector('body');
+  let html = document.querySelector('html');
+  
+  body.innerHTML = bodyForApiConnectionError;
+  html.className = "error";
+};
+
+/**
  * Populate the extension's main window
  */
 async function populateContent() {
   // Fetch media from API based on current page's domain
   let uri = await getCurrentPageUri();
-  let isKnown = await isKnownMedia(uri);
 
-  if (!isKnown) {
-    loadViewForUnknownMedia();
-    return;
-  }
+  try {
+    let isKnown = await isKnownMedia(uri);
 
+<<<<<<< HEAD
   currentMedia = fetchMediaByWebsite(uri);
   loadViewForKnownMedia();
+=======
+    if (!isKnown) {
+      loadViewForUnknownMedia();
+      return;
+    }
+  
+    currentMedia = await fetchMediaByWebsite(uri);
+    loadViewForKnownMedia();
+  } catch (error) {
+    loadViewForConnectionError();
+  }
+>>>>>>> c3676cb... Display different view for connection error to the API
 };
 
 /**
