@@ -13,4 +13,9 @@ public class TrustReportDto {
      */
     private float rate = 50;
 
+    /**
+     * Total number of votes for the media
+     */
+    private long voteCount = 0L;
+
 }

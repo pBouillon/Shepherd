@@ -1,8 +1,6 @@
 package com.fisæ.shepherd.domain.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -30,10 +28,12 @@ public class Vote {
     private boolean isTrustworthy = false;
 
     /**
-     * The media that is targeted by this vote
+     * The trust report of the media that is targeted by this vote
      */
     @ManyToOne
-    @JoinColumn(name="media_id", nullable=false)
-    private Media media;
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JoinColumn(name="trust_report_id", nullable=false)
+    private TrustReport trustReport;
 
 }
