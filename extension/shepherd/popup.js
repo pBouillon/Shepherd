@@ -246,10 +246,6 @@ async function populateContent() {
   try {
     let isKnown = await isKnownMedia(uri);
 
-<<<<<<< HEAD
-  currentMedia = fetchMediaByWebsite(uri);
-  loadViewForKnownMedia();
-=======
     if (!isKnown) {
       loadViewForUnknownMedia();
       return;
@@ -260,7 +256,6 @@ async function populateContent() {
   } catch (error) {
     loadViewForConnectionError();
   }
->>>>>>> c3676cb... Display different view for connection error to the API
 };
 
 /**
