@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 @dataclass
 class Media:
-    name: str
     description: str
+    name: str
     website: str
+    id: int = 0
