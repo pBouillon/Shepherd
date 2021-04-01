@@ -118,6 +118,36 @@ public class MediaWriteController extends MediaController {
     }
 
     /**
+     * Endpoint for: POST /medias/:id/votes
+     *
+     * Add a new vote for a specific media
+     *
+     * @param id Id of the targeted media
+     * @param command CQRS command containing the details needed to handle the vote
+     *
+     * @return Accepted to when the vote is acknowledged and its handling differed
+     */
+    @PostMapping("/{id}/votes")
+    @Operation(
+            summary = "Add a new vote for a specific media",
+            description = """
+                    Once received, the vote will be handled later on in order to appropriately update the media's trust score
+                    """,
+            responses = {
+                    @ApiResponse(responseCode = "202", description = "Vote successfully received"),
+                    @ApiResponse(responseCode = "400", description = "Invalid parameters"),
+                    @ApiResponse(responseCode = "404", description = "Media not found")
+            })
+    public ResponseEntity<?> postMediaVote(
+            @ApiParam("Id of the media to update")
+            @PathVariable @Min(Media.ID_MIN_VALUE) long id,
+            @ApiParam("Payload from which the vote for the media will be handled")
+            @Valid @RequestBody UpdateVoteCommand command) {
+        voteService.updateMediaVotes(id, command);
+        return ResponseEntity.accepted().build();
+    }
+
+    /**
      * Endpoint for: PUT /medias/:id
      *
      * Update a media by its id
@@ -141,33 +171,6 @@ public class MediaWriteController extends MediaController {
             @ApiParam("Payload from which the media will be updated")
             @Valid @RequestBody UpdateMediaCommand command) {
         return ResponseEntity.ok(mediaService.updateMedia(id, command));
-    }
-
-    /**
-     * Endpoint for: PUT /medias/:id/votes
-     *
-     * Update the media's score by modifying its votes
-     *
-     * @param id Id of the media to update
-     * @param command CQRS command containing the details needed to handle the vote
-     *
-     * @return Accepted to when the vote is acknowledged and differed
-     */
-    @PutMapping("/{id}/votes")
-    @Operation(
-            summary = "Update the media's score by modifying its votes",
-            responses = {
-                    @ApiResponse(responseCode = "202", description = "Vote successfully received"),
-                    @ApiResponse(responseCode = "400", description = "Invalid parameters"),
-                    @ApiResponse(responseCode = "404", description = "Media not found")
-            })
-    public ResponseEntity<?> putMediaVote(
-            @ApiParam("Id of the media to update")
-            @PathVariable @Min(Media.ID_MIN_VALUE) long id,
-            @ApiParam("Payload from which the vote for the media will be handled")
-            @Valid @RequestBody UpdateVoteCommand command) {
-        voteService.updateMediaVotes(id, command);
-        return ResponseEntity.accepted().build();
     }
 
 }

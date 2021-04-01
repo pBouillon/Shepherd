@@ -210,7 +210,7 @@ public class MediaWriteControllerTests extends ControllerTests {
 
         Assertions.assertThrows(
                 HttpClientErrorException.NotFound.class,
-                () -> restTemplate.put(mediaVoteUri, command));
+                () -> restTemplate.postForEntity(mediaVoteUri, command, Object.class));
     }
 
 }
