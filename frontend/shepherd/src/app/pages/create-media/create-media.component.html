@@ -75,7 +75,7 @@
     </div>
 
     <div class="row justify-content-center mt-3">
-      <button class="col-4 btn btn-outline-secondary mx-1">Cancel</button>
+      <a class="col-4 btn btn-outline-secondary mx-1" [routerLink]="'..'">Cancel</a>
       <button class="col-4 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
     </div>
   </form>

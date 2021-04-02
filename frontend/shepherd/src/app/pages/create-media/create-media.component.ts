@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Media } from 'src/app/models/medias/media';
+import { TrustReport } from 'src/app/models/medias/trust-report';
+import { MediaService } from 'src/app/shared/services/media/media.service';
 
 @Component({
   selector: 'app-create-media',
@@ -15,6 +18,7 @@ export class CreateMediaComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private mediaService: MediaService,
   ) { }
 
   ngOnInit(): void {
@@ -37,7 +41,33 @@ export class CreateMediaComponent implements OnInit {
   }
 
   onSubmit(): void {
-    alert('submitted');
+    const media = this.getMediaFromForm();
+
+    // POST the media
+    this.mediaService.createMedia(media).subscribe(
+      () => console.log('ok'),
+      (error: HttpErrorResponse) => console.error(error),
+    );
+
+    // Return to the menu
+  }
+
+  private getMediaFromForm() {
+    // Trim the trailing '/' if any
+    let rawMediaUrl: string = this.f.website.value;
+
+    if (rawMediaUrl.endsWith('/')) {
+      rawMediaUrl = rawMediaUrl.slice(0, -1);
+    }
+
+    // Retrieve the fields from the form
+    return new Media(
+      new Date(),
+      this.f.description.value,
+      0,
+      this.f.name.value,
+      new TrustReport(0),
+      new URL(rawMediaUrl));
   }
 
   get f() {
