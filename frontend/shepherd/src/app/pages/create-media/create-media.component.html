@@ -9,14 +9,44 @@
 
     <div class="row">
       <div class="col mb-3">
-        <label for="mediaName" class="form-label">Name</label>
+        <label for="mediaName" [ngClass]="{'text-success': f.name.valid}" class="form-label">Name</label>
         <input type="text" class="form-control" id="mediaName" placeholder="The Onion"
           [ngClass]="{'border-success': f.name.valid}"
-          [ngClass]="{'border-danger': f.name.dirty && f.name.invalid}"
+          [ngClass]="{'border-danger': f.name.touched && f.name.invalid}"
           formControlName="name" required>
-          <div *ngIf="f.name.dirty && f.name.invalid" class="text-danger">
-          <span *ngIf="f.name.errors?.required">The name is required</span>
-        </div>
+          <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+            <span *ngIf="f.name.errors?.required">
+              The name is required
+            </span>
+            <span *ngIf="f.name.errors?.minlength">
+              The name is a bit too short, please do not use abbreviations
+            </span>
+            <span *ngIf="f.name.errors?.maxlength">
+              The name too long, please just type the official name
+            </span>
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-3">
+        <label for="mediaDescription" [ngClass]="{'text-success': f.description.valid}" class="form-label">Description</label>
+        <textarea type="text" class="form-control" id="mediaDescription" rows="5"
+          placeholder="The Onion is an American satirical digital media company and newspaper organization that publishes articles on international, national, and local news."
+          [ngClass]="{'border-success': f.description.valid}"
+          [ngClass]="{'border-danger': f.description.touched && f.description.invalid}"
+          formControlName="description" required></textarea>
+          <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
+            <span *ngIf="f.description.errors?.required">
+              You should provide a short description for the media
+            </span>
+            <span *ngIf="f.description.errors?.minlength">
+              A longer description would surely be more useful for the other users to read
+            </span>
+            <span *ngIf="f.description.errors?.maxlength">
+              This is a bit too long, could you shorten this a bit?
+            </span>
+          </div>
       </div>
     </div>
 
@@ -27,4 +57,3 @@
   </form>
 
 </div>
-
