@@ -14,7 +14,7 @@
         type="search"
         placeholder="The Washington Post" />
     </div>
-    
+
     <hr class="my-3" />
   </div>
 
@@ -31,24 +31,24 @@
       <app-media-card
         *ngFor="let media of page.content"
         [media]="media"
-        class="col-sm-6">
+        class="col-sm-6 d-flex align-items-stretch">
       </app-media-card>
     </div>
-  
+
     <div class="container d-flex justify-content-center text-center my-3">
       <button class="btn btn-primary"
         [disabled]='page.first'
         (click)='loadPreviousPage()'>&lt;
       </button>
-  
+
       <span class="fs-3 mx-4 shepherd-text">
         {{ pageIndex + 1 }} / {{ page.totalPages }}
       </span>
-  
+
       <button class="btn btn-primary"
         [disabled]='page.last'
         (click)='loadNextPage()'>&gt;
-      </button>  
+      </button>
     </div>
   </ng-template>
 
