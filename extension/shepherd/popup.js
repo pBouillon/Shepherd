@@ -29,7 +29,7 @@ const bodyForUnknownMedia = `
 `;
 
 /**
- * @const {Object} buttons - Buttons 
+ * @const {Object} buttons - Buttons
  */
 const buttons = {
   suspicious: document.getElementById('buttonVoteSuspicious'),
@@ -92,7 +92,7 @@ async function getCurrentPageUri() {
   // Extract website URI from the tab's full URL
   let pageFullUrl = await promise;
   let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{1,50}/g)[0];
-  
+
   return pageUri;
 };
 
@@ -122,7 +122,7 @@ function getUrlForMedia(media) {
 /**
  * Get API URL for searching medias by website
  * @param {string} website - Website URI to search
- * @returns {URL} - API URL for the meadia search
+ * @returns {URL} - API URL for the media search
  */
 function getUrlForMediaSearchByWebsite(website) {
   return config.apiUri + "medias?website=" + website;
@@ -176,7 +176,7 @@ async function isKnownMedia(uri) {
 function loadViewForKnownMedia() {
   // Load title
   document.getElementById('mediaName').innerHTML = currentMedia.name;
-  
+
   // Populate tags
   populateTagsFrom(currentMedia);
 
@@ -193,7 +193,7 @@ function loadViewForKnownMedia() {
 function loadViewForUnknownMedia() {
   let body = document.querySelector('body');
   let html = document.querySelector('html');
-  
+
   body.innerHTML = bodyForUnknownMedia;
   html.className = "unknown";
 };
@@ -231,14 +231,14 @@ function populateTagsFrom(media) {
 /**
  * Send 'SUSPICIOUS' vote request to the API for the current media
  */
-function sendNegativeVote() { 
+function sendNegativeVote() {
   sendVote(false);
 };
 
 /**
  * Send 'TRUSTWORTHY' vote request to the API for the current media
  */
-function sendPositiveVote() { 
+function sendPositiveVote() {
   sendVote(true);
 };
 
@@ -246,9 +246,9 @@ function sendPositiveVote() {
  * Send vote request to the API for the current media
  * @param {boolean} value - Value of the vote
  */
-function sendVote(value) { 
+function sendVote(value) {
   api.put(
-    getUrlForMediaVote(currentMedia), 
+    getUrlForMediaVote(currentMedia),
     {
       "trustworthy": value
     }
@@ -257,12 +257,13 @@ function sendVote(value) {
 
 /**
  * Style a given element as a tag
- * @param {HTMLElement} el - HTML element 
+ * @param {HTMLElement} el - HTML element
  * @returns {HTMLElement} - The same element with Tag properties
  */
 function styleElementAsTag(el) {
   el.classList.add('badge');
   el.classList.add('bg-secondary');
+
   return el;
 };
 
