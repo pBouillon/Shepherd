@@ -9,6 +9,8 @@ import { Media } from 'src/app/models/medias/media';
 })
 export class CreateMediaComponent implements OnInit {
 
+  readonly urlRegexp = 'https://([\\da-z.-]{1,64})\\.([a-z.]{2,6})[/\\w .-]{0,256}/?';
+
   public createMediaForm!: FormGroup;
 
   constructor(
@@ -27,6 +29,10 @@ export class CreateMediaComponent implements OnInit {
         Validators.minLength(Media.DESCRIPTION_MIN_LENGTH),
         Validators.maxLength(Media.DESCRIPTION_MAX_LENGTH)
       ]],
+      website: ['', [
+        Validators.required,
+        Validators.pattern(this.urlRegexp),
+      ]]
     });
   }
 
@@ -35,9 +41,7 @@ export class CreateMediaComponent implements OnInit {
   }
 
   get f() {
-
     return this.createMediaForm.controls;
-
   }
 
 }

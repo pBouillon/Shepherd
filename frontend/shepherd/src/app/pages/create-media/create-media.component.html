@@ -30,6 +30,30 @@
 
     <div class="row">
       <div class="col mb-3">
+        <label for="mediaWebsite" class="form-label">Website</label>
+        <input type="url" class="form-control" id="mediaWebsite" placeholder="https://www.theonion.com"
+          [ngClass]="{'border-success': f.website.valid}"
+          [ngClass]="{'border-danger': f.website.touched && f.website.invalid}"
+          formControlName="website" aria-describedby="websiteHelp" required>
+        <div id="websiteHelp" class="form-text">
+          Only <code>HTTPS</code> urls are allowed
+          <a href="https://en.wikipedia.org/wiki/HTTPS#Difference_from_HTTP"
+            target="_blank"
+            class="shepherd-link">(why <code>HTTPS</code>?)</a>
+        </div>
+        <div *ngIf="f.website.touched && f.website.invalid" class="text-danger">
+          <span *ngIf="f.website.errors?.required">
+            Shepherd is built for online news, a website should be referenced
+          </span>
+          <span *ngIf="f.website.errors?.pattern">
+            This url does not seems to be valid. Did you picked the right one ?
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mb-3">
         <label for="mediaDescription" [ngClass]="{'text-success': f.description.valid}" class="form-label">Description</label>
         <textarea type="text" class="form-control" id="mediaDescription" rows="5"
           placeholder="The Onion is an American satirical digital media company and newspaper organization that publishes articles on international, national, and local news."
@@ -50,7 +74,7 @@
       </div>
     </div>
 
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
       <button class="col-4 btn btn-outline-secondary mx-1">Cancel</button>
       <button class="col-4 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
     </div>
