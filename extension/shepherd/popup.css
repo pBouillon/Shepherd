@@ -39,7 +39,7 @@ button[type="button"] {
 }
 
 .gauge-container-three > .gauge > .value {
-  stroke-width: 8px;
+  stroke-width: 5px;
   stroke: var(--blue-400);
 }
 

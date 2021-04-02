@@ -115,7 +115,7 @@ async function getCurrentPageUri() {
 /**
  * Generate configuration dictionary for the gauge instanciation
  * @param {Object} media - The media for which the gauge will be set up
- * @returns {Object} - The preconfigured configuration object
+ * @returns {Object} - The pre-configured configuration object
  */
 function getGaugeConfigurationFor(media) {
   return {
@@ -127,30 +127,12 @@ function getGaugeConfigurationFor(media) {
 };
 
 /**
- * Get API URL for the media resource
- * @param {Object} media - Media object
- * @returns {URL} - API resource URL for the given media
- */
-function getUrlForMedia(media) {
-  return config.apiUri + "medias/" + media.id;
-};
-
-/**
  * Get API URL for searching medias by website
  * @param {string} website - Website URI to search
  * @returns {URL} - API URL for the media search
  */
 function getUrlForMediaSearchByWebsite(website) {
   return config.apiUri + "medias?website=" + website;
-};
-
-/**
- * Get API URL for the media resource
- * @param {Object} media - Media object
- * @returns {URL} - API resource URL for the given media
- */
-function getUrlForMedias(media) {
-  return config.apiUri + "medias";
 };
 
 /**
@@ -191,8 +173,7 @@ async function isKnownMedia(uri) {
     getUrlForMediaSearchByWebsite(uri)
   );
 
-  let atLeastOneResult = response.data.totalElements > 0;
-  return atLeastOneResult;
+  return response.data.totalElements > 0;
 }
 
 /**
@@ -200,7 +181,7 @@ async function isKnownMedia(uri) {
  */
 function loadViewForKnownMedia() {
   // Load title
-  document.getElementById('mediaName').innerHTML = currentMedia.name;
+  document.getElementById('mediaName').innerHTML = getTrimmed(currentMedia.name);
 
   // Generate Find out more button link
   buttons.findOutMore.href = getPageUrlForMedia(currentMedia);
