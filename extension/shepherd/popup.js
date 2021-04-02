@@ -44,7 +44,7 @@ const bodyForUnknownMedia = `
 `;
 
 /**
- * @const {Object} buttons - Buttons 
+ * @const {Object} buttons - Buttons
  */
 const buttons = {
   suspicious: document.getElementById('buttonVoteSuspicious'),
@@ -84,13 +84,14 @@ function createTag(label) {
  * @param {string} website - The URL of the website currently displayed
  * @returns {Object} - The media details
  */
-function fetchMediaByWebsite(website) {
-  return {
-    id: 1,
-    name: 'Les Inrockuptibles',
-    rate: .0,
-    tags: ['News', 'World', 'Reporting'],
-  };
+async function fetchMediaByWebsite(website) {
+  const response = await api.get(
+    getUrlForMediaSearchByWebsite(website)
+  );
+
+  let media = response.data.content[0];
+  media.tags = ["World", "News", "Reporting"];
+  return media;
 };
 
 /**
@@ -107,49 +108,31 @@ async function getCurrentPageUri() {
   // Extract website URI from the tab's full URL
   let pageFullUrl = await promise;
   let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{1,50}/g)[0];
-  
+
   return pageUri;
 };
 
 /**
  * Generate configuration dictionary for the gauge instanciation
  * @param {Object} media - The media for which the gauge will be set up
- * @returns {Object} - The preconfigured configuration object
+ * @returns {Object} - The pre-configured configuration object
  */
 function getGaugeConfigurationFor(media) {
   return {
     min: config.mediaRateMin,
     max: config.mediaRateMax,
-    value: Math.round(media.rate),
+    value: Math.round(media.trustReport.rate),
     label: (val) => val + '%'
   }
 };
 
 /**
- * Get API URL for the media resource
- * @param {Object} media - Media object
- * @returns {URL} - API resource URL for the given media
- */
-function getUrlForMedia(media) {
-  return config.apiUri + "medias/" + media.id;
-};
-
-/**
  * Get API URL for searching medias by website
  * @param {string} website - Website URI to search
- * @returns {URL} - API URL for the meadia search
+ * @returns {URL} - API URL for the media search
  */
 function getUrlForMediaSearchByWebsite(website) {
   return config.apiUri + "medias?website=" + website;
-};
-
-/**
- * Get API URL for the media resource
- * @param {Object} media - Media object
- * @returns {URL} - API resource URL for the given media
- */
-function getUrlForMedias(media) {
-  return config.apiUri + "medias";
 };
 
 /**
@@ -190,8 +173,7 @@ async function isKnownMedia(uri) {
     getUrlForMediaSearchByWebsite(uri)
   );
 
-  let atLeastOneResult = response.data.totalElements > 0;
-  return atLeastOneResult;
+  return response.data.totalElements > 0;
 }
 
 /**
@@ -199,11 +181,11 @@ async function isKnownMedia(uri) {
  */
 function loadViewForKnownMedia() {
   // Load title
-  document.getElementById('mediaName').innerHTML = currentMedia.name;
+  document.getElementById('mediaName').innerHTML = getTrimmed(currentMedia.name);
 
   // Generate Find out more button link
   buttons.findOutMore.href = getPageUrlForMedia(currentMedia);
-  
+
   // Populate tags
   populateTagsFrom(currentMedia);
 
@@ -220,7 +202,7 @@ function loadViewForKnownMedia() {
 function loadViewForUnknownMedia() {
   let body = document.querySelector('body');
   let html = document.querySelector('html');
-  
+
   body.innerHTML = bodyForUnknownMedia;
   html.className = "unknown";
 };
@@ -231,7 +213,7 @@ function loadViewForUnknownMedia() {
 function loadViewForConnectionError() {
   let body = document.querySelector('body');
   let html = document.querySelector('html');
-  
+
   body.innerHTML = bodyForApiConnectionError;
   html.className = "error";
 };
@@ -250,7 +232,7 @@ async function populateContent() {
       loadViewForUnknownMedia();
       return;
     }
-  
+
     currentMedia = await fetchMediaByWebsite(uri);
     loadViewForKnownMedia();
   } catch (error) {
@@ -274,14 +256,14 @@ function populateTagsFrom(media) {
 /**
  * Send 'SUSPICIOUS' vote request to the API for the current media
  */
-function sendNegativeVote() { 
+function sendNegativeVote() {
   sendVote(false);
 };
 
 /**
  * Send 'TRUSTWORTHY' vote request to the API for the current media
  */
-function sendPositiveVote() { 
+function sendPositiveVote() {
   sendVote(true);
 };
 
@@ -289,9 +271,9 @@ function sendPositiveVote() {
  * Send vote request to the API for the current media
  * @param {boolean} value - Value of the vote
  */
-function sendVote(value) { 
+function sendVote(value) {
   api.put(
-    getUrlForMediaVote(currentMedia), 
+    getUrlForMediaVote(currentMedia),
     {
       "trustworthy": value
     }
@@ -300,12 +282,13 @@ function sendVote(value) {
 
 /**
  * Style a given element as a tag
- * @param {HTMLElement} el - HTML element 
+ * @param {HTMLElement} el - HTML element
  * @returns {HTMLElement} - The same element with Tag properties
  */
 function styleElementAsTag(el) {
   el.classList.add('badge');
   el.classList.add('bg-secondary');
+
   return el;
 };
 
