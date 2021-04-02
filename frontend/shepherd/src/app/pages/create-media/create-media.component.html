@@ -7,8 +7,8 @@
 
   <form class="container" [formGroup]="createMediaForm" (ngSubmit)="onSubmit()">
 
-    <div class="row">
-      <div class="col mb-3">
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
         <label for="mediaName" [ngClass]="{'text-success': f.name.valid}" class="form-label">Name</label>
         <input type="text" class="form-control" id="mediaName" placeholder="The Onion"
           [ngClass]="{'border-success': f.name.valid}"
@@ -28,8 +28,8 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col mb-3">
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
         <label for="mediaWebsite" class="form-label">Website</label>
         <input type="url" class="form-control" id="mediaWebsite" placeholder="https://www.theonion.com"
           [ngClass]="{'border-success': f.website.valid}"
@@ -52,8 +52,8 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col mb-3">
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
         <label for="mediaDescription" [ngClass]="{'text-success': f.description.valid}" class="form-label">Description</label>
         <textarea type="text" class="form-control" id="mediaDescription" rows="5"
           placeholder="The Onion is an American satirical digital media company and newspaper organization that publishes articles on international, national, and local news."
@@ -75,8 +75,8 @@
     </div>
 
     <div class="row justify-content-center mt-3">
-      <a class="col-4 btn btn-outline-secondary mx-1" [routerLink]="'..'">Cancel</a>
-      <button class="col-4 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
+      <a class="col-4 col-md-2 btn btn-outline-secondary mx-1" [routerLink]="'..'">Cancel</a>
+      <button class="col-4 col-md-2 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
     </div>
   </form>
 
