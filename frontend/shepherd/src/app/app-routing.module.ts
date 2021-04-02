@@ -8,7 +8,7 @@ import { MediaResolver } from './shared/resolvers/media.resolver';
 
 const routes: Routes = [
   { path: 'medias', component: MediasComponent },
-  { path: 'medias/:name', component: MediaComponent, resolve: { media: MediaResolver } },
+  { path: 'medias/details/:name', component: MediaComponent, resolve: { media: MediaResolver } },
   { path: '', component: HomepageComponent }
 ];
 

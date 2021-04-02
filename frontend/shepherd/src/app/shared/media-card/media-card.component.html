@@ -5,7 +5,7 @@
 
     <p class="card-text">{{ media.description }}</p>
 
-    <a [routerLink]="media.name"
+    <a [routerLink]="'details/' + media.name"
         class="btn btn-outline-primary mx-auto">
       Check the review
     </a>
