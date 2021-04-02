@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { MediaComponent } from './media/media.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CreateMediaComponent } from './create-media/create-media.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
@@ -15,9 +17,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HomepageComponent,
     MediasComponent,
     MediaComponent,
+    CreateMediaComponent,
   ],
   imports: [
     CommonModule,
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
