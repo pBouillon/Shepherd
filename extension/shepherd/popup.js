@@ -14,11 +14,42 @@ const api = axios.create({
 });
 
 /**
+ * @const {string} bodyForApiConnectionError - HTML string for the body content of API connection error
+ */
+const bodyForApiConnectionError = `
+<div class="container">
+  <div class="row text-center h-50 d-flex align-content-center">
+    <p class="pt-4">There's been an error trying to reach Shepherd.</p>
+  </div>
+
+  <div class="row text-center h-50 d-flex align-content-center">
+    <p class="pt-2">Please check your internet connection and try again.</p>
+  </div>
+</div>
+`;
+
+/**
+ * @const {string} bodyForUnknownMedia - HTML string for the body content of unknown media
+ */
+const bodyForUnknownMedia = `
+  <div class="container">
+    <div class="row text-center h-50 d-flex align-content-center">
+      <p class="pt-4">This website is not yet rated by Shepherd.</p>
+    </div>
+
+    <div class="row text-center h-50 d-flex align-content-center">
+      <p class="pt-2">Help the community by <a class="shepherd-link" href="${config.shepherdUri}" target="_blank">suggesting this media</a> on Shepherd.</p>
+    </div>
+  </div>
+`;
+
+/**
  * @const {Object} buttons - Buttons 
  */
 const buttons = {
   suspicious: document.getElementById('buttonVoteSuspicious'),
-  trustworthy: document.getElementById('buttonVoteTrustworthy')
+  trustworthy: document.getElementById('buttonVoteTrustworthy'),
+  findOutMore: document.getElementById('buttonFindOutMore')
 };
 
 /**
@@ -65,8 +96,19 @@ function fetchMediaByWebsite(website) {
 /**
  * @returns {string} - URI of the current page
  */
-function getCurrentPageUri() {
-  return window.location.protocol + '//' + window.location.host;
+async function getCurrentPageUri() {
+  // Create a promise for getting the tab URL
+  const promise = new Promise(resolve => {
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+      resolve(tabs[0].url);
+    });
+  });
+
+  // Extract website URI from the tab's full URL
+  let pageFullUrl = await promise;
+  let pageUri = pageFullUrl.match(/^https:\/\/[^\/]{1,50}/g)[0];
+  
+  return pageUri;
 };
 
 /**
@@ -89,7 +131,25 @@ function getGaugeConfigurationFor(media) {
  * @returns {URL} - API resource URL for the given media
  */
 function getUrlForMedia(media) {
-  return config.apiUri + "medias/" + media.id
+  return config.apiUri + "medias/" + media.id;
+};
+
+/**
+ * Get API URL for searching medias by website
+ * @param {string} website - Website URI to search
+ * @returns {URL} - API URL for the meadia search
+ */
+function getUrlForMediaSearchByWebsite(website) {
+  return config.apiUri + "medias?website=" + website;
+};
+
+/**
+ * Get API URL for the media resource
+ * @param {Object} media - Media object
+ * @returns {URL} - API resource URL for the given media
+ */
+function getUrlForMedias(media) {
+  return config.apiUri + "medias";
 };
 
 /**
@@ -97,7 +157,7 @@ function getUrlForMedia(media) {
  * @param {Object} media - Media object
  */
 function getUrlForMediaVote(media) {
-  return config.apiUri + "medias/" + media.id + "/votes"
+  return config.apiUri + "medias/" + media.id + "/votes";
 };
 
 /**
@@ -113,16 +173,37 @@ function getTrimmed(value) {
 };
 
 /**
- * Populate the extension's main window
+ * Get Shepherd page URL for the media
+ * @param {Object} media - Media object
+ * @returns {URL} - Shepherd page URL for the given media
  */
-function populateContent() {
-  // Fetch media from API based on current page's domain
-  let uri = getCurrentPageUri();
-  currentMedia = fetchMediaByWebsite(uri);
-  
+function getPageUrlForMedia(media) {
+  return config.shepherdUri + "medias/" + media.name;
+};
+
+/**
+ * @param {string} uri - Website URI of the media
+ * @return {boolean} - Boolean of whether the media exists in the database
+ */
+async function isKnownMedia(uri) {
+  const response = await api.get(
+    getUrlForMediaSearchByWebsite(uri)
+  );
+
+  let atLeastOneResult = response.data.totalElements > 0;
+  return atLeastOneResult;
+}
+
+/**
+ * Load view for a media that is in the database
+ */
+function loadViewForKnownMedia() {
   // Load title
   document.getElementById('mediaName').innerHTML = currentMedia.name;
 
+  // Generate Find out more button link
+  buttons.findOutMore.href = getPageUrlForMedia(currentMedia);
+  
   // Populate tags
   populateTagsFrom(currentMedia);
 
@@ -131,6 +212,50 @@ function populateContent() {
     document.getElementById('rateGauge'),
     getGaugeConfigurationFor(currentMedia)
   );
+};
+
+/**
+ * Load view for a media that is not in the database
+ */
+function loadViewForUnknownMedia() {
+  let body = document.querySelector('body');
+  let html = document.querySelector('html');
+  
+  body.innerHTML = bodyForUnknownMedia;
+  html.className = "unknown";
+};
+
+/**
+ * Load view for a connection error with the API
+ */
+function loadViewForConnectionError() {
+  let body = document.querySelector('body');
+  let html = document.querySelector('html');
+  
+  body.innerHTML = bodyForApiConnectionError;
+  html.className = "error";
+};
+
+/**
+ * Populate the extension's main window
+ */
+async function populateContent() {
+  // Fetch media from API based on current page's domain
+  let uri = await getCurrentPageUri();
+
+  try {
+    let isKnown = await isKnownMedia(uri);
+
+    if (!isKnown) {
+      loadViewForUnknownMedia();
+      return;
+    }
+  
+    currentMedia = await fetchMediaByWebsite(uri);
+    loadViewForKnownMedia();
+  } catch (error) {
+    loadViewForConnectionError();
+  }
 };
 
 /**
@@ -184,8 +309,9 @@ function styleElementAsTag(el) {
   return el;
 };
 
+
 /**
  * Load the extension's display
  */
 attachListenersToVoteButtons();
-populateContent();
+await populateContent();
