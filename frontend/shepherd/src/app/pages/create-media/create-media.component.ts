@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Media } from 'src/app/models/medias/media';
 import { TrustReport } from 'src/app/models/medias/trust-report';
 import { MediaService } from 'src/app/shared/services/media/media.service';
@@ -19,6 +20,7 @@ export class CreateMediaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private mediaService: MediaService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -41,15 +43,18 @@ export class CreateMediaComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // Retrieve the media from the form fields
     const media = this.getMediaFromForm();
 
     // POST the media
+    // TODO: handle the response
     this.mediaService.createMedia(media).subscribe(
       () => console.log('ok'),
       (error: HttpErrorResponse) => console.error(error),
     );
 
     // Return to the menu
+    this.router.navigate(['medias']);
   }
 
   private getMediaFromForm() {
