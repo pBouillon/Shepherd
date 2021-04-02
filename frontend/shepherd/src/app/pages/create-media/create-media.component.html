@@ -5,4 +5,26 @@
     <hr class="my-3" />
   </div>
 
+  <form class="container" [formGroup]="createMediaForm" (ngSubmit)="onSubmit()">
+
+    <div class="row">
+      <div class="col mb-3">
+        <label for="mediaName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="mediaName" placeholder="The Onion"
+          [ngClass]="{'border-success': f.name.valid}"
+          [ngClass]="{'border-danger': f.name.dirty && f.name.invalid}"
+          formControlName="name" required>
+          <div *ngIf="f.name.dirty && f.name.invalid" class="text-danger">
+          <span *ngIf="f.name.errors?.required">The name is required</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <button class="col-4 btn btn-outline-secondary mx-1">Cancel</button>
+      <button class="col-4 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
+    </div>
+  </form>
+
 </div>
+

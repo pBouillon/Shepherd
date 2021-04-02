@@ -6,6 +6,7 @@ export class Media {
         public creationDate: Date,
         public description: string,
         public id: number,
+        public name: string,
         public trustReport: TrustReport,
         public website: URL,
     ) { }
