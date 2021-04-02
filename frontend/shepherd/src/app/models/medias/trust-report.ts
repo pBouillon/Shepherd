@@ -1,5 +1,8 @@
 export class TrustReport {
 
-    rate: number = 50.;
+
+    constructor(
+        rate: number,
+    ) { }
 
 }

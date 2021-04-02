@@ -3,24 +3,17 @@ import { Media } from "./media";
 
 export class PaginatedMedias {
 
-    public content: Array<Media> = [];
-
-    public empty: boolean = true;
-
-    public first: boolean = true;
-
-    public last: boolean = true;
-
-    public number: number = 0;
-
-    public numberOfElements: number = 0;
-
-    public pageable: Pageable = new Pageable();
-    
-    public size: number = 0;
-    
-    public totalPages: number = 0;
-    
-    public totalElements: number = 0;
+    constructor(
+        public content: Array<Media>,
+        public empty: boolean,
+        public first: boolean,
+        public last: boolean,
+        public number: number,
+        public numberOfElements: number,
+        public pageable: Pageable,
+        public size: number,
+        public totalPages: number,
+        public totalElements: number,
+    ) { }
 
 }

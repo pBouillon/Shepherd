@@ -14,8 +14,8 @@ export class MediasComponent implements OnInit, AfterContentInit  {
 
   public searchForm?: FormGroup;
 
-  public page: PaginatedMedias = new PaginatedMedias();
-  
+  public page?: PaginatedMedias;
+
   public pageIndex = 0;
 
   constructor(
