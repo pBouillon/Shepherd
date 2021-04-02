@@ -7,7 +7,7 @@
   <div class="container" [formGroup]="searchForm!">
     <hr class="my-3" />
 
-    <div class="row mb-3 justify-content-center">
+    <div class="row mb-2 justify-content-center">
       <input class="col-12 col-sm-6 p-2 border border-1 rounded"
         id="search-bar"
         formControlName="search"
@@ -15,7 +15,12 @@
         placeholder="The Washington Post" />
     </div>
 
-    <hr class="my-3" />
+    <div class="d-flex justify-content-center ">
+      <span class="text-muted mx-1">Can't find your media?</span>
+      <a href="#" class="shepherd-link">Try creating it!</a>
+    </div>
+
+    <hr class="mb-3" />
   </div>
 
   <div *ngIf="page.empty; else mediasBoard">
