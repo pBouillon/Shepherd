@@ -72,7 +72,7 @@ export class CreateMediaComponent implements OnInit {
       this.f.description.value,
       0,
       this.f.name.value,
-      new TrustReport(0),
+      new TrustReport(0, 0),
       new URL(rawMediaUrl));
   }
 
