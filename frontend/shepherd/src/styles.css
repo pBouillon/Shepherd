@@ -2,6 +2,12 @@
 
 @import "./theme.css";
 
+body,
+app-root {
+  min-height: 100vh;
+  height: 100vh;
+}
+
 /* Gauge global styles: https://github.com/mattlewis92/angular-gauge#installation */
 mwl-gauge {
   width: 150px;
