@@ -2,16 +2,13 @@ import { Sort } from "./sort";
 
 export class Pageable {
 
-  public offset: number = 0;
-
-  public paged: boolean = true;
-  
-  public pageNumber: number = 0;
-  
-  public pageSize: number = 10;
-
-  public sort: Sort = new Sort();
-
-  public unpaged: boolean = true;
+  constructor(
+    public offset: number,
+    public paged: boolean,
+    public pageNumber: number,
+    public pageSize: number,
+    public sort: Sort,
+    public unpaged: boolean,
+  ) { }
 
 }

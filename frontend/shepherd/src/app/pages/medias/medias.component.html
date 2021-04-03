@@ -2,23 +2,27 @@
 
   <div class="container justify-content-center text-center my-3">
     <h1 class="shepherd-title">Rated medias</h1>
+    <hr class="my-3" />
   </div>
 
   <div class="container" [formGroup]="searchForm!">
-    <hr class="my-3" />
-
-    <div class="row mb-3 justify-content-center">
+    <div class="row mb-2 justify-content-center">
       <input class="col-12 col-sm-6 p-2 border border-1 rounded"
         id="search-bar"
         formControlName="search"
         type="search"
         placeholder="The Washington Post" />
     </div>
-    
-    <hr class="my-3" />
+
+    <div class="d-flex justify-content-center ">
+      <span class="text-muted mx-1">Can't find your media?</span>
+      <a [routerLink]="'new'" class="shepherd-link">Try creating it!</a>
+    </div>
+
+    <hr class="mb-3" />
   </div>
 
-  <div *ngIf="page.empty; else mediasBoard">
+  <div *ngIf="page?.empty; else mediasBoard">
     <div class="container d-flex justify-content-center text-center form-control">
       <h5 class="shepherd-text-muted my-5">
         Looks like there is no media reviewed yet, time to buy the newspaper?
@@ -29,26 +33,26 @@
   <ng-template #mediasBoard>
     <div class="row row-cols-1 row-cols-md-3 g-3">
       <app-media-card
-        *ngFor="let media of page.content"
+        *ngFor="let media of page?.content"
         [media]="media"
-        class="col-sm-6">
+        class="col-sm-6 d-flex align-items-stretch">
       </app-media-card>
     </div>
-  
+
     <div class="container d-flex justify-content-center text-center my-3">
       <button class="btn btn-primary"
-        [disabled]='page.first'
+        [disabled]='page?.first'
         (click)='loadPreviousPage()'>&lt;
       </button>
-  
+
       <span class="fs-3 mx-4 shepherd-text">
-        {{ pageIndex + 1 }} / {{ page.totalPages }}
+        {{ pageIndex + 1 }} / {{ page?.totalPages }}
       </span>
-  
+
       <button class="btn btn-primary"
-        [disabled]='page.last'
+        [disabled]='page?.last'
         (click)='loadNextPage()'>&gt;
-      </button>  
+      </button>
     </div>
   </ng-template>
 

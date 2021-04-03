@@ -1,0 +1,80 @@
+<div class="m-4">
+
+  <div class="container justify-content-center text-center my-3">
+    <h1 class="shepherd-title">Create a new media</h1>
+    <hr class="my-3" />
+  </div>
+
+  <form class="container" [formGroup]="createMediaForm" (ngSubmit)="onSubmit()">
+
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
+        <label for="mediaName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="mediaName" placeholder="The Onion"
+          [ngClass]="{'border-danger': f.name.touched && f.name.invalid}"
+          formControlName="name" required>
+          <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
+            <span *ngIf="f.name.errors?.required">
+              The name is required
+            </span>
+            <span *ngIf="f.name.errors?.minlength">
+              The name is a bit too short, please do not use abbreviations
+            </span>
+            <span *ngIf="f.name.errors?.maxlength">
+              The name too long, please just type the official name
+            </span>
+          </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
+        <label for="mediaWebsite" class="form-label">Website</label>
+        <input type="url" class="form-control" id="mediaWebsite" placeholder="https://www.theonion.com"
+          [ngClass]="{'border-danger': f.website.touched && f.website.invalid}"
+          formControlName="website" aria-describedby="websiteHelp" required>
+        <div id="websiteHelp" class="form-text">
+          Only <code>HTTPS</code> urls are allowed
+          <a href="https://en.wikipedia.org/wiki/HTTPS#Difference_from_HTTP"
+            target="_blank"
+            class="shepherd-link">(why <code>HTTPS</code>?)</a>
+        </div>
+        <div *ngIf="f.website.touched && f.website.invalid" class="text-danger">
+          <span *ngIf="f.website.errors?.required">
+            Shepherd is built for online news, the website of the media must be referenced
+          </span>
+          <span *ngIf="f.website.errors?.pattern">
+            This url does not seems to be valid. Did you picked the right one ?
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col col-md-6 mb-3">
+        <label for="mediaDescription" class="form-label">Description</label>
+        <textarea type="text" class="form-control" id="mediaDescription" rows="5"
+          placeholder="The Onion is an American satirical digital media company and newspaper organization that publishes articles on international, national, and local news."
+          [ngClass]="{'border-danger': f.description.touched && f.description.invalid}"
+          formControlName="description" required></textarea>
+          <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
+            <span *ngIf="f.description.errors?.required">
+              You should provide a short description for the media
+            </span>
+            <span *ngIf="f.description.errors?.minlength">
+              A longer description would surely be more useful for the other users to read
+            </span>
+            <span *ngIf="f.description.errors?.maxlength">
+              This is a bit too long, could you shorten this a bit?
+            </span>
+          </div>
+      </div>
+    </div>
+
+    <div class="row justify-content-center mt-3">
+      <a class="col-5 col-md-2 btn btn-outline-secondary mx-2" [routerLink]="'..'">Cancel</a>
+      <button class="col-5 col-md-2 btn btn-primary mx-2" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
+    </div>
+  </form>
+
+</div>

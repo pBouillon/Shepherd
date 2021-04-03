@@ -1,0 +1,3 @@
+.ng-valid[required], .ng-valid.required {
+  border: 1px solid var(--blue-400);
+}

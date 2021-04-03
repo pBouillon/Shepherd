@@ -2,21 +2,21 @@ import { TrustReport } from "./trust-report";
 
 export class Media {
 
-    creationDate: Date = new Date();
+    static DESCRIPTION_MAX_LENGTH = 256;
 
-    description: string;
+    static DESCRIPTION_MIN_LENGTH = 16;
 
-    id: number = 0;
+    static NAME_MIN_LENGTH = 3;
 
-    name: string;
+    static NAME_MAX_LENGTH = 32;
 
-    trustReport: TrustReport = new TrustReport();
-
-    website?: URL;
-
-    constructor(name: string, description?: string) {
-        this.name = name;
-        this.description = description || name;
-    }
+    constructor(
+        public creationDate: Date,
+        public description: string,
+        public id: number,
+        public name: string,
+        public trustReport: TrustReport,
+        public website: URL,
+    ) { }
 
 }

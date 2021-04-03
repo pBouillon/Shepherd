@@ -161,7 +161,7 @@ function getTrimmed(value) {
  * @returns {URL} - Shepherd page URL for the given media
  */
 function getPageUrlForMedia(media) {
-  return config.shepherdUri + "medias/" + media.name;
+  return config.shepherdUri + "medias/details/" + media.name;
 };
 
 /**
