@@ -25,8 +25,8 @@ import { GaugeModule } from 'angular-gauge';
       animated: true,
       dialRadius: 40,
       max: 100,
-      dialStartAngle: 40,
-      dialEndAngle: 140,
+      dialStartAngle: 140,
+      dialEndAngle: 40,
     }),
   ],
   exports: [
