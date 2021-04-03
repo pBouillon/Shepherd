@@ -47,7 +47,6 @@ export class CreateMediaComponent implements OnInit {
     const media = this.getMediaFromForm();
 
     // POST the media
-    // TODO: handle the response
     this.mediaService.createMedia(media).subscribe(
       () => console.log('ok'),
       (error: HttpErrorResponse) => console.error(error),

@@ -9,9 +9,8 @@
 
     <div class="row justify-content-center">
       <div class="col col-md-6 mb-3">
-        <label for="mediaName" [ngClass]="{'text-success': f.name.valid}" class="form-label">Name</label>
+        <label for="mediaName" class="form-label">Name</label>
         <input type="text" class="form-control" id="mediaName" placeholder="The Onion"
-          [ngClass]="{'border-success': f.name.valid}"
           [ngClass]="{'border-danger': f.name.touched && f.name.invalid}"
           formControlName="name" required>
           <div *ngIf="f.name.touched && f.name.invalid" class="text-danger">
@@ -32,7 +31,6 @@
       <div class="col col-md-6 mb-3">
         <label for="mediaWebsite" class="form-label">Website</label>
         <input type="url" class="form-control" id="mediaWebsite" placeholder="https://www.theonion.com"
-          [ngClass]="{'border-success': f.website.valid}"
           [ngClass]="{'border-danger': f.website.touched && f.website.invalid}"
           formControlName="website" aria-describedby="websiteHelp" required>
         <div id="websiteHelp" class="form-text">
@@ -43,7 +41,7 @@
         </div>
         <div *ngIf="f.website.touched && f.website.invalid" class="text-danger">
           <span *ngIf="f.website.errors?.required">
-            Shepherd is built for online news, a website should be referenced
+            Shepherd is built for online news, the website of the media must be referenced
           </span>
           <span *ngIf="f.website.errors?.pattern">
             This url does not seems to be valid. Did you picked the right one ?
@@ -54,10 +52,9 @@
 
     <div class="row justify-content-center">
       <div class="col col-md-6 mb-3">
-        <label for="mediaDescription" [ngClass]="{'text-success': f.description.valid}" class="form-label">Description</label>
+        <label for="mediaDescription" class="form-label">Description</label>
         <textarea type="text" class="form-control" id="mediaDescription" rows="5"
           placeholder="The Onion is an American satirical digital media company and newspaper organization that publishes articles on international, national, and local news."
-          [ngClass]="{'border-success': f.description.valid}"
           [ngClass]="{'border-danger': f.description.touched && f.description.invalid}"
           formControlName="description" required></textarea>
           <div *ngIf="f.description.touched && f.description.invalid" class="text-danger">
@@ -75,8 +72,8 @@
     </div>
 
     <div class="row justify-content-center mt-3">
-      <a class="col-4 col-md-2 btn btn-outline-secondary mx-1" [routerLink]="'..'">Cancel</a>
-      <button class="col-4 col-md-2 btn btn-primary mx-1" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
+      <a class="col-5 col-md-2 btn btn-outline-secondary mx-2" [routerLink]="'..'">Cancel</a>
+      <button class="col-5 col-md-2 btn btn-primary mx-2" [disabled]="createMediaForm.invalid" type="submit">Submit</button>
     </div>
   </form>
 
