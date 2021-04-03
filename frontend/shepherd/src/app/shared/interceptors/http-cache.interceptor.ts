@@ -17,14 +17,17 @@ export class HttpCacheInterceptor implements HttpInterceptor {
     private readonly cache: HttpCacheService,
   ) { }
 
+  private isWritingRequest(request: HttpRequest<any>): boolean {
+    return request.method !== 'GET';
+  }
+
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.method !== 'GET') {
+    if (this.isWritingRequest(request)) {
       this.cache.invalidate();
       return next.handle(request);
     }
 
     const cachedResponse = this.cache.get(request.url);
-
     if (cachedResponse) {
       return of(cachedResponse);
     }
