@@ -27,7 +27,7 @@ export class HttpCacheInterceptor implements HttpInterceptor {
       return next.handle(request);
     }
 
-    const cachedResponse = this.cache.get(request.url);
+    const cachedResponse = this.cache.get(request.urlWithParams);
     if (cachedResponse) {
       return of(cachedResponse);
     }
@@ -35,7 +35,7 @@ export class HttpCacheInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(response => {
         if (response instanceof HttpResponse) {
-          this.cache.put(request.url, response);
+          this.cache.put(request.urlWithParams, response);
         }
       })
     );
