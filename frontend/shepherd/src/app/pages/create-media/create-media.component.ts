@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Media } from 'src/app/models/medias/media';
 import { TrustReport } from 'src/app/models/medias/trust-report';
 import { MediaService } from 'src/app/shared/services/media/media.service';
@@ -18,9 +19,10 @@ export class CreateMediaComponent implements OnInit {
   public createMediaForm!: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private mediaService: MediaService,
-    private router: Router,
+    private readonly formBuilder: FormBuilder,
+    private readonly mediaService: MediaService,
+    private readonly router: Router,
+    private readonly toastr: ToastrService,
   ) { }
 
   ngOnInit(): void {
@@ -48,12 +50,12 @@ export class CreateMediaComponent implements OnInit {
 
     // POST the media
     this.mediaService.createMedia(media).subscribe(
-      () => console.log('ok'),
-      (error: HttpErrorResponse) => console.error(error),
+      () => {
+        this.toastr.success('Media successfully created');
+        this.router.navigate(['medias']);
+      },
+      (error: HttpErrorResponse) => this.toastr.error(error.error['reason'], 'Unable to create the media'),
     );
-
-    // Return to the menu
-    this.router.navigate(['medias']);
   }
 
   private getMediaFromForm() {
