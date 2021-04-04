@@ -24,6 +24,15 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
     boolean existsByNameIgnoreCase(String name);
 
     /**
+     * Get a paginated list of all medias
+     *
+     * @param request The pageable request to paginate the results
+     *
+     * @return A list of all medias
+     */
+    Page<Media> findAllByOrderByName(Pageable request);
+
+    /**
      * Get a paginated list of all medias using a specific name
      *
      * @param name Media name

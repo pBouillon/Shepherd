@@ -113,7 +113,7 @@ public class MediaService implements MediaCommandService, MediaQueryService {
 
         if (name.isEmpty() && website.isEmpty())
         {
-            medias = repository.findAll(request);
+            medias = repository.findAllByOrderByName(request);
         }
         else if (name.isPresent() && website.isEmpty())
         {
