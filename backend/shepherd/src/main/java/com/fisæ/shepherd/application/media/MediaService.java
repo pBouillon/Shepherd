@@ -113,19 +113,19 @@ public class MediaService implements MediaCommandService, MediaQueryService {
 
         if (name.isEmpty() && website.isEmpty())
         {
-            medias = repository.findAll(request);
+            medias = repository.findAllByOrderByName(request);
         }
         else if (name.isPresent() && website.isEmpty())
         {
-            medias = repository.findAllByNameContainingIgnoreCase(name.get(), request);
+            medias = repository.findAllByNameContainingIgnoreCaseOrderByNameAsc(name.get(), request);
         }
         else if (name.isEmpty())
         {
-            medias = repository.findAllByWebsite(URI.create(website.get()), request);
+            medias = repository.findAllByWebsiteOrderByNameAsc(URI.create(website.get()), request);
         }
         else
         {
-            medias = repository.findAllByNameContainingIgnoreCaseAndWebsite(
+            medias = repository.findAllByNameContainingIgnoreCaseAndWebsiteOrderByNameAsc(
                     name.get(), URI.create(website.get()), request);
         }
 

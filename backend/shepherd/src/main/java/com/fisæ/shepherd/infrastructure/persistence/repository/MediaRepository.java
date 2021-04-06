@@ -24,6 +24,15 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
     boolean existsByNameIgnoreCase(String name);
 
     /**
+     * Get a paginated list of all medias
+     *
+     * @param request The pageable request to paginate the results
+     *
+     * @return A list of all medias
+     */
+    Page<Media> findAllByOrderByName(Pageable request);
+
+    /**
      * Get a paginated list of all medias using a specific name
      *
      * @param name Media name
@@ -31,7 +40,7 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this name
      */
-    Page<Media> findAllByNameContainingIgnoreCase(String name, Pageable request);
+    Page<Media> findAllByNameContainingIgnoreCaseOrderByNameAsc(String name, Pageable request);
 
     /**
      * Get a paginated list of all medias using a specific name and website
@@ -42,7 +51,7 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this name and this website
      */
-    Page<Media> findAllByNameContainingIgnoreCaseAndWebsite(String name, URI website, Pageable request);
+    Page<Media> findAllByNameContainingIgnoreCaseAndWebsiteOrderByNameAsc(String name, URI website, Pageable request);
 
     /**
      * Get a paginated list of all medias using a specific website
@@ -52,6 +61,6 @@ public interface MediaRepository extends PagingAndSortingRepository<Media, Long>
      *
      * @return A list of all medias using this website
      */
-    Page<Media> findAllByWebsite(URI website, Pageable request);
+    Page<Media> findAllByWebsiteOrderByNameAsc(URI website, Pageable request);
 
 }

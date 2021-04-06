@@ -56,7 +56,7 @@ public class MediaQueryServiceTests {
 
     @Test
     public void givenNoMedias_WhenQueryingAPage_ThenNoMediasShouldBeReturned() {
-        Mockito.when(repository.findAll(any(PageRequest.class)))
+        Mockito.when(repository.findAllByOrderByName(any(PageRequest.class)))
                 .thenReturn(Page.empty());
 
         GetMediasQuery query = new GetMediasQuery();
