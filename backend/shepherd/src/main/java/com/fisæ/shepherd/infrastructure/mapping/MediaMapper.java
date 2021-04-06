@@ -7,10 +7,7 @@ import com.fisæ.shepherd.application.media.contracts.TrustReportDto;
 import com.fisæ.shepherd.domain.entity.Media;
 import com.fisæ.shepherd.domain.entity.TrustReport;
 import com.fisæ.shepherd.infrastructure.mapping.utils.UriMapper;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.List;
 
@@ -39,6 +36,7 @@ public interface MediaMapper {
      *
      * @return The associated DTO
      */
+    @Mapping(target = "voteCount", expression = "java(trustReport.getVotes().size())")
     TrustReportDto toDto(TrustReport trustReport);
 
     /**

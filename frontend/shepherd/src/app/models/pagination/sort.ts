@@ -1,9 +1,9 @@
 export class Sort {
 
-  public empty: boolean = true;
-
-  public sorted: boolean = false;
-
-  public unsorted: boolean = true;
+  constructor(
+    public empty: boolean,
+    public sorted: boolean,
+    public unsorted: boolean,
+  ) { }
 
 }

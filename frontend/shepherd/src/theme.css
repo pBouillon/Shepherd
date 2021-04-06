@@ -1,63 +1,18 @@
-@import '~bootstrap-icons/font/bootstrap-icons';
-
-
-/* Extension popup specifics */
-html {
-  width: 300px;
-  outline: none;
-  padding: 0px;
-}
-
-html.known {
-  height: 500px;
-}
-
-html.unknown {
-  height: 150px;
-}
-
-html.error {
-  height: 150px;
-}
-
-body {
-  height: 100%;
-  width: 100%;
-  display: grid;
-}
-
-footer div {
-  padding: 10px;
-}
-
-.badge {
-  margin: 5px;
-}
-
-button[type="button"] {
-  margin: 0px 10px 0px 10px;
-}
-
-.gauge-container-three > .gauge > .value {
-  stroke-width: 5px;
-  stroke: var(--blue-400);
-}
-
-.gauge-container-three > .gauge > .dial {
-  stroke-width: 5px;
-}
-
-.gauge-container-three > .gauge {
-  margin-bottom: -25px;
-}
-
 /* Default styles */
 .shepherd-title {
   color: var(--blue-200);
 }
 
 .shepherd-subtitle {
-  color: var(--blue-100);
+  color: var(--blue-300);
+}
+
+.shepherd-text {
+  color: var(--blue-400);
+}
+
+.shepherd-text-muted {
+  color: var(--gray-400);
 }
 
 .shepherd-link, .shepherd-link:hover {
@@ -82,6 +37,7 @@ button[type="button"] {
 .shepherd-link:hover::after {
   width: 100%;
 }
+
 
 /* Theming */
 :root {

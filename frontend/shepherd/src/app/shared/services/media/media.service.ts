@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { PaginatedMedias } from 'src/app/models/medias/paginated-medias';
 import { Media } from 'src/app/models/medias/media';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,10 @@ export class MediaService {
   constructor(
     private http: HttpClient
   ) { }
+
+  createMedia(media: Media): Observable<Media> {
+    return this.http.post<Media>(`${environment.apiUri}/medias`, media);
+  }
 
   getMediaByName(name: string): Observable<Media | null> {
     const params = new HttpParams().set('name', name);
@@ -36,7 +40,7 @@ export class MediaService {
   }): Observable<PaginatedMedias> {
     let httpParams = new HttpParams();
 
-    if (params?.itemsPerPages) 
+    if (params?.itemsPerPages)
       httpParams = httpParams.set('itemsPerPages', params.itemsPerPages + '');
 
     if (params?.name)
