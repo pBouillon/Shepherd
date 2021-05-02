@@ -49,6 +49,6 @@ the developer features
 
 1. From your settings, go to the extension panel
 1. Enable the developer mode
-1. Click on "Load an unpacked extension
+1. Click on "Load an unpacked extension"
 1. Select the folder: `~/Shepherd/extension/shepherd` (be sure to use the right prefix)
 1. The extension should now appear among the other ones that you may already have
